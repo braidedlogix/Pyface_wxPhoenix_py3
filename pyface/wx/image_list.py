@@ -50,7 +50,7 @@ class ImageList(wx.ImageList):
 
         # If the icon is a string then it is the filename of some kind of
         # image (e.g 'foo.gif', 'image/foo.png' etc).
-        if isinstance(filename, basestring):
+        if isinstance(filename, str):
             # Try the cache first.
             index = self._cache.get(filename)
             if index is None:
@@ -85,7 +85,7 @@ class ImageList(wx.ImageList):
             icon = filename
 
             # We also force them to be bitmaps!
-            bmp = wx.EmptyBitmap(self._width, self._height)
+            bmp = wx.Bitmap(self._width, self._height)
             bmp.CopyFromIcon(icon)
             # We force all images in the cache to be the same size.
             image = wx.ImageFromBitmap(bmp)

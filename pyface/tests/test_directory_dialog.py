@@ -8,25 +8,15 @@ from ..directory_dialog import DirectoryDialog
 from ..gui import GUI
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
-
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
+class TestDirectoryDialog(unittest.TestCase):
 
     def setUp(self):
-        GuiTestAssistant.setUp(self)
+        self.gui = GUI()
         self.dialog = DirectoryDialog()
-
-    def tearDown(self):
-        if self.dialog.control is not None:
-            with self.delete_widget(self.dialog.control):
-                self.dialog.destroy()
-        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected

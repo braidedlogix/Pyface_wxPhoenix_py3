@@ -27,6 +27,7 @@ import sys
 import IPython
 from IPython.frontend.wx.wx_frontend import WxController
 from IPython.kernel.core.interpreter import Interpreter
+
 import wx
 
 # Enthought library imports.
@@ -374,7 +375,7 @@ class IPythonWidget(Widget):
         shell = klass(parent, -1, shell=self.interp)
 
         # Listen for key press events.
-        wx.EVT_CHAR(shell, self._wx_on_char)
+        shell.Bind(wx.EVT_CHAR, self._wx_on_char)
 
         # Enable the shell as a drag and drop target.
         shell.SetDropTarget(PythonDropTarget(self))
@@ -433,7 +434,6 @@ class IPythonWidget(Widget):
 
     def _wx_on_char(self, event):
         """ Called whenever a change is made to the text of the document. """
-
         self.key_pressed = KeyPressedEvent(
             alt_down     = event.AltDown() == 1,
             control_down = event.ControlDown() == 1,

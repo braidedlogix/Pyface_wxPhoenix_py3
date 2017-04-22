@@ -31,7 +31,7 @@ class StatusBarManager(HasTraits):
     message = Property
 
     # The messages to be displayed in the status bar fields.
-    messages = List(Unicode)
+    messages = List(Str)#Unicode)
 
     # The toolkit-specific control that represents the status bar.
     status_bar = Any

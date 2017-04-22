@@ -114,8 +114,8 @@ class PythonSTC(stc.StyledTextCtrl):
                               stc.STC_MARK_BOXMINUS, "white", "black")
 
 
-        stc.EVT_STC_UPDATEUI(self,    ID, self.OnUpdateUI)
-        stc.EVT_STC_MARGINCLICK(self, ID, self.OnMarginClick)
+        self.Bind(stc.EVT_STC_UPDATEUI, self.OnUpdateUI)
+        self.Bind(stc.EVT_STC_MARGINCLICK, self.OnMarginClick)
 
 
         # Make some styles,  The lexer defines what each style is used for, we
@@ -183,7 +183,7 @@ class PythonSTC(stc.StyledTextCtrl):
 
         self.SetCaretForeground("BLUE")
 
-        wx.EVT_KEY_DOWN(self, self.OnKeyPressed)
+        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressed)
 
 
     def OnKeyPressed(self, event):

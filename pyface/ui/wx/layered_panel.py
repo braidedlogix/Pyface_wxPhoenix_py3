@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A Layered panel. """
-from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -138,7 +137,7 @@ class LayeredPanel(Widget):
     def has_layer(self, name):
         """ Does the panel contain a layer with the specified name? """
 
-        return self._layers.has_key(name)
+        return name in self._layers#self._layers.has_key(name)
 
     ###########################################################################
     # Private interface.

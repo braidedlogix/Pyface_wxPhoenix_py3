@@ -18,10 +18,18 @@
 from __future__ import print_function
 
 import types
-from string import atof
+#from string import atof
 import wx
 from wx.grid import PyGridCellRenderer
 
+def atof(s):
+    s,_,_=s.partition(' ') # eg. this helps by trimming off at the first space
+    while s:
+        try:
+            return float(s)
+        except:
+            s=s[:-1]
+    return 0.0
 #-------------------------------------------------------------------------------
 
 class DefaultRenderer(PyGridCellRenderer):
@@ -56,7 +64,7 @@ class DefaultRenderer(PyGridCellRenderer):
         """
         # We have to set the clipping region on the grid's DC,
         # otherwise the text will spill over to the next cell
-        dc.SetClippingRect(rect)
+        dc.SetClippingRegion(rect)
 
         # overwrite anything currently in the cell ...
         dc.SetBackgroundMode(wx.SOLID)
@@ -99,7 +107,7 @@ class DefaultRenderer(PyGridCellRenderer):
         """ Adds three dots "..." to indicate the cell is truncated.
         """
         text = grid.model.GetValue(row, col)
-        if not isinstance(text, basestring):
+        if not isinstance(text, str):
             msg = 'Problem appending "..." to cell: %d %d' % (row, col)
             raise TypeError(msg)
 

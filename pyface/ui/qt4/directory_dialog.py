@@ -74,7 +74,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         dlg.setFileMode(QtGui.QFileDialog.DirectoryOnly)
 
         if not self.new_directory:
-            dlg.setOptions(QtGui.QFileDialog.ReadOnly)
+            dlg.setReadOnly(True)
 
         if self.message:
             dlg.setLabelText(QtGui.QFileDialog.LookIn, self.message)

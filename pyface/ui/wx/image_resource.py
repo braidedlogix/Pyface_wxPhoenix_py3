@@ -25,7 +25,7 @@ import wx
 
 # Enthought library imports.
 from traits.api import Any, HasTraits, List, Property, provides
-from traits.api import Unicode
+from traits.api import Unicode, Str
 
 # Local imports.
 from pyface.i_image_resource import IImageResource, MImageResource
@@ -45,9 +45,9 @@ class ImageResource(MImageResource, HasTraits):
 
     #### 'ImageResource' interface ############################################
 
-    absolute_path = Property(Unicode)
+    absolute_path = Property(Str)#Property(Unicode)
 
-    name = Unicode
+    name = Str#Unicode
 
     search_path = List
 
@@ -69,7 +69,7 @@ class ImageResource(MImageResource, HasTraits):
             # We have to convert the image to a bitmap first and then create an
             # icon from that.
             bmp = image.ConvertToBitmap()
-            icon = wx.EmptyIcon()
+            icon = wx.Icon()
             icon.CopyFromBitmap(bmp)
 
         return icon

@@ -80,22 +80,18 @@ def _init_toolkit():
             modules = ', '.join(plugin.module_name for plugin in plugins)
             logger.warning(msg, tk, modules)
 
-        exception = None
         while plugins:
             plugin = plugins.pop(0)
             try:
                 tk_object = plugin.load()
                 return tk_object
-            except ImportError as exception:
-                logger.exception(exception)
+            except ImportError as exc:
+                logger.exception(exc)
                 msg = "Could not load plugin %r from %r"
                 logger.warning(msg, plugin.name, plugin.module_name)
         else:
             # no success
-            if exception is not None:
-                raise exception
-            else:
-                raise RuntimeError("No toolkit loaded or exception raised.")
+            raise exc
 
     # Get the toolkit.
     if ETSConfig.toolkit:
@@ -108,7 +104,7 @@ def _init_toolkit():
                 return import_toolkit(tk)
         except RuntimeError as exc:
             exc_info = logger.getEffectiveLevel() <= logging.INFO
-            level = logger.ERROR if exc_info else logging.INFO
+            level = 'ERROR' if exc_info else 'INFO'
             msg = "Could not import Pyface backend %r"
             logger.log(level, msg, tk, excinfo=exc_info)
 

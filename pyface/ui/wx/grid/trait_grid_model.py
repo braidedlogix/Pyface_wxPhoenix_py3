@@ -234,7 +234,7 @@ class TraitGridModel(GridModel):
             self.data.reverse()
 
         # now fire an event to tell the grid we're sorted
-        print 'firing sort event'
+
         self.column_sorted = GridSortEvent(index = col, reversed = reverse)
 
         return
@@ -333,9 +333,8 @@ class TraitGridModel(GridModel):
         # the potential string formatting
         column = self.__get_column(col)
         obj = self._get_row(row)
-
+        
         value = self._get_data_from_row(obj, column)
-
         return value
 
     def get_cell_selection_value(self, row, col):
@@ -386,8 +385,9 @@ class TraitGridModel(GridModel):
         formats = self.__get_column_formats(col)
 
         if value is not None and formats is not None and \
-               formats.has_key(type(value)) and \
-               formats[type(value)] is not None:
+			type(value)in formats and formats[type(value)] is not None:
+			   #formats.has_key(type(value)) and \
+               #formats[type(value)] is not None:
             try:
                 format = formats[type(value)]
                 if callable(format):
@@ -499,7 +499,10 @@ class TraitGridModel(GridModel):
                 # this is the case when an object method is specified
                 value = getattr(row, column.method)()
 
-        return value
+        if value is None:
+            return None
+        else:
+            return str(value) #value
 
     def _set_data_on_row(self, row, column, value):
         """ Retrieve the data specified by column for this row. Attribute
@@ -617,7 +620,11 @@ class TraitGridModel(GridModel):
         coldata = []
         for row in range(row_count):
             try:
-                coldata.append(self.get_value(row, col))
+                val=self.get_value(row, col)
+                if val is None:
+                    coldata.append(None)
+                else:
+                    coldata.append(val)#self.get_value(row, col))
             except IndexError:
                 coldata.append(None)
 

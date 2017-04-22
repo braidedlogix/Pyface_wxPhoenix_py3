@@ -1,27 +1,17 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest
+from traits.testing.unittest_tools import unittest, UnittestTools
 
+from ..gui import GUI
 from ..heading_text import HeadingText
 from ..split_application_window import SplitApplicationWindow
-from ..toolkit import toolkit_object
-
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
+class TestSplitApplicationWindow(unittest.TestCase, UnittestTools):
 
     def setUp(self):
-        GuiTestAssistant.setUp(self)
+        self.gui = GUI()
         self.window = SplitApplicationWindow()
-
-    def tearDown(self):
-        if self.window.control is not None:
-            with self.delete_widget(self.window.control):
-                self.window.destroy()
-        GuiTestAssistant.tearDown(self)
 
     def test_destroy(self):
         # test that destroy works even when no control

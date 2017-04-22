@@ -43,7 +43,7 @@ class ViewerSorter(HasTraits):
 
             return self.compare(viewer, parent, element_a, element_b)
 
-        elements.sort(comparator)
+        elements.sort(key=self.cmp_to_key(comparator))  #sort(comparator)
 
         return elements
 
@@ -64,7 +64,16 @@ class ViewerSorter(HasTraits):
         # If they are not in the same category then return the result of
         # comparing the categories.
         if category_a != category_b:
-            result = cmp(category_a, category_b)
+            #result = cmp(category_a, category_b)
+            result = category_a.__lt__(category_b)
+            if result:
+                result=-1
+            else:
+                result=category_b.__lt__(category_a)
+                if result:
+                    result=1
+                else:
+                    result=0
 
         else:
             # Get the label text for each element.
@@ -80,10 +89,35 @@ class ViewerSorter(HasTraits):
                 label_b = viewer.node_model.get_text(viewer, element_b)
 
             # Compare the label text.
-            result = cmp(label_a, label_b)
+            result = label_a.__lt__(label_b)#cmp(label_a, label_b)
 
+            if result:
+                result=-1
+            else:
+                result=label_b.__lt__(label_a)
+                if result:
+                    result=1
+                else:
+                    result=0
         return result
-
+    def cmp_to_key(self, mycmp):
+        'Convert a cmp= function into a key= function'
+        class K:
+            def __init__(self, obj, *args):
+                self.obj = obj
+            def __lt__(self, other):
+                return mycmp(self.obj, other.obj) < 0
+            def __gt__(self, other):
+                return mycmp(self.obj, other.obj) > 0
+            def __eq__(self, other):
+                return mycmp(self.obj, other.obj) == 0
+            def __le__(self, other):
+                return mycmp(self.obj, other.obj) <= 0
+            def __ge__(self, other):
+                return mycmp(self.obj, other.obj) >= 0
+            def __ne__(self, other):
+                return mycmp(self.obj, other.obj) != 0
+        return K
     def category(self, viewer, parent, element):
         """ Returns the category (an integer) for an element.
 

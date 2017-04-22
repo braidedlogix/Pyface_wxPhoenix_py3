@@ -3,36 +3,27 @@ from __future__ import absolute_import
 import os
 import sys
 
-from traits.testing.unittest_tools import unittest
+from traits.testing.unittest_tools import unittest, UnittestTools
 
+from ..gui import GUI
 from ..python_shell import PythonShell
-from ..toolkit import toolkit_object
 from ..window import Window
-
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 
 PYTHON_SCRIPT = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                 'python_shell_script.py'))
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestPythonShell(unittest.TestCase, GuiTestAssistant):
+class TestPythonShell(unittest.TestCase, UnittestTools):
 
     def setUp(self):
-        GuiTestAssistant.setUp(self)
+        self.gui = GUI()
         self.window = Window()
         self.window._create()
 
     def tearDown(self):
-        if self.widget.control is not None:
-            with self.delete_widget(self.widget.control):
-                self.widget.destroy()
-        if self.window.control is not None:
-            with self.delete_widget(self.window.control):
-                self.window.destroy()
-        GuiTestAssistant.tearDown(self)
+        self.widget.destroy()
+        self.window.destroy()
 
     def test_lifecycle(self):
         # test that destroy works

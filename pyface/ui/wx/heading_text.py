@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Instance, Int, provides, Unicode
+from traits.api import Instance, Int, provides, Unicode, Str
 
 # Local imports.
 from pyface.i_heading_text import IHeadingText, MHeadingText
@@ -41,7 +41,7 @@ class HeadingText(MHeadingText, Widget):
 
     level = Int(1)
 
-    text = Unicode('Default')
+    text = Str('Default')#Unicode('Default')
 
     image = Instance(ImageResource, ImageResource('heading_level_1'))
 
@@ -82,8 +82,8 @@ class HeadingText(MHeadingText, Widget):
         width, height = self._get_preferred_size(self.text, self._font)
         panel.SetMinSize((width, height))
 
-        wx.EVT_PAINT(panel, self._on_paint_background)
-        wx.EVT_ERASE_BACKGROUND(panel, self._on_erase_background)
+        panel.Bind(wx.EVT_PAINT, self._on_paint_background)
+        panel.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
 
         return panel
 

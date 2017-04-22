@@ -18,7 +18,7 @@
 """
 
 # Standard library imports.
-import __builtin__
+import builtins
 import os
 import sys
 import types
@@ -147,7 +147,7 @@ class PythonShell(MPythonShell, Widget):
         shell = PyShell(parent, -1)
 
         # Listen for key press events.
-        wx.EVT_CHAR(shell, self._wx_on_char)
+        shell.Bind(wx.EVT_CHAR, self._wx_on_char)
 
         # Enable the shell as a drag and drop target.
         shell.SetDropTarget(PythonDropTarget(self))
@@ -198,6 +198,7 @@ class PythonShell(MPythonShell, Widget):
 
         # This was originally in the python_shell plugin, but is toolkit
         # specific.
+
         if event.AltDown() and event.GetKeyCode() == 317:
             zoom = self.shell.control.GetZoom()
             if zoom != 20:
@@ -229,7 +230,7 @@ class PyShell(PyShellBase):
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = __builtin__.raw_input
+        self.raw_input = builtins.input
 
         super(PyShell,self).__init__(parent, id, pos, size, style, introText,
                                      locals, InterpClass, *args, **kwds)
@@ -265,7 +266,7 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        __builtin__.raw_input = self.raw_input
+        builtins.input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 

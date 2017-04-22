@@ -27,10 +27,40 @@ introspect module.
 
 # Import introspect.
 from wx.py import introspect
+from functools import cmp_to_key
 
 import types
-
+def cmp_to_key2( mycmp):
+    'Convert a cmp= function into a key= function'
+    class K:
+        def __init__(self, obj, *args):
+            self.obj = obj
+        def __lt__(self, other):
+            return mycmp(self.obj, other.obj) < 0
+        def __gt__(self, other):
+            return mycmp(self.obj, other.obj) > 0
+        def __eq__(self, other):
+            return mycmp(self.obj, other.obj) == 0
+        def __le__(self, other):
+            return mycmp(self.obj, other.obj) <= 0
+        def __ge__(self, other):
+            return mycmp(self.obj, other.obj) >= 0
+        def __ne__(self, other):
+            return mycmp(self.obj, other.obj) != 0
+    return K
 # The fixed function.
+def comparative(x,y):
+    result = x.__lt__(y)#cmp(label_a, label_b)
+
+    if result:
+        result=-1
+    else:
+        result=y.__lt__(x)
+        if result:
+            result=1
+        else:
+            result=0
+    
 def getAttributeNames(object, includeMagic=1, includeSingle=1,
                       includeDouble=1):
     """Return list of unique attributes, including inherited, for object."""
@@ -55,9 +85,9 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
         try: attributes += object._getAttributeNames()
         except: pass
     # Get all attribute names.
-    attrdict = getAllAttributeNames(object)
+    attrdict = getAllAttributeNames(object) 
     # Store the object's dir.
-    object_dir = dir(object)
+    object_dir = dir(object) #list
     for (obj_type_name, technique, count), attrlist in attrdict.items():
         # This complexity is necessary to avoid accessing all the
         # attributes of the object.  This is very handy for objects
@@ -72,12 +102,12 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     # Remove duplicates from the attribute list.
     for item in attributes:
         dict[item] = None
-    attributes = dict.keys()
+    attributes = list(dict.keys())
     # new-style swig wrappings can result in non-string attributes
     # e.g. ITK http://www.itk.org/
     attributes = [attribute for attribute in attributes \
-                  if isinstance(attribute, basestring)]
-    attributes.sort(lambda x, y: cmp(x.upper(), y.upper()))
+                  if isinstance(attribute, str)]
+    attributes.sort()#(key=cmp_to_key(comparative))#lambda x, y: cmp(x.upper(), y.upper()))
     if not includeSingle:
         attributes = filter(lambda item: item[0]!='_' \
                             or item[1]=='_', attributes)
@@ -112,11 +142,11 @@ def getAllAttributeNames(object):
     wakeupcall = dir(object)
     del wakeupcall
     # Get attributes available through the normal convention.
-    attributes = dir(object)
+    attributes = dir(object) #list
     attrdict[(key, 'dir', len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
-        attributes = object.__dict__.keys()
+        attributes = list( object.__dict__.keys())
         attributes.sort()
     except:  # Must catch all because object might have __getattr__.
         pass
@@ -137,12 +167,12 @@ def getAllAttributeNames(object):
     # Also get attributes from any and all parent classes.
     try:
         bases = object.__bases__
-    except:  # Must catch all because object might have __getattr__.
+    except:  #bject might have __getattr__.
         pass
     else:
-        if isinstance(bases, types.TupleType):
+        if isinstance(bases, tuple):
             for base in bases:
-                if type(base) is types.TypeType:
+                if type(base) is type:
                     # Break a circular reference. Happens in Python 2.2.
                     pass
                 else:

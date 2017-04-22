@@ -27,7 +27,7 @@ from pyface.wx.aui import aui, PyfaceAuiManager
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, on_trait_change, provides, Unicode
+from traits.api import Instance, List, on_trait_change, provides, Unicode, Str
 from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
@@ -68,7 +68,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # seems to work however (e.g. 'def _size_default'). Hmmmm....
 ##     size = (800, 600)
 
-    title = Unicode("Pyface")
+    title = Str("Pyface")#Unicode("Pyface")
 
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
@@ -76,8 +76,12 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_contents(self, parent):
         panel = wx.Panel(parent, -1, name="ApplicationWindow")
-        panel.SetSize((500, 400))
+        #sizer = wx.BoxSizer(wx.HORIZONTAL)
+        #panel.SetSize((4000, 1400))
+        #sizer.SetSizeHints(panel)
+        #panel.SetSizer(sizer)
         panel.SetBackgroundColour('blue')
+
 
         return panel
 
@@ -95,9 +99,10 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_tool_bar(self, parent):
         tool_bar_managers = self._get_tool_bar_managers()
+        
         if len(tool_bar_managers) > 0:
             for tool_bar_manager in reversed(tool_bar_managers):
-                tool_bar = tool_bar_manager.create_tool_bar(parent, aui=True)
+                tool_bar = tool_bar_manager.create_tool_bar(parent)#, aui=True)
                 self._add_toolbar_to_aui_manager(
                     tool_bar
                 )

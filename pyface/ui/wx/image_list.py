@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A cached image list. """
-from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -61,7 +60,7 @@ class ImageList(wx.ImageList):
 
             # If the filename is a string then it is the filename of some kind
             # of image (e.g 'foo.gif', 'image/foo.png' etc).
-            elif isinstance(filename, basestring):
+            elif isinstance(filename, str):
                 # Load the image from the file.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
@@ -69,7 +68,7 @@ class ImageList(wx.ImageList):
             # probably related to a MIME type).
             else:
                 # Create a bitmap from the icon.
-                bmp = wx.EmptyBitmap(self._width, self._height)
+                bmp = wx.Bitmap(self._width, self._height)
                 bmp.CopyFromIcon(filename)
 
                 # Turn it into an image so that we can scale it.

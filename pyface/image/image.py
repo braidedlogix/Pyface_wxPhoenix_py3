@@ -24,7 +24,7 @@ from platform import system
 from zipfile import is_zipfile, ZipFile, ZIP_DEFLATED
 import datetime
 import time
-from thread import allocate_lock
+from _thread import allocate_lock
 from threading import Thread
 
 from traits.api import (HasPrivateTraits, Property, Str, Int, List, Dict,
@@ -135,7 +135,8 @@ def get_python_value ( source, name ):
         code string.
     """
     temp = {}
-    exec source.replace( b'\r', b'' ) in globals(), temp
+
+    exec(source.replace( b'\r', b'' ),globals(),temp)
     return temp[ name ]
 
 
@@ -359,7 +360,7 @@ class ImageInfo ( HasPrivateTraits ):
                     for name, value in self.trait_get(
                         'name', 'image_name', 'description', 'category',
                         'keywords', 'alignment'
-                    ).iteritems())
+                    ).items())
         data.update(self.trait_get('width', 'height'))
         sides = ['left', 'right', 'top', 'bottom']
         data.update(('b'+name, getattr(self.border, name)) for name in sides)
@@ -694,7 +695,7 @@ class ImageVolume ( HasPrivateTraits ):
                     for name, value in self.trait_get(
                         'description', 'category', 'keywords', 'aliases',
                         'time_stamp'
-                    ).iteritems())
+                    ).items())
         data['info'] = ',\n'.join(info.image_volume_info_code
                                   for info in self.info)
         return (ImageVolumeTemplate % data)
@@ -780,14 +781,14 @@ class ImageVolume ( HasPrivateTraits ):
                     old_image.height = cur_image.height
                     cur_image.volume = None
 
-            images = cur_image_set.values()
+            images = list(cur_image_set.values())
 
         # Set the new time stamp of the volume:
         self.time_stamp = time_stamp
 
         # Return the resulting sorted list as the default value:
         images.sort( key = lambda item: item.image_name )
-
+        #sorted(images,key = lambda item: item.image_name )
         # Make sure all images reference this volume:
         for image in images:
             image.volume = self
@@ -1010,6 +1011,7 @@ class ImageLibrary ( HasPrivateTraits ):
 
         # Create the ImageVolume to describe the path's contents:
         image_volume_path = join( path, 'image_volume.py' )
+
         if exists( image_volume_path ):
             volume = get_python_value( read_file( image_volume_path ),
                                        'volume' )
@@ -1224,7 +1226,6 @@ class ImageLibrary ( HasPrivateTraits ):
 
         # Make sure the path is a valid zip file:
         if is_zipfile( path ):
-
             # Create a fast zip file for reading:
             zf = FastZipFile( path = path )
 

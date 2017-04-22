@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A top-level application window that supports multiple toolbars. """
-from __future__ import absolute_import
 
 # Major package imports.
 import wx

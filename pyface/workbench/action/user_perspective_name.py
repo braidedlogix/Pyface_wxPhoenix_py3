@@ -19,7 +19,7 @@ from traitsui.api import View, Item, VGroup
 def not_empty_string(object, name, value):
     """a not-empty string"""
 
-    if isinstance(value, basestring) and (value.strip() != ''):
+    if isinstance(value, str) and (value.strip() != ''):
         return value
 
     raise TraitError

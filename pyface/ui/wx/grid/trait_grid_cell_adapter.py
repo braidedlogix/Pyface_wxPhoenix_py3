@@ -15,11 +15,11 @@
 
 # Major package imports
 import wx
-from wx.grid import PyGridCellEditor
+from wx.grid import GridCellEditor as PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
 # Local imports:
-from combobox_focus_handler import ComboboxFocusHandler
+from .combobox_focus_handler import ComboboxFocusHandler
 
 wx_28 = (float( wx.__version__[:3] ) >= 2.8)
 
@@ -35,6 +35,7 @@ def get_control(control):
     return None
 
 def push_control(control, grid):
+
     control.PushEventHandler(ComboboxFocusHandler(grid))
     for child_control in control.GetChildren():
         push_control(child_control, grid)
@@ -108,13 +109,13 @@ class TraitGridCellAdapter(PyGridCellEditor):
         if self_height > 1.0:
             height = int( self_height )
         elif (self_height >= 0.0) and (grid is not None):
-            height = int( self_height * grid.GetSize()[1] )
+            height = int( self_height * grid.GetSize().Get()[1] )
 
         self_width = self._width
         if self_width > 1.0:
             width = int( self_width )
         elif (self_width >= 0.0) and (grid is not None):
-            width = int( self_width * grid.GetSize()[0] )
+            width = int( self_width * grid.GetSize().Get()[0] )
 
         self._edit_width, self._edit_height = width, height
 
@@ -167,7 +168,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
             if changed:
                 grid.ForceRefresh()
 
-        self._control.SetDimensions(rect.x + 1, rect.y + 1,
+        self._control.SetSize(rect.x + 1, rect.y + 1,
                                     edit_width, edit_height,
                                     SIZE_ALLOW_MINUS_ONE)
 
@@ -179,6 +180,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Show or hide the edit control.  You can use the attr (if not None)
             to set colours or fonts for the control.
         """
+
         if self.IsCreated():
             if wx_28:
                 super(TraitGridCellAdapter, self).Show(show, attr)
@@ -198,6 +200,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
     def BeginEdit(self, row, col, grid):
         """ Make sure the control is ready to edit. """
         # We have to manually set the focus to the control
+
         self._editor.update_editor()
         control = self._control
         control.Show(True)

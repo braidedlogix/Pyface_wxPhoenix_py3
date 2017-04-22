@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A Layered panel. """
-from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -89,15 +88,16 @@ class ExpandablePanel(Widget):
     def remove_panel(self, name):
         """ Removes a layer and its header from the container."""
 
-        if not self._layers.has_key(name):
+        #if not self._layers.has_key(name):
+        if not name in list( self._layers.keys()):
             return
 
         sizer = self.control.GetSizer()
         panel = self._layers[name]
         header = self._headers[name]
-        sizer.Remove(panel)
+        #sizer.Remove(panel)
         panel.Destroy()
-        sizer.Remove(header)
+        #sizer.Remove(header)
         header.Destroy()
 
         sizer.Layout()
@@ -155,6 +155,6 @@ class ExpandablePanel(Widget):
         sizer.Layout()
 
         # fixme: Errrr, maybe we can NOT do this!
-        w, h = self.control.GetSize()
+        w, h = self.control.GetSize().Get()
         self.control.SetSize((w+1, h+1))
         self.control.SetSize((w, h))

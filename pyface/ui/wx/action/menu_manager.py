@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Unicode, Bool
+from traits.api import Unicode, Bool, Str
 
 # Local imports.
 from pyface.action.action_manager import ActionManager
@@ -39,7 +39,7 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Unicode
+    name = Str#Unicode
 
     # Does the menu require a separator before the menu item name?
     separator = Bool(True)
@@ -74,7 +74,7 @@ class MenuManager(ActionManager, ActionManagerItem):
         sub._id = id
         sub._menu = menu
 
-        menu.AppendMenu(id, self.name, sub)
+        menu.Append(id, self.name, sub)
 
         return
 
@@ -164,7 +164,7 @@ class _Menu(wx.Menu):
         if x is None or y is None:
             self._parent.PopupMenu(self)
         else:
-            self._parent.PopupMenuXY(self, x, y)
+            self._parent.PopupMenu(self, x, y)
 
         return
 

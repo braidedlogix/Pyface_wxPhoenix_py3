@@ -206,11 +206,11 @@ class Shell(wxStyledTextCtrl):
         self.historyIndex = -1
         self.historyPrefix = 0
         # Assign handlers for keyboard events.
-        EVT_KEY_DOWN(self, self.OnKeyDown)
-        EVT_CHAR(self, self.OnChar)
+        self.Bind( EVT_KEY_DOWN, self.OnKeyDown)
+        self.Bind(EVT_CHAR, self.OnChar)
         # Assign handlers for wxSTC events.
-        EVT_STC_UPDATEUI(self, id, self.OnUpdateUI)
-        EVT_STC_USERLISTSELECTION(self, id, self.OnHistorySelected)
+        self.Bind(EVT_STC_UPDATEUI, self.OnUpdateUI)
+        self.Bind(EVT_STC_USERLISTSELECTION, self.OnHistorySelected)
         # Configure various defaults and user preferences.
         self.config()
         # Display the introductory banner information.
@@ -299,7 +299,7 @@ class Shell(wxStyledTextCtrl):
         """Execute the user's PYTHONSTARTUP script if they have one."""
         if startupScript and os.path.isfile(startupScript):
             startupText = 'Startup script executed: ' + startupScript
-            self.push('print %s;execfile(%s)' % \
+            self.push('print(%s;execfile(%s))' % \
                       (`startupText`, `startupScript`))
         else:
             self.push('')
@@ -378,7 +378,6 @@ class Shell(wxStyledTextCtrl):
 
         Only receives an event if OnKeyDown calls event.Skip() for
         the corresponding event."""
-
         # Prevent modification of previously submitted commands/responses.
         if not self.CanEdit():
             return
@@ -398,6 +397,7 @@ class Shell(wxStyledTextCtrl):
             else:
                 command += chr(key)
                 self.write(chr(key))
+
                 if self.autoComplete: self.autoCompleteShow(command)
         elif key == ord('('):
             # The left paren activates a call tip and cancels
@@ -623,7 +623,7 @@ class Shell(wxStyledTextCtrl):
 
         # This method will most likely be replaced by the enclosing app
         # to do something more interesting, like write to a status bar.
-        print text
+        print(text)
 
     def insertLineBreak(self):
         """Insert a new line break."""
@@ -852,7 +852,7 @@ class Shell(wxStyledTextCtrl):
     def run(self, command, prompt=1, verbose=1):
         """Execute command within the shell as if it was typed in directly.
         >>> shell.run('print "this"')
-        >>> print "this"
+        >>> print("this")
         this
         >>>
         """
@@ -1194,51 +1194,51 @@ class ShellMenu:
         b.Append(self.helpMenu, '&Help')
         self.SetMenuBar(b)
 
-        EVT_MENU(self, wxID_EXIT, self.OnExit)
-        EVT_MENU(self, wxID_UNDO, self.OnUndo)
-        EVT_MENU(self, wxID_REDO, self.OnRedo)
-        EVT_MENU(self, wxID_CUT, self.OnCut)
-        EVT_MENU(self, wxID_COPY, self.OnCopy)
-        EVT_MENU(self, wxID_PASTE, self.OnPaste)
-        EVT_MENU(self, wxID_CLEAR, self.OnClear)
-        EVT_MENU(self, wxID_SELECTALL, self.OnSelectAll)
-        EVT_MENU(self, wxID_ABOUT, self.OnAbout)
-        EVT_MENU(self, ID_AUTOCOMP_SHOW, \
-                 self.OnAutoCompleteShow)
-        EVT_MENU(self, ID_AUTOCOMP_INCLUDE_MAGIC, \
-                 self.OnAutoCompleteIncludeMagic)
-        EVT_MENU(self, ID_AUTOCOMP_INCLUDE_SINGLE, \
-                 self.OnAutoCompleteIncludeSingle)
-        EVT_MENU(self, ID_AUTOCOMP_INCLUDE_DOUBLE, \
-                 self.OnAutoCompleteIncludeDouble)
-        EVT_MENU(self, ID_CALLTIPS_SHOW, \
-                 self.OnCallTipsShow)
+        self.Bind( EVT_MENU, self.OnExit, wx.ID_EXIT)
+        self.Bind(EVT_MENU, self.OnUndo, wx.ID_UNDO)
+        self.Bind(EVT_MENU, self.OnRedo, wx.ID_REDO)
+        self.Bind(EVT_MENU, self.OnCut, wx.ID_CUT)
+        self.Bind(EVT_MENU, self.OnCopy, wx.ID_COPY)
+        self.Bind(EVT_MENU, self.OnPaste, wx.ID_PASTE)
+        self.Bind(EVT_MENU, self.OnClear, wx.ID_CLEAR)
+        self.Bind(EVT_MENU, self.OnSelectAll, wx.ID_SELECTALL)
+        self.Bind(EVT_MENU, self.OnAbout, wx.ID_ABOUT)
+        self.Bind(EVT_MENU, \
+                 self.OnAutoCompleteShow, ID_AUTOCOMP_SHOW)
+        self.Bind(EVT_MENU, \
+                 self.OnAutoCompleteIncludeMagic, ID_AUTOCOMP_INCLUDE_MAGIC)
+        self.Bind(EVT_MENU, \
+                 self.OnAutoCompleteIncludeSingle, ID_AUTOCOMP_INCLUDE_SINGLE)
+        self.Bind(EVT_MENU, \
+                 self.OnAutoCompleteIncludeDouble, ID_AUTOCOMP_INCLUDE_DOUBLE)
+        self.Bind(EVT_MENU, \
+                 self.OnCallTipsShow, ID_CALLTIPS_SHOW)
 
-        EVT_UPDATE_UI(self, wxID_UNDO, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, wxID_REDO, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, wxID_CUT, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, wxID_COPY, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, wxID_PASTE, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, wxID_CLEAR, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, ID_AUTOCOMP_SHOW, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, ID_AUTOCOMP_INCLUDE_MAGIC, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, ID_AUTOCOMP_INCLUDE_SINGLE, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, ID_AUTOCOMP_INCLUDE_DOUBLE, self.OnUpdateMenu)
-        EVT_UPDATE_UI(self, ID_CALLTIPS_SHOW, self.OnUpdateMenu)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, wx.ID_UNDO)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, wx.ID_REDO)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, wx.ID_CUT)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, wx.ID_COPY)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, wx.ID_PASTE)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, wx.ID_CLEAR)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_AUTOCOMP_SHOW)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_AUTOCOMP_INCLUDE_MAGIC)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_AUTOCOMP_INCLUDE_SINGLE)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_AUTOCOMP_INCLUDE_DOUBLE)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_CALLTIPS_SHOW)
 
         if hasattr( self, 'crust' ):
-            EVT_MENU(self, ID_FILLING_AUTO_UPDATE, self.OnFillingAutoUpdate)
-            EVT_MENU(self, ID_FILLING_SHOW_METHODS, self.OnFillingShowMethods)
-            EVT_MENU(self, ID_FILLING_SHOW_CLASS, self.OnFillingShowClass)
-            EVT_MENU(self, ID_FILLING_SHOW_DICT, self.OnFillingShowDict)
-            EVT_MENU(self, ID_FILLING_SHOW_DOC, self.OnFillingShowDoc)
-            EVT_MENU(self, ID_FILLING_SHOW_MODULE, self.OnFillingShowModule)
-            EVT_UPDATE_UI(self, ID_FILLING_AUTO_UPDATE, self.OnUpdateMenu)
-            EVT_UPDATE_UI(self, ID_FILLING_SHOW_METHODS, self.OnUpdateMenu)
-            EVT_UPDATE_UI(self, ID_FILLING_SHOW_CLASS, self.OnUpdateMenu)
-            EVT_UPDATE_UI(self, ID_FILLING_SHOW_DICT, self.OnUpdateMenu)
-            EVT_UPDATE_UI(self, ID_FILLING_SHOW_DOC, self.OnUpdateMenu)
-            EVT_UPDATE_UI(self, ID_FILLING_SHOW_MODULE, self.OnUpdateMenu)
+            self.Bind(EVT_MENU, self.OnFillingAutoUpdate, ID_FILLING_AUTO_UPDATE)
+            self.Bind(EVT_MENU, self.OnFillingShowMethods, ID_FILLING_SHOW_METHODS)
+            self.Bind(EVT_MENU, self.OnFillingShowClass, ID_FILLING_SHOW_CLASS)
+            self.Bind(EVT_MENU, self.OnFillingShowDict, ID_FILLING_SHOW_DICT)
+            self.Bind(EVT_MENU, self.OnFillingShowDoc, ID_FILLING_SHOW_DOC)
+            self.Bind(EVT_MENU, self.OnFillingShowModule, ID_FILLING_SHOW_MODULE)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_FILLING_AUTO_UPDATE)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_FILLING_SHOW_METHODS)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_FILLING_SHOW_CLASS)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_FILLING_SHOW_DICT)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_FILLING_SHOW_DOC)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, ID_FILLING_SHOW_MODULE)
 
     def OnExit(self, event):
         self.Close(True)

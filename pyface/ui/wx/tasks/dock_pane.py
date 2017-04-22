@@ -78,7 +78,6 @@ class DockPane(TaskPane, MDockPane):
 
     def get_new_info(self):
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
-
         # size?
 
         # Configure the dock widget according to the DockPane settings.
@@ -142,7 +141,7 @@ class DockPane(TaskPane, MDockPane):
 
     def _get_size(self):
         if self.control is not None:
-            return self.control.GetSizeTuple()
+            return self.control.GetSize().Get()
         return (-1, -1)
 
     #### Trait change handlers ################################################

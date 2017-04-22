@@ -64,10 +64,10 @@ class VirtualModel(PyGridTableBase):
         return self._data[row][1].get(self.GetColLabelValue(col), "")
 
     def SetValue(self, row, col, value):
-        print 'Setting value %d %d %s' % (row, col, value)
-        print 'Before ', self.GetValue(row, col)
+        print('Setting value %d %d %s' % (row, col, value))
+
         self._data[row][1][self.GetColLabelValue(col)] = value
-        print 'After ', self.GetValue(row, col)
+
 
     ''' def GetTypeName(self, row, col):
         if col == 2 or col == 6:
@@ -134,7 +134,7 @@ class VirtualModel(PyGridTableBase):
         grid.ProcessTableMessage(msg)
 
     def GetAttr88(self, row, col, someExtraParameter ):
-        print 'Overridden GetAttr ', row, col
+
         """Part of a workaround to avoid use of attributes, queried by _PropertyGrid's IsCurrentCellReadOnly"""
         #property = self.GetPropertyForCoordinate( row, col )
         #object = self.GetObjectForCoordinate( row, col )
@@ -187,7 +187,7 @@ class VirtualModel(PyGridTableBase):
         """ Append a tupe containing (name, data)
         """
         name, data = row
-        print 'Appending ', name
+        #print('Appending ', name)
         self._data.append(row)
         '''entry = {}
         for name in self.colnames:

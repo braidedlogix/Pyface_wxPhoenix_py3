@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ An MDI top-level application window. """
-from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -25,7 +24,8 @@ from .application_window import ApplicationWindow
 from .image_resource import ImageResource
 
 try:
-    import wx.aui
+    #import wx.aui
+    from wx.lib.agw import aui
     AUI = True
 except:
     AUI = False
@@ -64,7 +64,6 @@ class MDIApplicationWindow(ApplicationWindow):
         """ Create a child window. """
         if title is None:
             title = self.title
-
         if is_mdi:
             return wx.MDIChildFrame(self.control, -1, title)
         else:
@@ -91,14 +90,15 @@ class MDIApplicationWindow(ApplicationWindow):
         # Frame events.
         #
         # We respond to size events to layout windows around the MDI frame.
-        wx.EVT_SIZE(self.control, self._on_size)
+        self.control.Bind(wx.EVT_SIZE, self._on_size)
 
         # Client window events.
         client_window = self.control.GetClientWindow()
-        wx.EVT_ERASE_BACKGROUND(client_window, self._on_erase_background)
-
-        self._wx_offset = client_window.GetPositionTuple()
-
+        client_window.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
+        try:
+            self._wx_offset = client_window.GetPosition().Get()
+        except:
+            self._wx_offset = (0,0)
         if AUI:
             # Let the AUI manager look after the frame.
             self._aui_manager.SetManagedWindow(self.control)
@@ -158,7 +158,7 @@ class MDIApplicationWindow(ApplicationWindow):
     def _on_size(self, event):
         """ Called when the frame is resized. """
 
-        wx.LayoutAlgorithm().LayoutMDIFrame(self.control)
+        wx.adv.LayoutAlgorithm().LayoutMDIFrame(self.control)
 
         return
 

@@ -1,28 +1,18 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest
+from traits.testing.unittest_tools import unittest, UnittestTools
 
 from ..action.api import Action, MenuManager, MenuBarManager, StatusBarManager, ToolBarManager
 from ..application_window import ApplicationWindow
-from ..toolkit import toolkit_object
+from ..gui import GUI
 from ..image_resource import ImageResource
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
-
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
+class TestApplicationWindow(unittest.TestCase, UnittestTools):
 
     def setUp(self):
-        GuiTestAssistant.setUp(self)
+        self.gui = GUI()
         self.window = ApplicationWindow()
-
-    def tearDown(self):
-        if self.window.control is not None:
-            with self.delete_widget(self.window.control):
-                self.window.destroy()
-        GuiTestAssistant.tearDown(self)
 
     def test_close(self):
         # test that close works even when no control

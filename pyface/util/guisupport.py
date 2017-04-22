@@ -81,7 +81,7 @@ def get_app_wx(*args, **kwargs):
     if app is None:
         if not kwargs.has_key('redirect'):
             kwargs['redirect'] = False
-        app = wx.PySimpleApp(*args, **kwargs)
+        app = wx.App(*args, **kwargs)
     return app
 
 def is_event_loop_running_wx(app=None):
@@ -97,12 +97,20 @@ def start_event_loop_wx(app=None):
     """Start the wx event loop in a consistent manner."""
     if app is None:
         app = get_app_wx()
+
     if not is_event_loop_running_wx(app):
         app._in_event_loop = True
+        
+        #app.GetTopWindow().Show(False)
+        #import wx
+        #app.GetTopWindow().SetPosition((3200,250))
         app.MainLoop()
+
         app._in_event_loop = False
+
     else:
         app._in_event_loop = True
+
 
 #-----------------------------------------------------------------------------
 # qt4

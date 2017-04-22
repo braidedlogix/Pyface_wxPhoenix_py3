@@ -76,14 +76,14 @@ class GridCellImageRenderer(PyGridCellRenderer):
         wdelta = rect.width - size.GetWidth()
         x = rect.x
         if halign == wx.ALIGN_CENTRE and wdelta > 0:
-            x += wdelta / 2
+            x += wdelta // 2
 
         # now height
         hdelta = rect.height - size.GetHeight()
 
         y = rect.y
         if valign == wx.ALIGN_CENTRE and hdelta > 0:
-            y += hdelta / 2
+            y += hdelta // 2
 
         dc.SetClippingRegion(*rect)
 

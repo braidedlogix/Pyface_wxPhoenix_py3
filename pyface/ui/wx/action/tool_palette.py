@@ -178,7 +178,7 @@ class ToolPalette(Widget):
 
         wxid, label, bmp, kind, tooltip, longtip = param
 
-        panel = self.control.FindWindowById(wxid)
+        panel = self.control.FindWindowById(wxid)#.Window.FindWindowById(wxid)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         panel.SetSizer(sizer)
@@ -195,9 +195,9 @@ class ToolPalette(Widget):
 
         self.button_tool_map[button.GetId()] = wxid
         self.tool_id_to_button_map[wxid] = button
-        wx.EVT_BUTTON(panel, button.GetId(), self._on_button)
+        panel.Bind(wx.EVT_BUTTON, self._on_button, button)
         button.SetBitmapLabel(bmp)
-        button.SetToolTipString(label)
+        button.SetToolTip(label)
         sizer.Add(button, 0, wx.EXPAND)
 
 

@@ -50,10 +50,10 @@ from pyface.wx.drag_and_drop \
 from pyface.timer.api \
     import do_later, do_after
 
-from idockable \
+from .idockable \
     import IDockable
 
-from ifeature_tool \
+from .ifeature_tool \
     import IFeatureTool
 
 # Define version dependent values:
@@ -193,7 +193,7 @@ def set_standard_font ( dc ):
     global standard_font
 
     if standard_font is None:
-        standard_font = wx.SystemSettings_GetFont( wx.SYS_DEFAULT_GUI_FONT )
+        standard_font = wx.SystemSettings.GetFont( wx.SYS_DEFAULT_GUI_FONT )
 
     dc.SetFont( standard_font )
 
@@ -207,9 +207,9 @@ def clear_window ( window ):
     """ Clears a window to the standard background color.
     """
     bg_color = SystemMetrics().dialog_background_color
-    bg_color = wx.Colour(bg_color[0]*255, bg_color[1]*255, bg_color[2]*255)
+    bg_color = wx.Colour(int(bg_color[0]*255), int(bg_color[1]*255), int( bg_color[2]*255))
 
-    dx, dy = window.GetSizeTuple()
+    dx, dy = window.GetSize().Get()
     dc     = wx.PaintDC( window )
     dc.SetBrush( wx.Brush( bg_color, wx.SOLID ) )
     dc.SetPen( wx.TRANSPARENT_PEN )
@@ -224,14 +224,14 @@ def get_dc ( window ):
     """
     if is_mac:
         dc     = wx.ClientDC( window )
-        x, y   = window.GetPositionTuple()
-        dx, dy = window.GetSizeTuple()
+        x, y   = window.GetPosition().Get()
+        dx, dy = window.GetSize().Get()
         while True:
             window = window.GetParent()
             if window is None:
                 break
-            xw, yw   = window.GetPositionTuple()
-            dxw, dyw = window.GetSizeTuple()
+            xw, yw   = window.GetPosition().Get()
+            dxw, dyw = window.GetSize().Get()
             dx, dy   = min( dx, dxw - x ), min( dy, dyw - y )
             x += xw
             y += yw
@@ -240,7 +240,7 @@ def get_dc ( window ):
 
         return ( dc, 0, 0 )
 
-    x, y = window.ClientToScreenXY( 0, 0 )
+    x, y = window.ClientToScreen( 0, 0 )
     return ( wx.ScreenDC(), x, y )
 
 #-------------------------------------------------------------------------------
@@ -532,7 +532,11 @@ class DockItem ( HasPrivateTraits ):
         """ Sets the control's drag bounds.
         """
         bx, by, bdx, bdy = self.bounds
-        self.drag_bounds = ( x, y, min( x + dx, bx + bdx ) - x, dy )
+        if (bx+bdx-x)>0:
+            self.drag_bounds = ( x, y, min( x + dx, bx + bdx ) - x, dy )
+        else :
+            self.drag_bounds = ( x, y,  dx, dy )
+
 
     #---------------------------------------------------------------------------
     #  Gets the cursor to use when the mouse is over the item:
@@ -562,7 +566,7 @@ class DockItem ( HasPrivateTraits ):
                     tab_bounds = ( x, y, dx, dy )
                 else:
                     kind       = DOCK_TAB
-                    tab_bounds = ( x - (tdx / 2), y, tdx, dy )
+                    tab_bounds = ( x - (tdx // 2), y, tdx, dy )
             else:
                 if is_control:
                     kind       = DOCK_TABADD
@@ -769,9 +773,9 @@ class DockItem ( HasPrivateTraits ):
         window = self.control.GetParent()
         if begin:
             dc, x, y = get_dc( window )
-            dx, dy   = window.GetSize()
+            dx, dy   = window.GetSize().Get()
             dc2      = wx.MemoryDC()
-            self._drag_bitmap = wx.EmptyBitmap( dx, dy )
+            self._drag_bitmap = wx.Bitmap( dx, dy )
             dc2.SelectObject( self._drag_bitmap )
             dc2.Blit( 0, 0, dx, dy, dc, x, y )
             try:
@@ -824,10 +828,10 @@ class DockItem ( HasPrivateTraits ):
         if state == TabActive:
             pass
         elif state == TabInactive:
-            r,g,b = tab_color.Get()
+            r,g,b = tab_color.Get()[0:3]
             tab_color.Set(max(0, r-20), max(0, g-20), max(0, b-20))
         else:
-            r,g,b = tab_color.Get()
+            r,g,b = tab_color.Get()[0:3]
             tab_color.Set(min(255, r+20), min(255, g+20), min(255, b+20))
 
         self._is_tab   = True
@@ -846,13 +850,13 @@ class DockItem ( HasPrivateTraits ):
             bdc.DrawRectangle(0, 0, dx, dy)
 
             # Draw the left, top, and right side of a rectange around the tab
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             bdc.SetPen(pen)
             bdc.DrawLine(0,dy,0,0) #up
             bdc.DrawLine(0,0,dx,0) #right
             bdc.DrawLine(dx-1,0,dx-1,dy) #down
 
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
             bdc.SetPen(pen)
             bdc.DrawLine(1,dy,1,1)
             bdc.DrawLine(1,1,dx-2,1)
@@ -866,7 +870,7 @@ class DockItem ( HasPrivateTraits ):
             bdc.DrawRectangle(0, 3, dx, dy)
 
             # Draw the left, top, and right side of a rectange around the tab
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             bdc.SetPen(pen)
             bdc.DrawLine(0,dy,0,3)
             bdc.DrawLine(0,3,dx-1,3)
@@ -879,7 +883,7 @@ class DockItem ( HasPrivateTraits ):
         tc           = theme.content
         ox, oy       = theme.label.left, theme.label.top
         y = (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
-                    text_dy) / 2))
+                    text_dy) // 2))
         x = ox + slice.xleft + tc.left
 
         mode = self.feature_mode
@@ -930,7 +934,7 @@ class DockItem ( HasPrivateTraits ):
 
         self.fill_bg_color( dc, x, y, dx, dy )
 
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHILIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x, y, x+dx, y)
         dc.DrawLine(x, y+2, x+dx, y+2)
@@ -947,7 +951,7 @@ class DockItem ( HasPrivateTraits ):
 
         self.fill_bg_color( dc, x, y, dx, dy )
 
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHILIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x, y, x, y+dy)
         dc.DrawLine(x+2, y, x+2, y+dy)
@@ -1005,7 +1009,7 @@ class DockItem ( HasPrivateTraits ):
             # fixme: x calculation seems to be off by -1...
             return ( x + dx + ox - slice.xright - tc.right - CloseTabSize,
                      y + oy + ((dy + slice.xtop + tc.top - slice.xbottom -
-                                tc.bottom - text_dy) / 2) + 3,
+                                tc.bottom - text_dy) // 2) + 3,
                      CloseTabSize, CloseTabSize )
 
         return ( 0, 0, 0, 0 )
@@ -1068,7 +1072,7 @@ class DockItem ( HasPrivateTraits ):
         tc     = theme.content
         ox, oy = theme.label.left, theme.label.top
         y     += (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
-                         text_dy) / 2))
+                         text_dy) // 2))
         x     += ox + slice.xleft + tc.left
         result = self.is_in( event, x, y, idx, idy )
 
@@ -1235,9 +1239,9 @@ class DockSplitter ( DockItem ):
         if self.style == 'horizontal':
             # Draw a line the same color as the system button shadow, which
             # should be a darkish color in the users color scheme
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x+idx+1,y+dy/2,x+dx-2,y+dy/2)
+            dc.DrawLine(x+idx+1,y+dy//2,x+dx-2,y+dy//2)
 
             iy = y+2
             ix = x
@@ -1248,9 +1252,9 @@ class DockSplitter ( DockItem ):
         else:
             # Draw a line the same color as the system button shadow, which
             # should be a darkish color in the users color scheme
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x+dx/2,y+idy+1,x+dx/2,y+dy-2)
+            dc.DrawLine(x+dx//2,y+idy+1,x+dx//2,y+dy-2)
 
             iy = y
             ix = x + 2
@@ -1316,12 +1320,12 @@ class DockSplitter ( DockItem ):
             if not self.is_in( event, hx, hy, hdx, hdy ):
                 return
             if self.style == 'horizontal':
-                if event.GetX() < (hx + (hdx / 2)):
+                if event.GetX() < (hx + (hdx // 2)):
                     self.collapse(True)
                 else:
                     self.collapse(False)
             else:
-                if event.GetY() < (hy + (hdy / 2)):
+                if event.GetY() < (hy + (hdy // 2)):
                     self.collapse(True)
                 else:
                     self.collapse(False)
@@ -1340,7 +1344,8 @@ class DockSplitter ( DockItem ):
         """ Handles the mouse moving while the left mouse button is pressed.
         """
         if not self._click_pending:
-            x, y, dx, dy     = self._first_bounds
+            if (self._first_bounds is not None):
+                x, y, dx, dy     = self._first_bounds
             mx, my, mdx, mdy = self._max_bounds
 
             if self.style == 'horizontal':
@@ -1386,7 +1391,7 @@ class DockSplitter ( DockItem ):
                 if ((y == self.bounds[1]) or
                     (y < iy1)             or
                     ((y + dy) > (iy2 + idy2))):
-                    y = (iy1 + iy2 + idy2 - dy) / 2
+                    y = (iy1 + iy2 + idy2 - dy) // 2
             else:
                 self._last_bounds = self.bounds
                 if forward:
@@ -1397,7 +1402,7 @@ class DockSplitter ( DockItem ):
             if ((x == self.bounds[0]) or
                 (x < ix1)             or
                 ((x + dx) > (ix2 + idx2))):
-                x = (ix1 + ix2 + idx2 - dx) / 2
+                x = (ix1 + ix2 + idx2 - dx) // 2
         else:
             self._last_bounds = self.bounds
             if forward:
@@ -1447,10 +1452,10 @@ class DockSplitter ( DockItem ):
             nx, ny, ndx, ndy = bounds
             if is_horizontal:
                 ady = (ndy - 6)
-                ay  = ady / 2
+                ay  = ady // 2
             else:
                 adx = (ndx - 6)
-                ax  = adx / 2
+                ax  = adx // 2
             nx  += ax
             ny  += ay
             ndx -= adx
@@ -1461,10 +1466,10 @@ class DockSplitter ( DockItem ):
             ox, oy, odx, ody = self._bounds
             if is_horizontal:
                 ady = (ody - 6)
-                ay  = ady / 2
+                ay  = ady // 2
             else:
                 adx = (odx - 6)
-                ax  = adx / 2
+                ax  = adx // 2
             ox  += ax
             oy  += ay
             odx -= adx
@@ -1618,7 +1623,7 @@ class DockControl ( DockItem ):
         dx, dy = self.width, self.height
         if self.control is not None:
             if wx_26:
-                size = self.control.GetBestFittingSize()
+                size = self.control.GetEffectiveMinSize()
             else:
                 size = self.control.GetEffectiveMinSize()
             dx = size.GetWidth()
@@ -1642,17 +1647,17 @@ class DockControl ( DockItem ):
         self.height = dy = max( 0, dy )
         self.bounds = ( x, y, dx, dy )
 
-        # Note: All we really want to do is the 'SetDimensions' call, but the
+        # Note: All we really want to do is the 'SetSize' call, but the
         # other code is needed for Linux/GTK which will not correctly process
-        # the SetDimensions call if the min size is larger than the specified
+        # the SetSize call if the min size is larger than the specified
         # size. So we temporarily set its min size to (0,0), do the
-        # SetDimensions, then restore the original min size. The restore is
+        # SetSize, then restore the original min size. The restore is
         # necessary so that DockWindow itself will correctly draw the 'drag'
         # box when performing a docking maneuver...
         control  = self.control
         min_size = control.GetMinSize()
         control.SetMinSize( wx.Size( 0, 0 ) )
-        control.SetDimensions( x, y, dx, dy )
+        control.SetSize( x, y, dx, dy )
         control.SetMinSize( min_size )
 
     #---------------------------------------------------------------------------
@@ -2622,8 +2627,8 @@ class DockRegion ( DockGroup ):
         top    = y  - ty
         bottom = ty + dy - 1 - y
         choice = min( left, right, top, bottom )
-        mdx    = dx / 3
-        mdy    = dy / 3
+        mdx    = dx // 3
+        mdy    = dy // 3
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,
@@ -2805,8 +2810,8 @@ class DockRegion ( DockGroup ):
     def dump ( self, indent ):
         """ Prints the contents of the region.
         """
-        print '%sRegion( %08X, active = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.active, self.width, self.height )
+        print('%sRegion( %08X, active = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.active, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 
@@ -2838,8 +2843,8 @@ class DockRegion ( DockGroup ):
             active = self.active
 
         contents = self.contents
-        for i in (range( active, len( contents ) ) +
-                  range( active - 1, -1, -1 )):
+        for i in (list(range( active, len( contents ) )) +
+                  list(range( active - 1, -1, -1 ))):
             if contents[ i ].visible:
                 self.active = i
                 return
@@ -2943,12 +2948,12 @@ class DockRegion ( DockGroup ):
 
         # Draws a box around the frame containing the tab contents, starting
         # below the tab
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
         dc.SetPen(pen)
         dc.DrawRectangle(x, y+tab_height, dx, dy-tab_height)
 
         # draw highlight
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x+1, y+tab_height+1, x+dx-1, y+tab_height+1)
 
@@ -3108,7 +3113,7 @@ class DockSection ( DockGroup ):
 
         # Allocate the remainder to those parts that didn't request a width.
         if remain > 0:
-            remain = int( avail / remain )
+            remain = int( avail // remain )
 
             for i, sz in enumerate( sizes ):
                 if sz < 0:
@@ -3202,7 +3207,7 @@ class DockSection ( DockGroup ):
             # item's current size:
             for i, item in enumerate( contents ):
                 if i < n:
-                    idx = int( round( float( item.width * delta ) / cdx ) )
+                    idx = int( round( float( item.width * delta ) // cdx ) )
                 else:
                     idx = remaining
                 remaining -= idx
@@ -3239,7 +3244,7 @@ class DockSection ( DockGroup ):
             # item's current size:
             for i, item in enumerate( contents ):
                 if i < n:
-                    idy = int( round( float( item.height * delta ) / cdy ) )
+                    idy = int( round( float( item.height * delta ) // cdy ) )
                 else:
                     idy = remaining
                 remaining -= idy
@@ -3399,8 +3404,8 @@ class DockSection ( DockGroup ):
         top    = abs( top )
         bottom = abs( bottom )
         choice = min( left, right, top, bottom )
-        mdx    = dx / 3
-        mdy    = dy / 3
+        mdx    = dx // 3
+        mdy    = dy // 3
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,
@@ -3565,8 +3570,8 @@ class DockSection ( DockGroup ):
     def dump ( self, indent = 0 ):
         """ Prints the contents of the section.
         """
-        print '%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.is_row, self.width, self.height )
+        print('%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.is_row, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 
@@ -3672,7 +3677,7 @@ class DockInfo ( HasPrivateTraits ):
             bdc         = wx.MemoryDC()
             bdc2        = wx.MemoryDC()
             bdx, bdy    = bitmap.GetWidth(), bitmap.GetHeight()
-            bitmap2     = wx.EmptyBitmap( bdx, bdy )
+            bitmap2     = wx.Bitmap( bdx, bdy )
             bdc.SelectObject(  bitmap )
             bdc2.SelectObject( bitmap2 )
             bdc2.Blit( 0, 0, bdx, bdy, bdc, 0, 0 )
@@ -3791,7 +3796,8 @@ class SetStructureHandler ( object ):
 #  'DockSizer' class:
 #-------------------------------------------------------------------------------
 
-class DockSizer ( wx.PySizer ):
+#class DockSizer ( wx.PySizer ):
+class DockSizer ( wx.Sizer ):
 
     #---------------------------------------------------------------------------
     #  Initializes the object:
@@ -3799,7 +3805,7 @@ class DockSizer ( wx.PySizer ):
 
     def __init__ ( self, contents = None ):
         super( DockSizer, self ).__init__()
-
+        #super( Sizer, self ).__init__()
         # Make sure the DockImages singleton has been initialized:
         DockImages.init()
 
@@ -3830,8 +3836,8 @@ class DockSizer ( wx.PySizer ):
         if self._contents is None:
             return
 
-        x,   y = self.GetPositionTuple()
-        dx, dy = self.GetSizeTuple()
+        x,   y = self.GetPosition().Get()
+        dx, dy = self.GetSize().Get()
         self._contents.recalc_sizes( x, y, dx, dy )
 
     #---------------------------------------------------------------------------

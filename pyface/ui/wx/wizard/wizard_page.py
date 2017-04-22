@@ -42,9 +42,9 @@ class WizardPage(MWizardPage, HasTraits):
 
     complete = Bool(False)
 
-    heading = Unicode
+    heading = Str
 
-    subheading = Unicode
+    subheading = Str
 
     size = Tuple
 

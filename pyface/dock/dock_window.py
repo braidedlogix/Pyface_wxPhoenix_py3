@@ -62,14 +62,14 @@ from pyface.wx.drag_and_drop \
 from pyface.message_dialog \
     import error as warning
 
-from dock_sizer \
+from .dock_sizer \
     import DockSizer, DockControl, DockRegion, DockStyle, DockSplitter, \
            no_dock_info, clear_window, features
 
-from idockable \
+from .idockable \
     import IDockable
 
-from idock_ui_provider \
+from .idock_ui_provider \
     import IDockUIProvider
 
 is_mac = (sys.platform == 'darwin')
@@ -306,17 +306,17 @@ class DockWindow ( HasPrivateTraits ):
         control.owner = self
 
         # Set up the 'paint' event handler:
-        wx.EVT_PAINT( control, self._paint )
-        wx.EVT_SIZE(  control, self._size )
+        control.Bind(wx.EVT_PAINT, self._paint )
+        control.Bind(wx.EVT_SIZE, self._size )
 
         # Set up mouse event handlers:
-        wx.EVT_LEFT_DOWN(    control, self._left_down )
-        wx.EVT_LEFT_UP(      control, self._left_up )
-        wx.EVT_LEFT_DCLICK(  control, self._left_dclick )
-        wx.EVT_RIGHT_DOWN(   control, self._right_down )
-        wx.EVT_RIGHT_UP(     control, self.right_up )
-        wx.EVT_MOTION(       control, self._mouse_move )
-        wx.EVT_LEAVE_WINDOW( control, self._mouse_leave )
+        control.Bind(wx.EVT_LEFT_DOWN, self._left_down )
+        control.Bind(wx.EVT_LEFT_UP, self._left_up )
+        control.Bind(wx.EVT_LEFT_DCLICK, self._left_dclick )
+        control.Bind(wx.EVT_RIGHT_DOWN, self._right_down )
+        control.Bind(wx.EVT_RIGHT_UP, self.right_up )
+        control.Bind(wx.EVT_MOTION, self._mouse_move )
+        control.Bind(wx.EVT_LEAVE_WINDOW, self._mouse_leave )
 
         control.SetDropTarget( PythonDropTarget( self ) )
 
@@ -325,7 +325,7 @@ class DockWindow ( HasPrivateTraits ):
             color = self.theme.tab.image_slice.bg_color
         else:
             color = SystemMetrics().dialog_background_color
-            color = wx.Colour(color[0]*255, color[1]*255, color[2]*255)
+            color = wx.Colour(int(color[0]*255), int(color[1]*255), int(color[2]*255))
 
         self.control.SetBackgroundColour( color )
 
@@ -369,7 +369,7 @@ class DockWindow ( HasPrivateTraits ):
         global cursor_map
 
         if cursor not in cursor_map:
-            cursor_map[ cursor ] = wx.StockCursor( cursor )
+            cursor_map[ cursor ] = wx.Cursor( cursor )
 
         self.control.SetCursor( cursor_map[ cursor ] )
 
@@ -393,14 +393,16 @@ class DockWindow ( HasPrivateTraits ):
         """
         # There are cases where a layout has been scheduled for a DockWindow,
         # but then the DockWindow is destroyed, which will cause the calls
-        # below to fail. So we catch the 'PyDeadObjectError' exception and
+        # below to fail. So we catch the 'RuntimeError' exception and
         # ignore it:
-        try:
+        #try:
+            #self.control.Layout()
+            #self.control.Refresh()
+        #except wx.PyDeadObjectError:
+            #pass
+        if self.control:
             self.control.Layout()
             self.control.Refresh()
-        except wx.PyDeadObjectError:
-            pass
-
     #---------------------------------------------------------------------------
     #  Minimizes/Maximizes a specified DockControl:
     #---------------------------------------------------------------------------
@@ -463,15 +465,15 @@ class DockWindow ( HasPrivateTraits ):
         """
         control = self.control
         if control is not None:
-            wx.EVT_PAINT(            control, None )
-            wx.EVT_SIZE(             control, None )
-            wx.EVT_LEFT_DOWN(        control, None )
-            wx.EVT_LEFT_UP(          control, None )
-            wx.EVT_LEFT_DCLICK(      control, None )
-            wx.EVT_RIGHT_DOWN(       control, None )
-            wx.EVT_RIGHT_UP(         control, None )
-            wx.EVT_MOTION(           control, None )
-            wx.EVT_LEAVE_WINDOW(     control, None )
+            control.Bind(wx.EVT_PAINT, None )
+            control.Bind(wx.EVT_SIZE, None )
+            control.Bind(wx.EVT_LEFT_DOWN, None )
+            control.Bind(wx.EVT_LEFT_UP, None )
+            control.Bind(wx.EVT_LEFT_DCLICK, None )
+            control.Bind(wx.EVT_RIGHT_DOWN, None )
+            control.Bind(wx.EVT_RIGHT_UP, None )
+            control.Bind(wx.EVT_MOTION, None )
+            control.Bind(wx.EVT_LEAVE_WINDOW, None )
 
     #---------------------------------------------------------------------------
     #  Handles repainting the window:
@@ -517,7 +519,7 @@ class DockWindow ( HasPrivateTraits ):
         sizer = self.sizer
         if sizer is not None:
             try:
-                dx, dy = self.control.GetSizeTuple()
+                dx, dy = self.control.GetSize().Get()
                 sizer.SetDimension( 0, 0, dx, dy )
             except:
                 # fixme: This is temporary code to work around a problem in
@@ -661,7 +663,7 @@ class DockWindow ( HasPrivateTraits ):
                                        edit_action,
                                        name = 'popup' )
 
-                window.PopupMenuXY( popup_menu.create_menu( window, self ),
+                window.PopupMenu( popup_menu.create_menu( window, self ),
                                     event.GetX() - 10, event.GetY() - 10 )
                 self._object = None
 

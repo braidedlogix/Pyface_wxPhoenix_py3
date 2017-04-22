@@ -41,9 +41,9 @@ class ImageCache(MImageCache, HasTraits):
     ###########################################################################
 
     def get_image(self, filename):
-        image = QtGui.QPixmapCache.find(filename)
+        image = QtGui.QPixmap(self._width, self._height)
 
-        if image is not None:
+        if QtGui.QPixmapCache.find(filename, image):
             scaled = self._qt4_scale(image)
 
             if scaled is not image:
@@ -53,7 +53,7 @@ class ImageCache(MImageCache, HasTraits):
                 QtGui.QPixmapCache.insert(filename, scaled)
         else:
             # Load the image from the file and add it to the cache.
-            image = QtGui.QPixmap(filename)
+            image.load(filename)
             scaled = self._qt4_scale(image)
             QtGui.QPixmapCache.insert(filename, scaled)
 

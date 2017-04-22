@@ -11,7 +11,6 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-from __future__ import absolute_import
 
 from .grid import Grid
 from .grid_model import GridModel, GridSortEvent

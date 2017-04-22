@@ -24,7 +24,7 @@ import os
 import wx
 
 # Enthought library imports.
-from traits.api import Enum, Int, List, provides, Unicode
+from traits.api import Enum, Int, List, provides, Unicode, Str
 
 # Local imports.
 from pyface.i_file_dialog import IFileDialog, MFileDialog
@@ -42,21 +42,21 @@ class FileDialog(MFileDialog, Dialog):
 
     action = Enum('open', 'open files', 'save as')
 
-    default_directory = Unicode
+    default_directory = Str#Unicode
 
-    default_filename = Unicode
+    default_filename = Str#Unicode
 
-    default_path = Unicode
+    default_path = Str#Unicode
 
-    directory = Unicode
+    directory = Str#Unicode
 
-    filename = Unicode
+    filename = Str#Unicode
 
-    path = Unicode
+    path = Str#Unicode
 
-    paths = List(Unicode)
+    paths = List(Str)#Unicode)
 
-    wildcard = Unicode
+    wildcard = Str#Unicode
 
     wildcard_index = Int(0)
 
@@ -74,7 +74,7 @@ class FileDialog(MFileDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path  = unicode(self.control.GetPath())
+        self.path  = str(self.control.GetPath())
         # Work around wx bug throwing exception on cancel of file dialog
         if len(self.path)>0:
             self.paths = self.control.GetPaths()
@@ -105,11 +105,11 @@ class FileDialog(MFileDialog, Dialog):
             default_filename = self.default_filename
 
         if self.action == 'open':
-            style = wx.OPEN
+            style = wx.FD_OPEN
         elif self.action == 'open files':
-            style = wx.OPEN | wx.MULTIPLE
+            style = wx.FD_OPEN | wx.FD_MULTIPLE
         else:
-            style = wx.SAVE | wx.OVERWRITE_PROMPT
+            style = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
 
         # Create the actual dialog.
         dialog = wx.FileDialog(parent, self.title, defaultDir=default_directory,

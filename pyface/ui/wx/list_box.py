@@ -1,5 +1,4 @@
 """ A simple list box widget with a model-view architecture. """
-from __future__ import absolute_import
 
 # Major package imports.
 import wx

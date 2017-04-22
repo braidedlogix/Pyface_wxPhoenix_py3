@@ -17,7 +17,6 @@
 """ An image and text-based control that can be used as a normal, radio or
     toolbar button.
 """
-from __future__ import absolute_import
 
 import wx
 from numpy import array, fromstring, reshape, ravel, dtype
@@ -45,11 +44,11 @@ class ImageButton ( Widget ):
 
     # Pens used to draw the 'selection' marker:
     _selectedPenDark = wx.Pen(
-        wx.SystemSettings_GetColour( wx.SYS_COLOUR_3DSHADOW ), 1, wx.SOLID
+        wx.SystemSettings.GetColour( wx.SYS_COLOUR_3DSHADOW ), 1, wx.SOLID
     )
 
     _selectedPenLight = wx.Pen(
-        wx.SystemSettings_GetColour( wx.SYS_COLOUR_3DHIGHLIGHT ), 1, wx.SOLID
+        wx.SystemSettings.GetColour( wx.SYS_COLOUR_3DHIGHLIGHT ), 1, wx.SOLID
     )
 
     #---------------------------------------------------------------------------
@@ -110,16 +109,16 @@ class ImageButton ( Widget ):
             self._tx = self._ix + idx + spacing
             dx       = idx + tdx + spacing
             dy       = max( idy, tdy )
-            self._iy = hp2 + ((dy - idy) / 2)
-            self._ty = hp2 + ((dy - tdy) / 2)
+            self._iy = hp2 + ((dy - idy) // 2)
+            self._ty = hp2 + ((dy - tdy) // 2)
         else:
             self._iy = hp2
             spacing  = (idy > 0) * (tdy > 0) * 2
             self._ty = self._iy + idy + spacing
             dx       = max( idx, tdx )
             dy       = idy + tdy + spacing
-            self._ix = wp2 + ((dx - idx) / 2)
-            self._tx = wp2 + ((dx - tdx) / 2)
+            self._ix = wp2 + ((dx - idx) // 2)
+            self._tx = wp2 + ((dx - tdx) // 2)
 
         # Create the toolkit-specific control:
         self._dx     = dx + wp2 + wp2
@@ -130,11 +129,11 @@ class ImageButton ( Widget ):
         self._mouse_over    = self._button_down = False
 
         # Set up mouse event handlers:
-        wx.EVT_ENTER_WINDOW( self.control, self._on_enter_window )
-        wx.EVT_LEAVE_WINDOW( self.control, self._on_leave_window )
-        wx.EVT_LEFT_DOWN(    self.control, self._on_left_down )
-        wx.EVT_LEFT_UP(      self.control, self._on_left_up )
-        wx.EVT_PAINT(        self.control, self._on_paint )
+        self.control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window )
+        self.control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window )
+        self.control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down )
+        self.control.Bind(wx.EVT_LEFT_UP, self._on_left_up )
+        self.control.Bind(wx.EVT_PAINT, self._on_paint )
 
     #---------------------------------------------------------------------------
     #  Handles the 'image' trait being changed:
@@ -193,7 +192,7 @@ class ImageButton ( Widget ):
         control = self.control
         control.ReleaseMouse()
         self._button_down = False
-        wdx, wdy          = control.GetClientSizeTuple()
+        wdx, wdy          = control.GetClientSize().Get()
         x, y              = event.GetX(), event.GetY()
         control.Refresh()
         if (0 <= x < wdx) and (0 <= y < wdy):
@@ -208,9 +207,9 @@ class ImageButton ( Widget ):
         """ Called when the widget needs repainting.
         """
         wdc      = wx.PaintDC( self.control )
-        wdx, wdy = self.control.GetClientSizeTuple()
-        ox       = (wdx - self._dx) / 2
-        oy       = (wdy - self._dy) / 2
+        wdx, wdy = self.control.GetClientSize().Get()
+        ox       = (wdx - self._dx) // 2
+        oy       = (wdy - self._dy) // 2
 
         disabled = (not self.control.IsEnabled())
         if self._image is not None:
@@ -223,7 +222,7 @@ class ImageButton ( Widget ):
                     g = data[ :, 0 ] + data[ :, 1 ] + data[ :, 2 ]
                     data[ :, 0 ] = data[ :, 1 ] = data[ :, 2 ] = g
                     img.SetData(ravel(data.astype(dtype('uint8'))).tostring())
-                    img.SetMaskColour(0, 0, 0)
+                    img.SetColour(0, 0, 0)
                     self._mono_image = img.ConvertToBitmap()
                     self._img        = None
                 image = self._mono_image

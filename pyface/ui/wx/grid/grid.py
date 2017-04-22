@@ -19,7 +19,7 @@ import wx
 import wx.lib.gridmovers as grid_movers
 from os.path import abspath, exists
 from wx.grid import Grid as wxGrid
-from wx.grid import GridCellAttr, GridCellBoolRenderer, PyGridTableBase
+from wx.grid import GridCellAttr, GridCellBoolRenderer, GridTableBase
 from wx.grid import GridTableMessage, \
      GRIDTABLE_NOTIFY_ROWS_APPENDED, GRIDTABLE_NOTIFY_ROWS_DELETED,  \
      GRIDTABLE_NOTIFY_ROWS_INSERTED, GRIDTABLE_NOTIFY_COLS_APPENDED, \
@@ -241,32 +241,32 @@ class Grid(Widget):
 
         # Initialize wx handlers:
         self._notify_select = True
-        wx.grid.EVT_GRID_SELECT_CELL(grid, self._on_select_cell)
-        wx.grid.EVT_GRID_RANGE_SELECT(grid, self._on_range_select)
-        wx.grid.EVT_GRID_COL_SIZE(grid, self._on_col_size)
-        wx.grid.EVT_GRID_ROW_SIZE(grid, self._on_row_size)
+        grid.Bind(wx.grid.EVT_GRID_SELECT_CELL, self._on_select_cell)
+        grid.Bind(wx.grid.EVT_GRID_RANGE_SELECT, self._on_range_select)
+        grid.Bind(wx.grid.EVT_GRID_COL_SIZE, self._on_col_size)
+        grid.Bind(wx.grid.EVT_GRID_ROW_SIZE, self._on_row_size)
 
         # This starts the cell editor on a double-click as well as on a second
         # click:
-        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(grid, self._on_cell_left_dclick)
+        grid.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self._on_cell_left_dclick)
 
         # Notify when cells are clicked on:
-        wx.grid.EVT_GRID_CELL_RIGHT_CLICK(grid, self._on_cell_right_click)
-        wx.grid.EVT_GRID_CELL_RIGHT_DCLICK(grid, self._on_cell_right_dclick)
+        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, self._on_cell_right_click)
+        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, self._on_cell_right_dclick)
 
-        wx.grid.EVT_GRID_LABEL_RIGHT_CLICK(grid, self._on_label_right_click)
-        wx.grid.EVT_GRID_LABEL_LEFT_CLICK(grid, self._on_label_left_click)
+        grid.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, self._on_label_right_click)
+        grid.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, self._on_label_left_click)
 
         #wx.grid.EVT_GRID_EDITOR_CREATED(grid, self._on_editor_created)
         if is_win32:
-            wx.grid.EVT_GRID_EDITOR_HIDDEN(grid, self._on_editor_hidden)
+            grid.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self._on_editor_hidden)
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
-        wx.EVT_KEY_DOWN(grid, self._on_key_down)
+        grid.Bind(wx.EVT_KEY_DOWN, self._on_key_down)
 
         # We handle control resize events to adjust column widths
-        wx.EVT_SIZE(grid, self._on_size)
+        grid.Bind(wx.EVT_SIZE, self._on_size)
 
         # Handle drags:
         self._corner_window = grid.GetGridCornerLabelWindow()
@@ -277,11 +277,11 @@ class Grid(Widget):
         # Handle mouse button state changes:
         self._ignore = False
         for window in ( gw, rw, cw ):
-            wx.EVT_MOTION(    window, self._on_grid_motion )
-            wx.EVT_LEFT_DOWN( window, self._on_left_down )
-            wx.EVT_LEFT_UP(   window, self._on_left_up )
+            window.Bind(wx.EVT_MOTION, self._on_grid_motion )
+            window.Bind(wx.EVT_LEFT_DOWN, self._on_left_down )
+            window.Bind(wx.EVT_LEFT_UP, self._on_left_up )
 
-        wx.EVT_PAINT(self._grid_window, self._on_grid_window_paint)
+        self._grid_window.Bind(wx.EVT_PAINT, self._on_grid_window_paint)
 
         # Initialize the row and column models:
         self.__initialize_rows(self.model)
@@ -297,32 +297,32 @@ class Grid(Widget):
         self.__autosize()
 
         self._edit = False
-        wx.EVT_IDLE(grid, self._on_idle)
+        grid.Bind(wx.EVT_IDLE, self._on_idle)
 
     def dispose(self):
         # Remove all wx handlers:
         grid = self._grid
-        wx.grid.EVT_GRID_SELECT_CELL(       grid, None )
-        wx.grid.EVT_GRID_RANGE_SELECT(      grid, None )
-        wx.grid.EVT_GRID_COL_SIZE(          grid, None )
-        wx.grid.EVT_GRID_ROW_SIZE(          grid, None )
-        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(  grid, None )
-        wx.grid.EVT_GRID_CELL_RIGHT_CLICK(  grid, None )
-        wx.grid.EVT_GRID_CELL_RIGHT_DCLICK( grid, None )
-        wx.grid.EVT_GRID_LABEL_RIGHT_CLICK( grid, None )
-        wx.grid.EVT_GRID_LABEL_LEFT_CLICK(  grid, None )
-        wx.grid.EVT_GRID_EDITOR_CREATED(    grid, None )
+        grid.Bind(wx.grid.EVT_GRID_SELECT_CELL, None )
+        grid.Bind(wx.grid.EVT_GRID_RANGE_SELECT, None )
+        grid.Bind(wx.grid.EVT_GRID_COL_SIZE, None )
+        grid.Bind(wx.grid.EVT_GRID_ROW_SIZE, None )
+        grid.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, None )
+        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, None )
+        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, None )
+        grid.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, None )
+        grid.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, None )
+        grid.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, None )
         if is_win32:
-            wx.grid.EVT_GRID_EDITOR_HIDDEN( grid, None )
-        wx.EVT_KEY_DOWN(                    grid, None )
-        wx.EVT_SIZE(                        grid, None )
-        wx.EVT_PAINT( self._grid_window, None )
+            grid.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, None )
+        grid.Bind(wx.EVT_KEY_DOWN, None )
+        grid.Bind(wx.EVT_SIZE, None )
+        #self._grid_window.Bind( wx.EVT_PAINT , None )
 
         for window in ( self._grid_window , self._row_window ,
                         self._col_window ):
-            wx.EVT_MOTION(    window, None )
-            wx.EVT_LEFT_DOWN( window, None )
-            wx.EVT_LEFT_UP(   window, None )
+            window.Bind(wx.EVT_MOTION, None )
+            window.Bind(wx.EVT_LEFT_DOWN, None )
+            window.Bind(wx.EVT_LEFT_UP, None )
 
         otc = self.on_trait_change
         otc(self._on_enable_lines_changed, 'enable_lines',
@@ -512,7 +512,7 @@ class Grid(Widget):
 
         font = self.default_label_font
         if font is None:
-            font = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
+            font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
             font.SetWeight(wx.BOLD)
 
         self._grid.SetLabelFont(font)
@@ -581,11 +581,11 @@ class Grid(Widget):
         # should we allow individual cells to be selected or only rows
         # or only columns
         if self.selection_mode == 'cell':
-            self._grid.SetSelectionMode(wxGrid.wxGridSelectCells)
+            self._grid.SetSelectionMode(wxGrid.GridSelectCells)
         elif self.selection_mode == 'rows':
-            self._grid.SetSelectionMode(wxGrid.wxGridSelectRows)
+            self._grid.SetSelectionMode(wxGrid.GridSelectRows)
         elif self.selection_mode == 'cols':
-            self._grid.SetSelectionMode(wxGrid.wxGridSelectColumns)
+            self._grid.SetSelectionMode(wxGrid.GridSelectColumns)
 
     def _on_column_label_height_changed(self):
         """ Handle a change to the column_label_height trait. """
@@ -679,8 +679,9 @@ class Grid(Widget):
     def _on_editor_created(self, evt):
 
         editor = evt.GetControl()
-        if editor is not None:
-            editor.PushEventHandler(ComboboxFocusHandler(self._grid))
+     
+        #if editor is not None:
+            #editor.PushEventHandler(ComboboxFocusHandler(self._grid))
 
         evt.Skip()
 
@@ -736,7 +737,7 @@ class Grid(Widget):
         evt.Skip()
         if evt.Dragging() and not evt.ControlDown():
             data = self.__get_drag_value()
-            if isinstance(data, basestring):
+            if isinstance(data, str):
                 file = abspath(data)
                 if exists(file):
                     FileDropSource(self._grid, file)
@@ -746,7 +747,7 @@ class Grid(Widget):
 
     def _on_grid_motion(self, evt):
         if evt.GetEventObject() is self._grid_window:
-            x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition())
+            x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition().Get())
             row  = self._grid.YToRow(y)
             col  = self._grid.XToCol(x)
 
@@ -885,8 +886,8 @@ class Grid(Widget):
                 if menu.GetMenuItemCount() > 0:
                     # Popup the menu (if an action is selected it will be
                     # performed before before 'PopupMenu' returns).
-                    x, y = evt.GetPosition()
-                    self._grid.PopupMenuXY(menu, x - 10, y - 10 )
+                    x, y = evt.GetPosition().Get()
+                    self._grid.PopupMenu(menu, x - 10, y - 10 )
 
             self.cell_right_clicked = (row, col)
 
@@ -914,7 +915,7 @@ class Grid(Widget):
             if menu.GetMenuItemCount() > 0:
                 # Popup the menu (if an action is selected it will be performed
                 # before before 'PopupMenu' returns).
-                self._grid.PopupMenu(menu, evt.GetPosition())
+                self._grid.PopupMenu(menu, evt.GetPosition().Get())
         elif col >= 0:
             cws = getattr( self, '_cached_widths', None )
             if (cws is not None) and (0 <= col < len( cws )):
@@ -1389,17 +1390,17 @@ class Grid(Widget):
 
         grid.BeginBatch()
 
-        dx, dy  = grid.GetClientSize()
+        dx, dy  = grid.GetClientSize().Get()
         n       = model.get_column_count()
         pdx     = 0
         wdx     = 0.0
         widths  = []
         cached  = getattr( self, '_cached_widths', None )
-        current = [ grid.GetColSize( i ) for i in xrange( n ) ]
+        current = [ grid.GetColSize( i ) for i in range( n ) ]
         if (cached is None) or (len( cached ) != n):
             self._cached_widths = cached = [ None ] * n
 
-        for i in xrange( n ):
+        for i in range( n ):
             cw = cached[i]
             if ((cw is None) or (-cw == current[i]) or
                 # hack: For some reason wx always seems to adjust column 0 by
@@ -1407,6 +1408,8 @@ class Grid(Widget):
                 # need to add a little fudge factor just for this column:
                 ((i == 0) and (abs( current[i] + cw ) <= 1))):
                 width = model.get_column_size( i )
+                if width is None:
+                    width=0.0
                 if width <= 0.0:
                     width = 0.1
                 if width <= 1.0:
@@ -1490,8 +1493,8 @@ class Grid(Widget):
         # Handle the last pending range of lines to be selected:
         if first >= 0:
             sb(first, 0, last, 0, True)
-
-class _GridTableBase(PyGridTableBase):
+           
+class _GridTableBase(GridTableBase):
     """ A private adapter for the underlying wx grid implementation. """
 
     ###########################################################################
@@ -1502,7 +1505,7 @@ class _GridTableBase(PyGridTableBase):
         """ Creates a new table base. """
 
         # Base class constructor.
-        PyGridTableBase.__init__(self)
+        GridTableBase.__init__(self)
 
         # The Pyface model that provides the data.
         self.model = model
@@ -1556,7 +1559,6 @@ class _GridTableBase(PyGridTableBase):
 
     def GetValue(self, row, col):
         """ Get the value at the specified row and column. """
-
         return self.model.get_value(row, col)
 
     def SetValue(self, row, col, value):
@@ -1571,12 +1573,12 @@ class _GridTableBase(PyGridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = str(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = str(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1591,12 +1593,12 @@ class _GridTableBase(PyGridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = str(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = str(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1661,9 +1663,18 @@ class _GridTableBase(PyGridTableBase):
         pos = self.model.get_column_count()
         return self.model.insert_columns(pos, num_cols)
 
-    def GetAttr(self, row, col, kind):
+    def _GetAttr(self, row, col, kind):
         """ Retrieve the cell attribute object for the specified cell. """
+        
+        gr=self._grid._grid
 
+        dch,dcv=gr.GetDefaultCellAlignment()
+
+
+        #dco=gr.GetDefaultCellOverflow() 
+
+        #gr.GetDefaultEditor()
+        #gr.GetDefaultRenderer()        
         result = GridCellAttr()
         # we only handle cell requests, for other delegate to the supa
         if kind != GridCellAttr.Cell and kind != GridCellAttr.Any:
@@ -1689,6 +1700,10 @@ class _GridTableBase(PyGridTableBase):
             #       underlying code from destroying our object.
             editor.IncRef()
             result.SetEditor(editor)
+        #else:
+        #    #dce.IncRef()
+        #    dce = wx.grid.GridCellTextEditor()
+        #    result.SetEditor(dce)
 
         # try to find a renderer for this cell
         renderer = None
@@ -1698,22 +1713,14 @@ class _GridTableBase(PyGridTableBase):
         if renderer is not None and renderer.renderer is not None:
             renderer.renderer.IncRef()
             result.SetRenderer(renderer.renderer)
+        #else:
+        #    #dcr.IncRef()
+        #    dcr = wx.grid.GridCellStringRenderer()
+        #    result.SetRenderer(dcr)
 
-        # look to see if this cell is editable
-        read_only = False
-        if row < rows and col < cols:
-            read_only = self.model.is_cell_read_only(row, col) or \
-                        self.model.is_row_read_only(row) or \
-                        self.model.is_column_read_only(col)
-
-        result.SetReadOnly(read_only)
-        if read_only :
-            read_only_color = self._grid.default_cell_read_only_color
-            if read_only_color is not None and read_only_color is not Undefined:
-                result.SetBackgroundColour(read_only_color)
 
         # check to see if colors or fonts are specified for this cell
-        bgcolor = None
+        bgcolor = self._grid.default_cell_bg_color#None
         if row < rows and col < cols:
             bgcolor = self.model.get_cell_bg_color(row, col)
         else:
@@ -1721,15 +1728,19 @@ class _GridTableBase(PyGridTableBase):
 
         if bgcolor is not None:
             result.SetBackgroundColour(bgcolor)
-
-        text_color = None
+        #else:
+        #    dcbgc=gr.GetDefaultCellBackgroundColour() 
+        #    result.SetBackgroundColour(dcbgc)
+        text_color = self._grid.default_cell_text_color#None
         if row < rows and col < cols:
             text_color = self.model.get_cell_text_color(row, col)
         else:
             text_color = self._grid.default_cell_text_color
         if text_color is not None:
             result.SetTextColour(text_color)
-
+        #else:
+        #    dctc=gr.GetDefaultCellTextColour()
+        #    result.SetTextColour(dctc)
         cell_font = None
         if row < rows and col < cols:
             cell_font = self.model.get_cell_font(row, col)
@@ -1737,6 +1748,9 @@ class _GridTableBase(PyGridTableBase):
             cell_font = self._grid.default_cell_font
         if cell_font is not None:
             result.SetFont(cell_font)
+        #else:
+        #    dcf=gr.GetDefaultCellFont()
+        #    result.SetFont(dcf)
 
         # check for alignment definition for this cell
         halignment = valignment = None
@@ -1759,6 +1773,20 @@ class _GridTableBase(PyGridTableBase):
                 v = wx.ALIGN_CENTRE
 
             result.SetAlignment(h, v)
+        else:
+            result.SetAlignment(dch,dcv)
+        # look to see if this cell is editable
+        read_only = False
+        if row < rows and col < cols:
+            read_only = self.model.is_cell_read_only(row, col) or \
+                        self.model.is_row_read_only(row) or \
+                        self.model.is_column_read_only(col)
+
+        result.SetReadOnly(read_only)
+        if read_only :
+            read_only_color = self._grid.default_cell_read_only_color
+            if read_only_color is not None and read_only_color is not Undefined:
+                result.SetBackgroundColour(read_only_color)
 
         return result
 
@@ -1780,8 +1808,8 @@ class _GridTableBase(PyGridTableBase):
         for editor in editors:
             editor.dispose()
 
-from wx.grid import PyGridCellEditor
-class DummyGridCellEditor(PyGridCellEditor):
+from wx.grid import GridCellEditor
+class DummyGridCellEditor(GridCellEditor):
 
     def Show(self, show, attr):
         return

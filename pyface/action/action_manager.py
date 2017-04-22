@@ -102,7 +102,7 @@ class ActionManager(HasTraits):
         for arg in args:
             # We allow a group to be defined by simply specifying a string (its
             # Id).
-            if isinstance(arg, basestring):
+            if isinstance(arg, str):
                 # Create a group with the specified Id.
                 arg = Group(id=arg)
 
@@ -202,7 +202,7 @@ class ActionManager(HasTraits):
             self._groups.insert(index, item)
 
         # 2) The item is a string.
-        elif isinstance(item, basestring):
+        elif isinstance(item, str):
             # Create a group with that Id.
             group = Group(id=item)
 
@@ -363,7 +363,7 @@ class ActionManager(HasTraits):
 
     def dump(self, indent=''):
         """ Render a manager! """
-        print indent, 'Manager', self.id
+        print(indent, 'Manager', self.id)
         indent += '  '
 
         for group in self._groups:
@@ -371,12 +371,12 @@ class ActionManager(HasTraits):
 
     def render_group(self, group, indent=''):
         """ Render a group! """
-        print indent, 'Group', group.id
+        print(indent, 'Group', group.id)
         indent += '    '
 
         for item in group.items:
             if isinstance(item, Group):
-                print 'Surely, a group cannot contain another group!!!!'
+                print('Surely, a group cannot contain another group!!!!')
                 self.render_group(item, indent)
 
             else:
@@ -389,4 +389,4 @@ class ActionManager(HasTraits):
             item.dump(indent)
 
         else:
-            print indent, 'Item', item.id
+            print(indent, 'Item', item.id)

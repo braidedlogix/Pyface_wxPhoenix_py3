@@ -29,8 +29,6 @@ class SplitTabWidget(QtGui.QSplitter):
     new_window_request = QtCore.Signal(QtCore.QPoint, QtGui.QWidget)
     tab_close_request = QtCore.Signal(QtGui.QWidget)
     tab_window_changed = QtCore.Signal(QtGui.QWidget)
-    editor_has_focus = QtCore.Signal(QtGui.QWidget)
-    focus_changed = QtCore.Signal(QtGui.QWidget, QtGui.QWidget)
 
     # The different hotspots of a QTabWidget.  An non-negative value is a tab
     # index and the hotspot is to the left of it.
@@ -301,7 +299,7 @@ class SplitTabWidget(QtGui.QSplitter):
                 return
 
         if self._repeat_focus_changes:
-            self.focus_changed.emit(old, new)
+            self.focusChanged.emit(old, new)
 
         if new is None:
             return
@@ -323,7 +321,7 @@ class SplitTabWidget(QtGui.QSplitter):
             else:
                 nw = ntw.widget(ntidx)
 
-            self.editor_has_focus.emit(nw)
+            self.hasFocus.emit(nw)
 
     def _tab_widget_of(self, target):
         """ Return the tab widget and index of the widget that contains the

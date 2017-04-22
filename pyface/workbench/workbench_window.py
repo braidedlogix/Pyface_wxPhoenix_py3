@@ -502,11 +502,15 @@ class WorkbenchWindow(ApplicationWindow):
 
     def reset_all_perspectives(self):
         """ Reset all perspectives back to their original contents. """
-
+        del_id=[]
         # Remove all perspective mementos (except user perspectives).
-        for id in self._memento.perspective_mementos.keys():
+        #for id in self._memento.perspective_mementos.keys():
+        for id, value in self._memento.perspective_mementos.items():
             if not id.startswith('__user_perspective'):
-                del self._memento.perspective_mementos[id]
+                #del self._memento.perspective_mementos[id]
+                del_id.append(id)
+        for id in del_id:
+            del self._memento.perspective_mementos[id]
 
         # Re-display the active perspective.
         self._show_perspective(self.active_perspective,self.active_perspective)

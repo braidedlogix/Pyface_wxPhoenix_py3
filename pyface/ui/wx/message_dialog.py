@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Enum, provides, Unicode
+from traits.api import Enum, provides, Unicode, Str
 
 # Local imports.
 from pyface.i_message_dialog import IMessageDialog, MMessageDialog
@@ -45,11 +45,11 @@ class MessageDialog(MMessageDialog, Dialog):
 
     #### 'IMessageDialog' interface ###########################################
 
-    message = Unicode
+    message = Str#Unicode
 
-    informative = Unicode
+    informative = Str#Unicode
 
-    detail = Unicode
+    detail = Str#Unicode
 
     severity = Enum('information', 'warning', 'error')
 

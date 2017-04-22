@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Bool, provides, Unicode
+from traits.api import Bool, provides, Unicode, Str
 
 # Local imports.
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
@@ -37,13 +37,13 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     #### 'IDirectoryDialog' interface #########################################
 
-    default_path = Unicode
+    default_path = Str#Unicode
 
-    message = Unicode
+    message = Str#Unicode
 
     new_directory = Bool(True)
 
-    path = Unicode
+    path = Str#Unicode
 
     ###########################################################################
     # Protected 'IDialog' interface.
@@ -59,7 +59,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path = unicode(self.control.GetPath())
+        self.path = str(self.control.GetPath())
 
         # Let the window close as normal.
         super(DirectoryDialog, self).close()
