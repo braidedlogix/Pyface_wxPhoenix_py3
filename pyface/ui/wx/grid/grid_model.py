@@ -19,6 +19,7 @@
 from traits.api import Any, Bool, Event, HasPrivateTraits, HasTraits, \
      Instance, Int, Str, Tuple
 
+
 # The classes below are part of the table specification.
 class GridRow(HasTraits):
     """ Structure for holding row/column specifications. """
@@ -29,9 +30,11 @@ class GridRow(HasTraits):
     # The label for this column
     label = Str
 
+
 # We specify the same info for rows and for columns, but add a GridColumn
 # name for clarity.
 GridColumn = GridRow
+
 
 class GridSortData(HasTraits):
     """ An event that signals a sorting has taken place.
@@ -44,8 +47,10 @@ class GridSortData(HasTraits):
     index = Int(-1)
     reversed = Bool(False)
 
+
 # for backwards compatibility
 GridSortEvent = GridSortData
+
 
 class GridModel(HasPrivateTraits):
     """ Model for grid views. """
@@ -76,10 +81,10 @@ class GridModel(HasPrivateTraits):
     row_sorted = Event
 
     # Event fired when a cell is clicked on:
-    click = Event # = (row, column) that was clicked on
+    click = Event  # = (row, column) that was clicked on
 
     # Event fired when a cell is double-clicked on:
-    dclick = Event # = (row, column) that was double-clicked on
+    dclick = Event  # = (row, column) that was double-clicked on
 
     #########################################################################
     # 'object' interface.
@@ -252,7 +257,6 @@ class GridModel(HasPrivateTraits):
         model-specific. """
 
         return selection_list
-
 
     # fixme: this context menu stuff is going in here for now, but it
     # seems like this is really more of a view piece than a model piece.
@@ -431,5 +435,6 @@ class GridModel(HasPrivateTraits):
         Returns **True** if successful; **False** otherwise.
         """
         return False
+
 
 #### EOF ####################################################################

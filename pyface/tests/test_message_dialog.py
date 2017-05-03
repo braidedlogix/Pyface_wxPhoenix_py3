@@ -17,7 +17,6 @@ USING_QT = ETSConfig.toolkit not in ['', 'wx']
 
 
 class TestMessageDialog(unittest.TestCase):
-
     def setUp(self):
         self.gui = GUI()
         self.dialog = MessageDialog()
@@ -152,7 +151,6 @@ class TestMessageDialog(unittest.TestCase):
 
 @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
 class TestMessageDialogHelpers(unittest.TestCase):
-
     def test_information(self):
         self._check_dialog(information)
 

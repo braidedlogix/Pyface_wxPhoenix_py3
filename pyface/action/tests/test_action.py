@@ -7,7 +7,6 @@ from ..action_event import ActionEvent
 
 
 class TestAction(unittest.TestCase):
-
     def test_default_id(self):
         action = Action(name='Test')
         self.assertEqual(action.id, 'Test')

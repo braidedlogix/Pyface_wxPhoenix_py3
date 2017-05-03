@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Model for tree views. """
 
-
 # Enthought library imports.
 from traits.api import Any, HasTraits, Event
 
@@ -192,8 +191,7 @@ class TreeModel(HasTraits):
         """ Fires the nodes removed event. """
 
         self.nodes_replaced = NodeEvent(
-            node=node, old_children=old_children, children=new_children
-        )
+            node=node, old_children=old_children, children=new_children)
 
         return
 
@@ -203,5 +201,6 @@ class TreeModel(HasTraits):
         self.structure_changed = NodeEvent(node=node)
 
         return
+
 
 #### EOF ####################################################################

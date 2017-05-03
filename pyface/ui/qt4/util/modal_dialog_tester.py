@@ -20,7 +20,6 @@ from traits.api import Undefined
 from .event_loop_helper import EventLoopHelper
 from .testing import find_qt_widget
 
-
 BUTTON_TEXT = {
     OK: 'OK',
     CANCEL: 'Cancel',
@@ -57,6 +56,7 @@ class ModalDialogTester(object):
          manager is used from the GuiTestAssistant when necessary.
 
     """
+
     def __init__(self, function):
         #: The command to call that will cause a dialog to open.
         self.function = function
@@ -240,8 +240,7 @@ class ModalDialogTester(object):
             yield
         except Exception:
             self._event_loop_error.append(
-                (sys.exc_info()[0], traceback.format_exc())
-            )
+                (sys.exc_info()[0], traceback.format_exc()))
 
     def assert_no_errors_collected(self):
         """ Assert that the tester has not collected any errors.
@@ -263,10 +262,7 @@ class ModalDialogTester(object):
         """
         control = self.get_dialog_widget()
         widget = find_qt_widget(
-            control,
-            type_,
-            test=lambda widget: widget.text() == text
-        )
+            control, type_, test=lambda widget: widget.text() == text)
         widget.click()
 
     def click_button(self, button_id):

@@ -15,7 +15,6 @@
 provides a visual indicator of the current state, a text label, and a
 'remove' button. """
 
-
 # Major package imports.
 import wx
 
@@ -37,12 +36,12 @@ class ExpandableHeader(Widget):
     title = Str('Panel')
 
     # The carat image to show when the panel is collapsed.
-    collapsed_carat_image = Instance(ImageResource, ImageResource('carat_closed'))
+    collapsed_carat_image = Instance(ImageResource,
+                                     ImageResource('carat_closed'))
     # The carat image to show when the panel is expanded.
     expanded_carat_image = Instance(ImageResource, ImageResource('carat_open'))
     # The backing header image when the mouse is elsewhere
-    header_bar_image = Instance(ImageResource,
-                                ImageResource('panel_gradient'))
+    header_bar_image = Instance(ImageResource, ImageResource('panel_gradient'))
     # The backing header image when the mouse is over
     header_mouseover_image = Instance(ImageResource,
                                       ImageResource('panel_gradient_over'))
@@ -57,7 +56,6 @@ class ExpandableHeader(Widget):
 
     # The panel has been expanded or collapsed
     panel_expanded = Event
-
 
     _CARAT_X = 4
     _CARAT_Y = 2
@@ -115,19 +113,19 @@ class ExpandableHeader(Widget):
         panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
 
         # create the remove button
-        remove = wx.BitmapButton(panel, -1, self._remove_bmp, style=0,
-                                 pos=(-1, 3))
+        remove = wx.BitmapButton(
+            panel, -1, self._remove_bmp, style=0, pos=(-1, 3))
         sizer.Add(remove, 0, wx.ALIGN_RIGHT, 5)
 
         # Create a suitable font.
-        self._font = new_font_like(wx.NORMAL_FONT,
-                                   point_size=wx.NORMAL_FONT.GetPointSize()- 1)
+        self._font = new_font_like(
+            wx.NORMAL_FONT, point_size=wx.NORMAL_FONT.GetPointSize() - 1)
 
         height = self._get_preferred_height(parent, self.title, self._font)
         panel.SetSize((-1, height))
 
         panel.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
-        panel.Bind(wx.EVT_ENTER_WINDOW,self._on_enter_leave)
+        panel.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_leave)
         panel.Bind(wx.EVT_LEAVE_WINDOW, self._on_enter_leave)
         panel.Bind(wx.EVT_LEFT_DOWN, self._on_down)
         panel.Bind(wx.EVT_RIGHT_DOWN, self._on_down)

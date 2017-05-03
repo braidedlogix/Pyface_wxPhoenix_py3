@@ -14,8 +14,10 @@ from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
 from .dock_pane import AREA_MAP
 
 # Contants.
-ORIENTATION_MAP = { 'horizontal' : QtCore.Qt.Horizontal,
-                    'vertical': QtCore.Qt.Vertical }
+ORIENTATION_MAP = {
+    'horizontal': QtCore.Qt.Horizontal,
+    'vertical': QtCore.Qt.Vertical
+}
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -55,8 +57,10 @@ class MainWindowLayout(HasTraits):
                    child.x() >= 0 and child.y() >= 0:
                 # Get the list of dock widgets in this tab group in order.
                 geometry = child.geometry()
-                tabs = [ tab for tab in self.control.tabifiedDockWidgets(child)
-                         if tab.isVisible() ]
+                tabs = [
+                    tab for tab in self.control.tabifiedDockWidgets(child)
+                    if tab.isVisible()
+                ]
                 if tabs:
                     tab_bar = self._get_tab_bar(child)
                     tab_index = tab_bar.currentIndex()
@@ -65,8 +69,10 @@ class MainWindowLayout(HasTraits):
 
                 # Create the leaf-level item for the child.
                 if tabs:
-                    panes = [ self._prepare_pane(dock_widget, include_sizes)
-                              for dock_widget in tabs ]
+                    panes = [
+                        self._prepare_pane(dock_widget, include_sizes)
+                        for dock_widget in tabs
+                    ]
                     item = Tabbed(*panes, active_tab=panes[tab_index].id)
                 else:
                     item = self._prepare_pane(child, include_sizes)
@@ -102,7 +108,8 @@ class MainWindowLayout(HasTraits):
                 items.difference_update(remove)
             else:
                 # Raise an exception instead of falling into an infinite loop.
-                raise RuntimeError('Unable to extract layout from QMainWindow.')
+                raise RuntimeError(
+                    'Unable to extract layout from QMainWindow.')
 
         if items:
             return items.pop()
@@ -122,14 +129,17 @@ class MainWindowLayout(HasTraits):
         for name, q_dock_area in AREA_MAP.iteritems():
             sublayout = getattr(layout, name)
             if sublayout:
-                self.set_layout_for_area(sublayout, q_dock_area,
-                                         _toplevel_call=False)
+                self.set_layout_for_area(
+                    sublayout, q_dock_area, _toplevel_call=False)
 
         # Remove the fixed sizes once Qt activates the layout.
         QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
 
-    def set_layout_for_area(self, layout, q_dock_area,
-                            _toplevel_added=False, _toplevel_call=True):
+    def set_layout_for_area(self,
+                            layout,
+                            q_dock_area,
+                            _toplevel_added=False,
+                            _toplevel_call=True):
         """ Applies a LayoutItem to the specified dock area.
         """
         # If we try to do the layout bottom-up, Qt will become confused. In
@@ -187,8 +197,11 @@ class MainWindowLayout(HasTraits):
 
             # Now we can recurse.
             for i, item in enumerate(layout.items):
-                self.set_layout_for_area(item, q_dock_area,
-                    _toplevel_added=True, _toplevel_call=False)
+                self.set_layout_for_area(
+                    item,
+                    q_dock_area,
+                    _toplevel_added=True,
+                    _toplevel_call=False)
 
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
@@ -264,8 +277,8 @@ class MainWindowLayout(HasTraits):
         if isinstance(layout, PaneItem):
             dock_widget = self._get_dock_widget(layout)
             if dock_widget is None:
-                logger.warning('Cannot retrieve dock widget for pane %r'
-                               % layout.id)
+                logger.warning('Cannot retrieve dock widget for pane %r' %
+                               layout.id)
             else:
                 if layout.width > 0:
                     dock_widget.widget().setFixedWidth(layout.width)
@@ -284,7 +297,7 @@ class MainWindowLayout(HasTraits):
         """
         if self.control is None:
             return
-        QWIDGETSIZE_MAX = (1 << 24) - 1 # Not exposed by Qt bindings.
+        QWIDGETSIZE_MAX = (1 << 24) - 1  # Not exposed by Qt bindings.
         for child in self.control.children():
             if isinstance(child, QtGui.QDockWidget):
                 child.widget().setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
@@ -293,7 +306,6 @@ class MainWindowLayout(HasTraits):
                 # min/max sizes and hence that too needs to be reset.
                 child.setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
                 child.setMinimumSize(0, 0)
-
 
 
 class MainWindowLayoutError(ValueError):

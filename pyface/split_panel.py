@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A panel that is split in two either horizontally or vertically. """
 
-
 # Local imports.
 from pyface.split_widget import SplitWidget
 from pyface.widget import Widget

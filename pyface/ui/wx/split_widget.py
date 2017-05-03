@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Mix-in class for split widgets.
 """
 
@@ -32,7 +31,6 @@ class SplitWidget(MSplitWidget, HasTraits):
     """ The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
-
 
     #### 'ISplitWidget' interface #############################################
 
@@ -155,5 +153,6 @@ class SplitWidget(MSplitWidget, HasTraits):
         #wx.EVT_SIZE(splitter, None)
 
         return
+
 
 #### EOF ######################################################################

@@ -8,7 +8,6 @@ from ..split_application_window import SplitApplicationWindow
 
 
 class TestSplitApplicationWindow(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         self.gui = GUI()
         self.window = SplitApplicationWindow()

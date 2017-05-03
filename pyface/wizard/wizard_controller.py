@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A wizard controller that has a static list of pages. """
 
-
 # Enthought library imports.
 from traits.api import Bool, HasTraits, Instance, List, Property, provides
 
@@ -158,7 +157,8 @@ class WizardController(HasTraits):
         """ Called when the current page is changed. """
 
         if old is not None:
-            old.on_trait_change(self._on_page_complete, 'complete',remove=True)
+            old.on_trait_change(
+                self._on_page_complete, 'complete', remove=True)
 
         if new is not None:
             new.on_trait_change(self._on_page_complete, 'complete')
@@ -175,5 +175,6 @@ class WizardController(HasTraits):
         self._update()
 
         return
+
 
 #### EOF ######################################################################

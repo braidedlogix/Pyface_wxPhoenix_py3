@@ -14,7 +14,6 @@
 #  Date:   10/18/2005
 #
 #-------------------------------------------------------------------------------
-
 """ Pyface 'DockWindow' support.
 
     This package provides a Pyface 'dockable' window component that allows
@@ -23,4 +22,3 @@
     sub-region of the DockWindow, in which case each sub-window appears as a
     separate notebook-like tab within the region.
 """
-

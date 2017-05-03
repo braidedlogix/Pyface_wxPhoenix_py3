@@ -1,6 +1,5 @@
 """ A view containing a main walter canvas. """
 
-
 # Enthought library imports.
 from pyface.workbench.api import View, WorkbenchWindow
 from traits.api import HasTraits, Instance, Str, on_trait_change
@@ -13,8 +12,8 @@ class DebugViewModel(HasTraits):
     #### 'Model' interface ####################################################
 
     active_editor = Str
-    active_part   = Str
-    active_view   = Str
+    active_part = Str
+    active_view = Str
 
     window = Instance(WorkbenchWindow)
 
@@ -22,15 +21,14 @@ class DebugViewModel(HasTraits):
     # 'Model' interface.
     ###########################################################################
 
-    @on_trait_change(
-        'window.active_editor', 'window.active_part', 'window.active_view'
-    )
+    @on_trait_change('window.active_editor', 'window.active_part',
+                     'window.active_view')
     def refresh(self):
         """ Refresh the model. """
 
         self.active_editor = self._get_id(self.window.active_editor)
-        self.active_part   = self._get_id(self.window.active_part)
-        self.active_view   = self._get_id(self.window.active_view)
+        self.active_part = self._get_id(self.window.active_part)
+        self.active_view = self._get_id(self.window.active_view)
 
         return
 
@@ -84,11 +82,11 @@ class DebugView(View):
         self.model = DebugViewModel(window=self.window)
 
         ui = self.model.edit_traits(
-            parent = parent,
-            kind   = 'subpanel',
-            view   =  TraitsView('active_part', 'active_editor', 'active_view')
-        )
+            parent=parent,
+            kind='subpanel',
+            view=TraitsView('active_part', 'active_editor', 'active_view'))
 
         return ui.control
+
 
 #### EOF ######################################################################

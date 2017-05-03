@@ -1,6 +1,5 @@
 """ A simple example of using the workbench window. """
 
-
 # Enthought library imports.
 from pyface.action.api import Action, MenuManager
 from pyface.workbench.api import EditorManager, WorkbenchWindow
@@ -51,23 +50,23 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     # The available perspectives.
     perspectives = [
         Perspective(
-            name     = 'Foo',
-            contents = [
-                PerspectiveItem(id='Black', position='bottom', height=0.1),
-                PerspectiveItem(id='Debug', position='left', width=0.25)
-            ]
-        ),
-
-        Perspective(
-            name     = 'Bar',
-            contents = [
-                PerspectiveItem(id='Black', position='top'),
-                PerspectiveItem(id='Blue', position='bottom'),
-                PerspectiveItem(id='Green', position='left'),
-                PerspectiveItem(id='Red', position='right'),
-                PerspectiveItem(id='Debug', position='left')
-            ]
-        )
+            name='Foo',
+            contents=[
+                PerspectiveItem(
+                    id='Black', position='bottom', height=0.1),
+                PerspectiveItem(
+                    id='Debug', position='left', width=0.25)
+            ]), Perspective(
+                name='Bar',
+                contents=[
+                    PerspectiveItem(
+                        id='Black', position='top'), PerspectiveItem(
+                            id='Blue', position='bottom'), PerspectiveItem(
+                                id='Green', position='left'), PerspectiveItem(
+                                    id='Red', position='right'),
+                    PerspectiveItem(
+                        id='Debug', position='left')
+                ])
     ]
 
     #### 'ExampleWorkbenchWindow' interface ###################################
@@ -103,9 +102,10 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         """ Trait initializer. """
 
         file_menu = MenuManager(
-            self._new_person_action, self._exit_action,
-            name='&File', id='FileMenu'
-        )
+            self._new_person_action,
+            self._exit_action,
+            name='&File',
+            id='FileMenu')
         view_menu = ViewMenuManager(name='&View', id='ViewMenu', window=self)
 
         return MenuBarManager(file_menu, view_menu, window=self)
@@ -117,9 +117,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         # allowed!
         tool_bar_managers = [
             ToolBarManager(
-                self._exit_action, show_tool_names = False, name=str(i)
-            )
-
+                self._exit_action, show_tool_names=False, name=str(i))
             for i in range(5)
         ]
 
@@ -168,5 +166,6 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         self.workbench.edit(Person(name='New', age=100))
 
         return
+
 
 #### EOF ######################################################################

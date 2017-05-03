@@ -32,8 +32,8 @@ class HistoryConsoleWidget(ConsoleWidget):
         if not hidden:
             history = self.input_buffer if source is None else source
 
-        executed = super(HistoryConsoleWidget, self).execute(
-            source, hidden, interactive)
+        executed = super(HistoryConsoleWidget, self).execute(source, hidden,
+                                                             interactive)
 
         if executed and not hidden:
             # Save the command unless it was an empty string or was identical
@@ -74,8 +74,8 @@ class HistoryConsoleWidget(ConsoleWidget):
             # search.
             cursor = self._get_prompt_cursor()
             if self._history_prefix:
-                cursor.movePosition(QtGui.QTextCursor.Right,
-                                    n=len(self._history_prefix))
+                cursor.movePosition(
+                    QtGui.QTextCursor.Right, n=len(self._history_prefix))
             else:
                 cursor.movePosition(QtGui.QTextCursor.EndOfLine)
             self._set_cursor(cursor)
@@ -100,8 +100,8 @@ class HistoryConsoleWidget(ConsoleWidget):
             # input buffer is set.)
             if self._history_prefix:
                 cursor = self._get_prompt_cursor()
-                cursor.movePosition(QtGui.QTextCursor.Right,
-                                    n=len(self._history_prefix))
+                cursor.movePosition(
+                    QtGui.QTextCursor.Right, n=len(self._history_prefix))
                 self._set_cursor(cursor)
 
             return False

@@ -6,9 +6,7 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-
 """ Tests for the tabular editor tester. """
-
 
 import unittest
 import cStringIO
@@ -24,7 +22,6 @@ from pyface.util.testing import skip_if_no_traitsui
 
 
 class MyClass(HasStrictTraits):
-
     def default_traits_view(self):
         from traitsui.api import CancelButton, OKButton, View
 
@@ -140,11 +137,9 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     self.assertTrue(
-                        tester.has_widget('OK', QtGui.QAbstractButton)
-                    )
+                        tester.has_widget('OK', QtGui.QAbstractButton))
                     self.assertFalse(
-                        tester.has_widget(text='I am a virtual button')
-                    )
+                        tester.has_widget(text='I am a virtual button'))
             finally:
                 tester.close()
 
@@ -159,8 +154,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
                         type_=QtGui.QAbstractButton,
-                        test=lambda x: x.text() == 'OK'
-                    )
+                        test=lambda x: x.text() == 'OK')
                     self.assertIsInstance(widget, QtGui.QPushButton)
             finally:
                 tester.close()

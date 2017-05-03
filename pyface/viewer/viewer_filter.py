@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for all viewer filters. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits
 
@@ -66,5 +65,6 @@ class ViewerFilter(HasTraits):
         """
 
         return False
+
 
 #### EOF ######################################################################

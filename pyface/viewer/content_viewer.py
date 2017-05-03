@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for all content viewers. """
 
-
 # Enthought library imports.
 from traits.api import Any, Instance, List
 
@@ -58,5 +57,6 @@ class ContentViewer(Viewer):
 
     # The viewer's filters.
     filters = List(ViewerFilter)
+
 
 #### EOF ######################################################################

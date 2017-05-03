@@ -9,8 +9,8 @@ from pyface.gui import GUI
 from pyface.image_resource import ImageResource
 from pyface.splash_screen import SplashScreen
 
-class TestWindow(unittest.TestCase, UnittestTools):
 
+class TestWindow(unittest.TestCase, UnittestTools):
     def setUp(self):
         self.gui = GUI()
         self.window = SplashScreen()

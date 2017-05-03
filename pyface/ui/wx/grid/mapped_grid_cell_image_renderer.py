@@ -17,10 +17,11 @@
 
 from .grid_cell_image_renderer import GridCellImageRenderer
 
+
 class MappedGridCellImageRenderer(GridCellImageRenderer):
     """ Maps data values to image and text. """
 
-    def __init__(self, image_map = None, text_map = None):
+    def __init__(self, image_map=None, text_map=None):
 
         # Base-class constructor. We pass ourself as the provider
         super(MappedGridCellImageRenderer, self).__init__(self)
@@ -68,5 +69,6 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
 
         # retrieve the unformatted value from the model and return it
         return model.get_cell_drag_value(row, col)
+
 
 #### EOF ######################################################################

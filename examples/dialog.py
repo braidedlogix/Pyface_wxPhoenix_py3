@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Dialog example. """
 
-
 # Standard library imports.
 import os, sys
 
@@ -42,10 +41,9 @@ class MainWindow(ApplicationWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self._on_exit),
-                name = '&File',
-            )
-        )
+                Action(
+                    name='E&xit', on_perform=self._on_exit),
+                name='&File', ))
 
         return
 

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The base class for all actions. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Callable, Enum, HasTraits, Instance, Str
 from traits.api import Unicode

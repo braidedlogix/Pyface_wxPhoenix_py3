@@ -1,6 +1,5 @@
 """ An item in a Perspective contents list. """
 
-
 # Enthought library imports.
 from traits.api import Enum, Float, HasTraits, provides, Str
 
@@ -51,5 +50,6 @@ class PerspectiveItem(HasTraits):
 
     # The style of the dock control created.
     style_hint = Enum('tab', 'vertical', 'horizontal', 'fixed')
+
 
 #### EOF ######################################################################

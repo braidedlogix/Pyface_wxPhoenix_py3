@@ -10,8 +10,7 @@
 import logging
 
 logger = logging.getLogger(__name__)
-logger.warning(
-    'DEPRECATED: pyface.util.grid, use pyface.wx.grid instead. '
-    'Will be removed in Pyface 7.')
+logger.warning('DEPRECATED: pyface.util.grid, use pyface.wx.grid instead. '
+               'Will be removed in Pyface 7.')
 
 from pyface.wx.grid import *

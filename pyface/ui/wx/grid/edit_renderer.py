@@ -15,8 +15,8 @@
 from .edit_image_renderer import EditImageRenderer
 from .grid_cell_renderer import GridCellRenderer
 
-class EditRenderer(GridCellRenderer):
 
+class EditRenderer(GridCellRenderer):
     def __init__(self, **traits):
 
         # base-class constructor

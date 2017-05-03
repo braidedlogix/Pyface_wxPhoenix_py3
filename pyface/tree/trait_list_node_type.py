@@ -1,6 +1,5 @@
 """ The node type for a trait list. """
 
-
 # Enthought library imports.
 from traits.api import Any, Str
 
@@ -55,5 +54,6 @@ class TraitListNodeType(NodeType):
         """ Returns the label text for a node. """
 
         return self.text
+
 
 ##### EOF #####################################################################

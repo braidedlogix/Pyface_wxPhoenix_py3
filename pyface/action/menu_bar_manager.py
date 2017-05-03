@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A menu bar manager realizes itself in errr, a menu bar control. """
 
-
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 MenuBarManager = toolkit_object('action.menu_bar_manager:MenuBarManager')

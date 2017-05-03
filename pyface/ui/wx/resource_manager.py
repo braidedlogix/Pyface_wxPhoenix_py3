@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -75,5 +74,6 @@ class PyfaceResourceFactory(ResourceFactory):
             os.unlink(filename)
 
         return image
+
 
 #### EOF ######################################################################

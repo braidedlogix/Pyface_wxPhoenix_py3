@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Node tree example. """
 
-
 # Standard library imports.
 import os, sys
 

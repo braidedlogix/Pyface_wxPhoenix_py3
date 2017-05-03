@@ -8,7 +8,6 @@ from pyface.tasks.api import DockPane, Task, TaskPane, TaskWindow
 from traits.api import List
 from traits.etsconfig.api import ETSConfig
 
-
 USING_WX = ETSConfig.toolkit not in ['', 'qt4']
 
 
@@ -24,8 +23,10 @@ class BogusTask(Task):
 
     def create_dock_panes(self):
         self.dock_panes = dock_panes = [
-            DockPane(id='tests.bogus_task.dock_pane_2', name='Dock Pane 2'),
-            DockPane(id='tests.bogus_task.dock_pane_1', name='Dock Pane 1'),
+            DockPane(
+                id='tests.bogus_task.dock_pane_2', name='Dock Pane 2'),
+            DockPane(
+                id='tests.bogus_task.dock_pane_1', name='Dock Pane 1'),
         ]
 
         return dock_panes
@@ -35,17 +36,14 @@ class BogusTask(Task):
             SMenu(
                 SGroup(
                     group_factory=DockPaneToggleGroup,
-                    id='tests.bogus_task.DockPaneToggleGroup'
-                ),
-                id= 'View', name='&View'
-            )
-        )
+                    id='tests.bogus_task.DockPaneToggleGroup'),
+                id='View',
+                name='&View'))
 
         return menu_bar
 
 
 class DockPaneToggleGroupTestCase(unittest.TestCase):
-
     @unittest.skipIf(USING_WX, "TaskWindowBackend is not implemented in WX")
     def setUp(self):
         # Set up the bogus task with its window.
@@ -58,6 +56,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
 
         # Fish the dock pane toggle group from the menu bar manager.
         dock_pane_toggle_group = []
+
         def find_doc_pane_toggle(item):
             if item.id == 'tests.bogus_task.DockPaneToggleGroup':
                 dock_pane_toggle_group.append(item)
@@ -67,7 +66,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         self.dock_pane_toggle_group = dock_pane_toggle_group[0]
 
     def get_dock_pane_toggle_action_names(self):
-        names =  [
+        names = [
             action_item.action.name
             for action_item in self.dock_pane_toggle_group.items
         ]
@@ -88,8 +87,8 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
     def test_react_to_dock_pane_added(self):
         # Add a dock pane to the task.
         self.task_state.dock_panes.append(
-            DockPane(id='tests.bogus_task.dock_pane_0', name='Dock Pane 0')
-        )
+            DockPane(
+                id='tests.bogus_task.dock_pane_0', name='Dock Pane 0'))
 
         # Check that there are 3 dock panes in the group.
         self.assertEqual(3, len(self.dock_pane_toggle_group.items))

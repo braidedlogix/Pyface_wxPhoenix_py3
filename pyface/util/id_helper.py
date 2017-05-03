@@ -13,8 +13,8 @@
 #------------------------------------------------------------------------------
 """ Helper functions to automatically generate unique IDs. """
 
-
 from weakref import WeakKeyDictionary
+
 
 class _ObjectCounter(object):
     """ Counts objects. """
@@ -46,6 +46,7 @@ class _ObjectCounter(object):
         count = self.get_count(obj)
         self._objects_registry[obj] = count + 1
         return self._objects_registry[obj]
+
 
 # Global object counter.
 object_counter = _ObjectCounter()

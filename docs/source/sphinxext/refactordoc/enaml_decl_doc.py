@@ -18,10 +18,12 @@ class EnamlDeclDoc(BaseDoc):
     def __init__(self, lines, headers=None, verbose=False):
 
         if headers is None:
-            headers = {'Input Attributes': 'attributes',
-                       'Synchronized Attributes': 'attributes',
-                       'Output Attributes': 'attributes',
-                       'Public Attributes': 'attributes'}
+            headers = {
+                'Input Attributes': 'attributes',
+                'Synchronized Attributes': 'attributes',
+                'Output Attributes': 'attributes',
+                'Public Attributes': 'attributes'
+            }
 
         super(EnamlDeclDoc, self).__init__(lines, headers, verbose)
         return

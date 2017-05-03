@@ -1,6 +1,5 @@
 """ The interface for perspective items. """
 
-
 # Enthought library imports.
 from traits.api import Enum, Float, Interface, Str
 
@@ -48,5 +47,6 @@ class IPerspectiveItem(Interface):
 
     # The style of the dock window.
     style_hint = Enum('tab', 'horizontal', 'vertical', 'fixed')
+
 
 #### EOF ######################################################################

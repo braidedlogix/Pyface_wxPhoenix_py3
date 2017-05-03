@@ -11,7 +11,6 @@
 #------------------------------------------------------------------------------
 """ A page in a wizard. """
 
-
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -27,7 +26,6 @@ class WizardPage(MWizardPage, HasTraits):
     See the IWizardPage interface for the API documentation.
 
     """
-
 
     #### 'IWizardPage' interface ##############################################
 
@@ -138,5 +136,6 @@ class _WizardPage(QtGui.QWizardPage):
         """ The trait handler for when the page's completion state changes. """
 
         self.completeChanged.emit()
+
 
 #### EOF ######################################################################

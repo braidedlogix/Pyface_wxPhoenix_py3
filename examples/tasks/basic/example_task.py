@@ -22,28 +22,35 @@ class ExampleTask(Task):
     #default_layout = TaskLayout(
     #    left=PaneItem('example.python_script_browser_pane'))
 
-    menu_bar = SMenuBar(SMenu(TaskAction(name='Open...', method='open',
-                                         accelerator='Ctrl+O'),
-                              TaskAction(name='Save', method='save',
-                                         accelerator='Ctrl+S'),
-                              id='File', name='&File'),
-                        SMenu(DockPaneToggleGroup(),
-                              id='View', name='&View'))
+    menu_bar = SMenuBar(
+        SMenu(
+            TaskAction(
+                name='Open...', method='open', accelerator='Ctrl+O'),
+            TaskAction(
+                name='Save', method='save', accelerator='Ctrl+S'),
+            id='File',
+            name='&File'),
+        SMenu(
+            DockPaneToggleGroup(), id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='open',
-                                      tooltip='Open a file',
-                                      image=ImageResource('document_open')),
-                           TaskAction(method='save',
-                                      tooltip='Save the current file',
-                                      image=ImageResource('document_save'))) ]
+    tool_bars = [
+        SToolBar(
+            TaskAction(
+                method='open',
+                tooltip='Open a file',
+                image=ImageResource('document_open')),
+            TaskAction(
+                method='save',
+                tooltip='Save the current file',
+                image=ImageResource('document_save')))
+    ]
 
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
 
     def _default_layout_default(self):
-        return TaskLayout(
-            left=PaneItem('example.python_script_browser_pane'))
+        return TaskLayout(left=PaneItem('example.python_script_browser_pane'))
 
     def activated(self):
         """ Overriden to set the window's title.
@@ -62,7 +69,7 @@ class ExampleTask(Task):
         browser = PythonScriptBrowserPane()
         handler = lambda: self._open_file(browser.selected_file)
         browser.on_trait_change(handler, 'activated')
-        return [ browser ]
+        return [browser]
 
     ###########################################################################
     # 'ExampleTask' interface.
@@ -85,8 +92,8 @@ class ExampleTask(Task):
         except IOError:
             # If you are trying to save to a file that doesn't exist, open up a
             # FileDialog with a 'save as' action.
-            dialog = FileDialog(parent=self.window.control,
-                                action='save as', wildcard='*.py')
+            dialog = FileDialog(
+                parent=self.window.control, action='save as', wildcard='*.py')
             if dialog.open() == OK:
                 editor.save(dialog.path)
             else:
@@ -111,9 +118,12 @@ class ExampleTask(Task):
         if self.window.central_pane.editor.dirty:
             message = 'The current file has unsaved changes. ' \
                       'Do you want to save your changes?'
-            dialog = ConfirmationDialog(parent=self.window.control,
-                                        message=message, cancel=True,
-                                        default=CANCEL, title='Save Changes?')
+            dialog = ConfirmationDialog(
+                parent=self.window.control,
+                message=message,
+                cancel=True,
+                default=CANCEL,
+                title='Save Changes?')
             result = dialog.open()
             if result == CANCEL:
                 return False

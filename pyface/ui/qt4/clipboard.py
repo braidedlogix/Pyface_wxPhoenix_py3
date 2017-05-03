@@ -104,5 +104,5 @@ class Clipboard(BaseClipboard):
         mime_data.setUrls([QtCore.QUrl(path) for path in data])
         cb.setMimeData(mime_data)
 
-    def _get_has_file_data (self):
+    def _get_has_file_data(self):
         return cb.mimeData().hasUrls()

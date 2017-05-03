@@ -8,13 +8,12 @@
 #-----------------------------------------------------------------------------
 """ Object with views for naming or renaming a user perspective. """
 
-
 # Enthought library imports.
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
 
-
 #### Trait definitions ########################################################
+
 
 def not_empty_string(object, name, value):
     """a not-empty string"""
@@ -23,6 +22,7 @@ def not_empty_string(object, name, value):
         return value
 
     raise TraitError
+
 
 # Define a trait which can not be the empty string:
 NotEmptyString = Trait('', not_empty_string)
@@ -53,38 +53,34 @@ class UserPerspectiveName(HasTraits):
 
     new_view = View(
         VGroup(
-            VGroup( 'name', 'show_editor_area' ),
-            VGroup( '_',
-                Item( 'new_help',
-                      style = 'readonly' ),
-                show_labels = False
-            )
-        ),
-        title   = 'New User Perspective',
-        id      = 'envisage.workbench.action.'
-                  'new_user_perspective_action.UserPerspectiveName',
-        buttons = [ 'OK', 'Cancel' ],
-        kind    = 'livemodal',
-        width   = 300
-    )
+            VGroup('name', 'show_editor_area'),
+            VGroup(
+                '_', Item(
+                    'new_help', style='readonly'), show_labels=False)),
+        title='New User Perspective',
+        id='envisage.workbench.action.'
+        'new_user_perspective_action.UserPerspectiveName',
+        buttons=['OK', 'Cancel'],
+        kind='livemodal',
+        width=300)
 
-    save_as_view = View( 'name',
-        title   = 'Save User Perspective As',
-        id      = 'envisage.workbench.action.'
-                  'save_as_user_perspective_action.UserPerspectiveName',
-        buttons = [ 'OK', 'Cancel' ],
-        kind    = 'livemodal',
-        width   = 300
-    )
+    save_as_view = View(
+        'name',
+        title='Save User Perspective As',
+        id='envisage.workbench.action.'
+        'save_as_user_perspective_action.UserPerspectiveName',
+        buttons=['OK', 'Cancel'],
+        kind='livemodal',
+        width=300)
 
-    rename_view = View( 'name',
-        title   = 'Rename User Perspective',
-        id      = 'envisage.workbench.action.'
-                  'rename_user_perspective_action.UserPerspectiveName',
-        buttons = [ 'OK', 'Cancel' ],
-        kind    = 'livemodal',
-        width   = 300
-    )
+    rename_view = View(
+        'name',
+        title='Rename User Perspective',
+        id='envisage.workbench.action.'
+        'rename_user_perspective_action.UserPerspectiveName',
+        buttons=['OK', 'Cancel'],
+        kind='livemodal',
+        width=300)
+
 
 #### EOF #####################################################################
-

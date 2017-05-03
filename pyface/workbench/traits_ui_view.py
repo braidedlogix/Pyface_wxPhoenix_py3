@@ -1,6 +1,5 @@
 """ A view whose content is provided by a traits UI. """
 
-
 # Standard library imports.
 import logging
 
@@ -9,7 +8,6 @@ from traits.api import Any, Instance, Str
 
 # Local imports.
 from .view import View
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -99,9 +97,9 @@ class TraitsUIView(View):
         """
 
         ui = self.obj.edit_traits(
-            parent=parent, view=self.view, kind='subpanel'
-        )
+            parent=parent, view=self.view, kind='subpanel')
 
         return ui
+
 
 #### EOF ######################################################################

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for table content providers. """
 
-
 # Local imports.
 from .content_provider import ContentProvider
 
@@ -33,5 +32,6 @@ class TableContentProvider(ContentProvider):
     # 'TreeContentProvider' and 'TreeLabelProvider'  instead of some
     # combination of the specific and generic viewer classes as in JFace.
     pass
+
 
 #### EOF ####################################################################

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A description of a row in a grid. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits
 
@@ -27,5 +26,6 @@ class GridRow(HasTraits):
         self.__dict__.update(row_data)
 
         return
+
 
 #### EOF ######################################################################

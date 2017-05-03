@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Major package imports.
 from pyface.qt import QtGui
 
@@ -27,7 +26,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     """ The toolkit specific implementation of a DirectoryDialog.  See the
     IDirectoryDialog interface for the API documentation.
     """
-
 
     #### 'IDirectoryDialog' interface #########################################
 
@@ -80,5 +78,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
             dlg.setLabelText(QtGui.QFileDialog.LookIn, self.message)
 
         return dlg
+
 
 #### EOF ######################################################################

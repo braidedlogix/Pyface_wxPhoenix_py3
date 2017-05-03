@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The abstract interface for all pyface top-level windows. """
 
-
 # Enthought library imports.
 from traits.api import Event, Tuple, Unicode, Str
 
@@ -39,7 +38,7 @@ class IWindow(IWidget):
     size = Tuple
 
     #: The window title.
-    title = Str#Unicode
+    title = Str  #Unicode
 
     #### Events #####
 
@@ -47,10 +46,10 @@ class IWindow(IWidget):
     activated = Event
 
     #: The window has been closed.
-    closed =  Event
+    closed = Event
 
     #: The window is about to be closed.
-    closing =  Event
+    closing = Event
 
     #: The window has been deactivated.
     deactivated = Event
@@ -103,8 +102,11 @@ class IWindow(IWidget):
             Which button should be the default button.
         """
 
-    def information(
-            self, message, title='Information', detail='', informative=''):
+    def information(self,
+                    message,
+                    title='Information',
+                    detail='',
+                    informative=''):
         """ Convenience method to show an information message dialog.
 
         Parameters
@@ -217,8 +219,11 @@ class MWindow(object):
 
         return confirm(self.control, message, title, cancel, default)
 
-    def information(
-            self, message, title='Information', detail='', informative=''):
+    def information(self,
+                    message,
+                    title='Information',
+                    detail='',
+                    informative=''):
         """ Convenience method to show an information message dialog.
 
         Parameters

@@ -29,12 +29,14 @@ class FileBrowserPane(TraitsDockPane):
     selected_file = File(os.path.expanduser('~'))
 
     # The view used to construct the dock pane's widget.
-    view = View(Item('selected_file',
-                     editor=FileEditor(dclick_name='activated',
-                                       filter_name='filters'),
-                     style='custom',
-                     show_label=False),
-                resizable=True)
+    view = View(
+        Item(
+            'selected_file',
+            editor=FileEditor(
+                dclick_name='activated', filter_name='filters'),
+            style='custom',
+            show_label=False),
+        resizable=True)
 
 
 class PythonScriptBrowserPane(FileBrowserPane):
@@ -48,7 +50,7 @@ class PythonScriptBrowserPane(FileBrowserPane):
 
     #### FileBrowserPane interface ############################################
 
-    filters = [ '*.py' ]
+    filters = ['*.py']
 
 
 class PythonEditorPane(TaskPane):

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Python editor example. """
 
-
 # Enthought library imports.
 from pyface.api import ApplicationWindow, FileDialog, GUI, OK, \
         PythonEditor
@@ -40,22 +39,16 @@ class MainWindow(ApplicationWindow):
                     Action(
                         name='&Open...',
                         accelerator='Ctrl+O',
-                        on_perform=self.on_open_file
-                    ),
+                        on_perform=self.on_open_file),
                     Action(
                         name='&Save',
                         accelerator='Ctrl+S',
-                        on_perform=self.on_save_file
-                    ),
-                    id='document_group',
-                ),
+                        on_perform=self.on_save_file),
+                    id='document_group', ),
                 Action(
-                    name='&Close',
-                    accelerator='Ctrl+W',
-                    on_perform=self.close
-                ),
-                name='&File')
-        )
+                    name='&Close', accelerator='Ctrl+W',
+                    on_perform=self.close),
+                name='&File'))
 
     ###########################################################################
     # Protected 'IApplication' interface.
@@ -90,9 +83,11 @@ class MainWindow(ApplicationWindow):
             except IOError as e:
                 # If you are trying to save to a file that doesn't exist,
                 # open up a FileDialog with a 'save as' action.
-                dlg = FileDialog(parent=self.control, action='save as', wildcard="*.py")
+                dlg = FileDialog(
+                    parent=self.control, action='save as', wildcard="*.py")
                 if dlg.open() == OK:
                     self._editor.save(dlg.path)
+
 
 # Application entry point.
 if __name__ == '__main__':

@@ -17,8 +17,11 @@ from __future__ import absolute_import
 
 
 # Convenience functions.
-def information(parent, message, title='Information',
-                detail='', informative=''):
+def information(parent,
+                message,
+                title='Information',
+                detail='',
+                informative=''):
     """ Convenience method to show an information message dialog.
 
     Parameters
@@ -37,9 +40,12 @@ def information(parent, message, title='Information',
 
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title,
-        severity='information', detail=detail, informative=informative
-    )
+        parent=parent,
+        message=message,
+        title=title,
+        severity='information',
+        detail=detail,
+        informative=informative)
     dialog.open()
 
 
@@ -62,9 +68,12 @@ def warning(parent, message, title='Warning', detail='', informative=''):
 
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title,
-        severity='warning', detail=detail, informative=informative
-    )
+        parent=parent,
+        message=message,
+        title=title,
+        severity='warning',
+        detail=detail,
+        informative=informative)
     dialog.open()
 
 
@@ -87,9 +96,12 @@ def error(parent, message, title='Error', detail='', informative=''):
 
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title, severity='error',
-        detail=detail, informative=informative
-    )
+        parent=parent,
+        message=message,
+        title=title,
+        severity='error',
+        detail=detail,
+        informative=informative)
     dialog.open()
 
 

@@ -1,6 +1,5 @@
 """ A simple example of using the workbench. """
 
-
 # Enthought library imports.
 from pyface.api import YES
 from pyface.workbench.api import Workbench
@@ -29,5 +28,6 @@ class ExampleWorkbench(Workbench):
             event.veto = True
 
         return
+
 
 #### EOF ######################################################################

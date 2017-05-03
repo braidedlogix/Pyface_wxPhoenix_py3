@@ -54,8 +54,8 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         parent : parent of the returned root
         """
-        root = EditorAreaWidget(editor_area=SplitEditorAreaPane(),
-                                parent=parent)
+        root = EditorAreaWidget(
+            editor_area=SplitEditorAreaPane(), parent=parent)
         btn0 = QtGui.QPushButton('0')
         btn1 = QtGui.QPushButton('1')
         tabwidget = root.tabwidget()
@@ -210,14 +210,20 @@ class TestEditorAreaWidget(unittest.TestCase):
         # on the rightchild of horizontal split, where the top tabwidget of
         # the vertical split is empty.
         layout = Splitter(
-            Tabbed(PaneItem(id=0, width=600, height=600),
-                   active_tab=0),
-            Splitter(Tabbed(PaneItem(id=-1, width=600, height=300),
-                            active_tab=0),
-                     Tabbed(PaneItem(id=1, width=600, height=300),
-                            PaneItem(id=2, width=600, height=300),
-                            active_tab=0),
-                     orientation='vertical'),
+            Tabbed(
+                PaneItem(
+                    id=0, width=600, height=600), active_tab=0),
+            Splitter(
+                Tabbed(
+                    PaneItem(
+                        id=-1, width=600, height=300), active_tab=0),
+                Tabbed(
+                    PaneItem(
+                        id=1, width=600, height=300),
+                    PaneItem(
+                        id=2, width=600, height=300),
+                    active_tab=0),
+                orientation='vertical'),
             orientation='horizontal')
         # a total of 3 files are needed to give this layout - one on the
         # leftchild of horizontal split, and the other two on the bottom
@@ -235,12 +241,12 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         ######## test tooltips #############
 
-        self.assertEquals(editor_area.active_tabwidget.tabToolTip(0),
-                          "test_tooltip0")
-        self.assertEquals(editor_area.active_tabwidget.tabToolTip(1),
-                          "test_tooltip1")
-        self.assertEquals(editor_area.active_tabwidget.tabToolTip(2),
-                          "test_tooltip2")
+        self.assertEquals(
+            editor_area.active_tabwidget.tabToolTip(0), "test_tooltip0")
+        self.assertEquals(
+            editor_area.active_tabwidget.tabToolTip(1), "test_tooltip1")
+        self.assertEquals(
+            editor_area.active_tabwidget.tabToolTip(2), "test_tooltip2")
 
         ######## test set_layout #############
 
@@ -379,6 +385,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         with event_loop():
             window.close()
+
 
 if __name__ == '__main__':
     unittest.main()

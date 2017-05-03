@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -31,7 +30,6 @@ from pyface.util.guisupport import start_event_loop_wx
 # Local imports.
 from pyface.i_gui import IGUI, MGUI
 
-
 # Logging.
 logger = logging.getLogger(__name__)
 
@@ -39,14 +37,13 @@ logger = logging.getLogger(__name__)
 @provides(IGUI)
 class GUI(MGUI, HasTraits):
 
-
     #### 'GUI' interface ######################################################
 
     busy = Bool(False)
 
     started = Bool(False)
 
-    state_location = Str#Unicode
+    state_location = Str  #Unicode
 
     ###########################################################################
     # 'object' interface.
@@ -115,10 +112,12 @@ class GUI(MGUI, HasTraits):
 
         # A hack to force menus to appear for applications run on Mac OS X.
         if sys.platform == 'darwin':
+
             def _mac_os_x_hack():
                 f = wx.Frame(None, -1)
                 f.Show(True)
                 f.Close()
+
             self.invoke_later(_mac_os_x_hack)
 
         logger.debug("---------- starting GUI event loop ----------")
@@ -150,5 +149,6 @@ class GUI(MGUI, HasTraits):
             del self._wx_cursor
 
         return
+
 
 #### EOF ######################################################################

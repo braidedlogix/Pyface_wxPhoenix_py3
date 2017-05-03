@@ -34,11 +34,13 @@ class Person(HasTraits):
 
     # a default traits view
     view = View(
-        Item('name', resizable=True),
-        Item('age', resizable=True),
-        Item('gender', resizable=True),
-        resizable=True,
-    )
+        Item(
+            'name', resizable=True),
+        Item(
+            'age', resizable=True),
+        Item(
+            'gender', resizable=True),
+        resizable=True, )
 
 
 class MainWindow(ApplicationWindow):

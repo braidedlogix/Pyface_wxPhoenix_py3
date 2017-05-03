@@ -31,7 +31,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-
     #### 'IApplicationWindow' interface #######################################
 
     icon = Instance(ImageResource)

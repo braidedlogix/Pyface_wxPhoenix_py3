@@ -1,6 +1,5 @@
 """ An editor whose content is provided by a traits UI. """
 
-
 # Standard library imports.
 import logging
 
@@ -9,7 +8,6 @@ from traits.api import Instance, Str
 
 # Local imports.
 from .editor import Editor
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -83,9 +81,9 @@ class TraitsUIEditor(Editor):
         """
 
         ui = self.obj.edit_traits(
-            parent=parent, view=self.view, kind='subpanel'
-        )
+            parent=parent, view=self.view, kind='subpanel')
 
         return ui
+
 
 #### EOF ######################################################################

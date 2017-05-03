@@ -30,37 +30,50 @@ from wx.py import introspect
 from functools import cmp_to_key
 
 import types
-def cmp_to_key2( mycmp):
+
+
+def cmp_to_key2(mycmp):
     'Convert a cmp= function into a key= function'
+
     class K:
         def __init__(self, obj, *args):
             self.obj = obj
+
         def __lt__(self, other):
             return mycmp(self.obj, other.obj) < 0
+
         def __gt__(self, other):
             return mycmp(self.obj, other.obj) > 0
+
         def __eq__(self, other):
             return mycmp(self.obj, other.obj) == 0
+
         def __le__(self, other):
             return mycmp(self.obj, other.obj) <= 0
+
         def __ge__(self, other):
             return mycmp(self.obj, other.obj) >= 0
+
         def __ne__(self, other):
             return mycmp(self.obj, other.obj) != 0
+
     return K
+
+
 # The fixed function.
-def comparative(x,y):
-    result = x.__lt__(y)#cmp(label_a, label_b)
+def comparative(x, y):
+    result = x.__lt__(y)  #cmp(label_a, label_b)
 
     if result:
-        result=-1
+        result = -1
     else:
-        result=y.__lt__(x)
+        result = y.__lt__(x)
         if result:
-            result=1
+            result = 1
         else:
-            result=0
-    
+            result = 0
+
+
 def getAttributeNames(object, includeMagic=1, includeSingle=1,
                       includeDouble=1):
     """Return list of unique attributes, including inherited, for object."""
@@ -68,9 +81,11 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     dict = {}
     if not introspect.hasattrAlwaysReturnsTrue(object):
         # Add some attributes that don't always get picked up.
-        special_attrs = ['__bases__', '__class__', '__dict__', '__name__',
-                         'func_closure', 'func_code', 'func_defaults',
-                         'func_dict', 'func_doc', 'func_globals', 'func_name']
+        special_attrs = [
+            '__bases__', '__class__', '__dict__', '__name__', 'func_closure',
+            'func_code', 'func_defaults', 'func_dict', 'func_doc',
+            'func_globals', 'func_name'
+        ]
         attributes += [attr for attr in special_attrs \
                        if hasattr(object, attr)]
     # For objects that have traits, get all the trait names since
@@ -82,12 +97,14 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
             pass
 
     if includeMagic:
-        try: attributes += object._getAttributeNames()
-        except: pass
+        try:
+            attributes += object._getAttributeNames()
+        except:
+            pass
     # Get all attribute names.
-    attrdict = getAllAttributeNames(object) 
+    attrdict = getAllAttributeNames(object)
     # Store the object's dir.
-    object_dir = dir(object) #list
+    object_dir = dir(object)  #list
     for (obj_type_name, technique, count), attrlist in attrdict.items():
         # This complexity is necessary to avoid accessing all the
         # attributes of the object.  This is very handy for objects
@@ -107,17 +124,19 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     # e.g. ITK http://www.itk.org/
     attributes = [attribute for attribute in attributes \
                   if isinstance(attribute, str)]
-    attributes.sort()#(key=cmp_to_key(comparative))#lambda x, y: cmp(x.upper(), y.upper()))
+    attributes.sort(
+    )  #(key=cmp_to_key(comparative))#lambda x, y: cmp(x.upper(), y.upper()))
     if not includeSingle:
         attributes = filter(lambda item: item[0]!='_' \
                             or item[1]=='_', attributes)
     if not includeDouble:
-        attributes = filter(lambda item: item[:2]!='__', attributes)
+        attributes = filter(lambda item: item[:2] != '__', attributes)
     return attributes
 
 
 # Replace introspect's version with ours.
 introspect.getAttributeNames = getAttributeNames
+
 
 # This is also a modified version of the function which does not use
 # str(object).
@@ -142,11 +161,11 @@ def getAllAttributeNames(object):
     wakeupcall = dir(object)
     del wakeupcall
     # Get attributes available through the normal convention.
-    attributes = dir(object) #list
+    attributes = dir(object)  #list
     attrdict[(key, 'dir', len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
-        attributes = list( object.__dict__.keys())
+        attributes = list(object.__dict__.keys())
         attributes.sort()
     except:  # Must catch all because object might have __getattr__.
         pass

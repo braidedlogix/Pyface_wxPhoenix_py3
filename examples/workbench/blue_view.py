@@ -1,6 +1,5 @@
 """ A view containing a blue panel! """
 
-
 # Local imports.
 from color_view import ColorView
 
@@ -16,5 +15,6 @@ class BlueView(ColorView):
     # The default position of the view relative to the item specified in the
     # 'relative_to' trait.
     position = 'bottom'
+
 
 #### EOF ######################################################################

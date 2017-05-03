@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for content providers. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits
 
@@ -36,5 +35,6 @@ class ContentProvider(HasTraits):
         """
 
         raise NotImplementedError
+
 
 #### EOF ####################################################################

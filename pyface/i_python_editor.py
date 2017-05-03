@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A widget for editing Python code. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Event, Interface, Unicode
 

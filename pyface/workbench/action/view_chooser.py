@@ -1,12 +1,11 @@
 """ A UI that allows the user to choose a view. """
 
-
 # Enthought library imports.
 from pyface.workbench.api import IView, WorkbenchWindow
 from traits.api import Any, HasTraits, Instance, List, Str
 from traits.api import TraitError, Undefined
 from traitsui.api import Item, TreeEditor, TreeNode, View
-from traitsui.menu import Action # fixme: Non-api import!
+from traitsui.menu import Action  # fixme: Non-api import!
 
 
 class Category(HasTraits):
@@ -123,61 +122,48 @@ class ViewChooser(HasTraits):
 
     traits_ui_view = View(
         Item(
-            name       = 'window',
-            editor     = TreeEditor(
-                nodes  = [
+            name='window',
+            editor=TreeEditor(
+                nodes=[
                     WorkbenchWindowTreeNode(
-                        auto_open = True,
-                        label     = '=Views',
-                        rename    = False,
-                        copy      = False,
-                        delete    = False,
-                        insert    = False,
-                        menu      = None,
-                    ),
-
-                    TreeNode(
-                        node_for  = [Category],
-                        auto_open = True,
-                        children  = 'views',
-                        label     = 'name',
-                        rename    = False,
-                        copy      = False,
-                        delete    = False,
-                        insert    = False,
-                        menu      = None,
-                    ),
-
-                    IViewTreeNode(
-                        auto_open = False,
-                        label     = 'name',
-                        rename    = False,
-                        copy      = False,
-                        delete    = False,
-                        insert    = False,
-                        menu      = None,
-                    )
+                        auto_open=True,
+                        label='=Views',
+                        rename=False,
+                        copy=False,
+                        delete=False,
+                        insert=False,
+                        menu=None, ), TreeNode(
+                            node_for=[Category],
+                            auto_open=True,
+                            children='views',
+                            label='name',
+                            rename=False,
+                            copy=False,
+                            delete=False,
+                            insert=False,
+                            menu=None, ), IViewTreeNode(
+                                auto_open=False,
+                                label='name',
+                                rename=False,
+                                copy=False,
+                                delete=False,
+                                insert=False,
+                                menu=None, )
                 ],
-
-                editable   = False,
-                hide_root  = True,
-                selected   = 'selected',
-                show_icons = True
-            ),
-            show_label = False
-        ),
-
-        buttons   = [
-            Action(name='OK', enabled_when='view is not None'), 'Cancel'
+                editable=False,
+                hide_root=True,
+                selected='selected',
+                show_icons=True),
+            show_label=False),
+        buttons=[
+            Action(
+                name='OK', enabled_when='view is not None'), 'Cancel'
         ],
-
-        resizable = True,
-        style     = 'custom',
-        title     = 'Show View',
-
-        width     = .2,
-        height    = .4
-    )
+        resizable=True,
+        style='custom',
+        title='Show View',
+        width=.2,
+        height=.4)
 
     ###########################################################################
     # 'ViewChooser' interface.
@@ -195,5 +181,6 @@ class ViewChooser(HasTraits):
             self.view = None
 
         return
+
 
 #### EOF ######################################################################

@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Standard library imports.
 import logging
 
@@ -26,25 +25,23 @@ from pyface.workbench.i_workbench_window_layout import \
         MWorkbenchWindowLayout
 from .split_tab_widget import SplitTabWidget
 
-
 # Logging.
 logger = logging.getLogger(__name__)
 
-
 # For mapping positions relative to the editor area.
 _EDIT_AREA_MAP = {
-    'left':     QtCore.Qt.LeftDockWidgetArea,
-    'right':    QtCore.Qt.RightDockWidgetArea,
-    'top':      QtCore.Qt.TopDockWidgetArea,
-    'bottom':   QtCore.Qt.BottomDockWidgetArea
+    'left': QtCore.Qt.LeftDockWidgetArea,
+    'right': QtCore.Qt.RightDockWidgetArea,
+    'top': QtCore.Qt.TopDockWidgetArea,
+    'bottom': QtCore.Qt.BottomDockWidgetArea
 }
 
 # For mapping positions relative to another view.
 _VIEW_AREA_MAP = {
-    'left':     (QtCore.Qt.Horizontal, True),
-    'right':    (QtCore.Qt.Horizontal, False),
-    'top':      (QtCore.Qt.Vertical, True),
-    'bottom':   (QtCore.Qt.Vertical, False)
+    'left': (QtCore.Qt.Horizontal, True),
+    'right': (QtCore.Qt.Horizontal, False),
+    'top': (QtCore.Qt.Vertical, True),
+    'bottom': (QtCore.Qt.Vertical, False)
 }
 
 
@@ -86,7 +83,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             return None
 
         try:
-            self._qt4_editor_area.addTab(self._qt4_get_editor_control(editor), title)
+            self._qt4_editor_area.addTab(
+                self._qt4_get_editor_control(editor), title)
 
             if editor._loading_on_open:
                 self._qt4_editor_tab_spinner(editor, '', True)
@@ -113,7 +111,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
             # Additionally, display an error message to the user.
             error(self.window.control, 'Unable to add view [%s]' % view.id,
-                    'Workbench Plugin Error')
+                  'Workbench Plugin Error')
 
         return view
 
@@ -285,7 +283,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
     def get_toolkit_memento(self):
-        return (0, {'geometry' : self.window.control.saveGeometry()})
+        return (0, {'geometry': self.window.control.saveGeometry()})
 
     def set_toolkit_memento(self, memento):
         if hasattr(memento, 'toolkit_data'):
@@ -325,7 +323,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         else: tw.hide_button(tidx)
 
         if not new and not editor == self.window.active_editor:
-            self._qt4_editor_area.setTabTextColor(editor.control, QtCore.Qt.red)
+            self._qt4_editor_area.setTabTextColor(editor.control,
+                                                  QtCore.Qt.red)
 
     @on_trait_change('window:active_editor')
     def _qt4_active_editor_changed(self, old, new):
@@ -350,7 +349,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         if old is not None:
             # Handle focus changes from views.
             for view in self.window.views:
-                if view is not focus_part and view.control is not None and view.control.isAncestorOf(old):
+                if view is not focus_part and view.control is not None and view.control.isAncestorOf(
+                        old):
                     view.has_focus = False
                     break
 
@@ -554,8 +554,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 continue
 
             sender = dw.sender()
-            if (sender is dw.toggleViewAction() or
-                sender in dw.children()):
+            if (sender is dw.toggleViewAction() or sender in dw.children()):
                 # Toggling the action or pressing the close button on
                 # the view
                 v.visible = checked
@@ -640,5 +639,6 @@ class _ViewContainer(QtGui.QMainWindow):
         self._width = self._height = -1
 
         QtGui.QMainWindow.showEvent(self, e)
+
 
 #### EOF ######################################################################

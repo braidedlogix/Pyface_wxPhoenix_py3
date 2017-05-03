@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for a dialog that allows the user to open/save files etc. """
 
-
 # Standard library imports.
 import sys
 

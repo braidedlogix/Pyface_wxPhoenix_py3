@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -30,7 +29,6 @@ class Widget(MWidget, HasTraits):
     interface for the API documentation.
     """
 
-
     #### 'IWidget' interface ##################################################
 
     control = Any
@@ -45,5 +43,6 @@ class Widget(MWidget, HasTraits):
         if self.control is not None:
             self.control.Destroy()
             self.control = None
+
 
 #### EOF ######################################################################

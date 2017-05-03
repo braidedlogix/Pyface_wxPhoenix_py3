@@ -1,6 +1,5 @@
 """ The 'View' menu """
 
-
 # Standard library imports.
 import logging
 
@@ -13,7 +12,6 @@ from traits.api import on_trait_change
 from .perspective_menu_manager import PerspectiveMenuManager
 from .show_view_action import ShowViewAction
 from .toggle_view_visibility_action import ToggleViewVisibilityAction
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -80,10 +78,8 @@ class ViewMenuManager(MenuManager):
     # 'ViewMenuManager' interface.
     ###########################################################################
 
-    @on_trait_change(
-        'window.active_perspective,window.active_part,'
-        'window.views,window.views_items'
-    )
+    @on_trait_change('window.active_perspective,window.active_part,'
+                     'window.views,window.views_items')
     def refresh(self):
         """ Refreshes the checked state of the actions in the menu. """
 
@@ -137,9 +133,10 @@ class ViewMenuManager(MenuManager):
             # window interface?
             if window.layout.contains_view(view):
                 group.append(
-                    ToggleViewVisibilityAction(view=view, window=window)
-                )
+                    ToggleViewVisibilityAction(
+                        view=view, window=window))
 
         return
+
 
 #### EOF ######################################################################

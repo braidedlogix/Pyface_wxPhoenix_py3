@@ -27,8 +27,8 @@ class Toolkit(HasTraits):
     package = List(Str)
 
     def __init__(self, toolkit, *packages, **traits):
-        super(Toolkit, self).__init__(toolkit=toolkit, packages=list(packages),
-                                      **traits)
+        super(Toolkit, self).__init__(
+            toolkit=toolkit, packages=list(packages), **traits)
 
     def __call__(self, name):
         """ Return the toolkit specific object with the given name.

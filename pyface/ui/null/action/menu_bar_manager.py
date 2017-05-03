@@ -14,7 +14,6 @@
 """ The 'null' backend specific implementation of a menu bar manager.
 """
 
-
 # Local imports.
 from pyface.action.action_manager import ActionManager
 
@@ -37,5 +36,6 @@ class MenuBarManager(ActionManager):
             controller = self.controller
 
         return None
+
 
 #### EOF ######################################################################

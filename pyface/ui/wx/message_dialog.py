@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -27,12 +26,11 @@ from traits.api import Enum, provides, Unicode, Str
 from pyface.i_message_dialog import IMessageDialog, MMessageDialog
 from .dialog import Dialog
 
-
 # Map the ETS severity to the corresponding wx standard icon.
 _SEVERITY_TO_ICON_MAP = {
-    'information':  wx.ICON_INFORMATION,
-    'warning':      wx.ICON_WARNING,
-    'error':        wx.ICON_ERROR
+    'information': wx.ICON_INFORMATION,
+    'warning': wx.ICON_WARNING,
+    'error': wx.ICON_ERROR
 }
 
 
@@ -42,14 +40,13 @@ class MessageDialog(MMessageDialog, Dialog):
     IMessageDialog interface for the API documentation.
     """
 
-
     #### 'IMessageDialog' interface ###########################################
 
-    message = Str#Unicode
+    message = Str  #Unicode
 
-    informative = Str#Unicode
+    informative = Str  #Unicode
 
-    detail = Str#Unicode
+    detail = Str  #Unicode
 
     severity = Enum('information', 'warning', 'error')
 

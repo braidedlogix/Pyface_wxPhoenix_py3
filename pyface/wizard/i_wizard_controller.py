@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for all pyface wizard controllers. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Interface, Instance, List
 
@@ -56,5 +55,6 @@ class IWizardController(Interface):
 
     def dispose_pages(self):
         """ Dispose all the pages. """
+
 
 #### EOF ######################################################################

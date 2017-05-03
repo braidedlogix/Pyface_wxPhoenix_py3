@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Standard library imports.
 import sys
 from os.path import basename
@@ -27,6 +26,7 @@ from pyface.wx.python_stc import PythonSTC, faces
 # Local imports.
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
+
 
 @provides(IPythonEditor)
 class PythonEditor(Editor):
@@ -100,7 +100,7 @@ class PythonEditor(Editor):
         """ Selects the specified line.
         """
         start = self.control.PositionFromLine(lineno)
-        end   = self.control.GetLineEndPosition(lineno)
+        end = self.control.GetLineEndPosition(lineno)
 
         self.control.SetSelection(start, end)
 
@@ -170,7 +170,7 @@ class PythonEditor(Editor):
         stc.SetIndent(4)
 
         # Line ending mode.
-        stc.SetEOLMode(wx.stc.STC_EOL_LF) # Unix
+        stc.SetEOLMode(wx.stc.STC_EOL_LF)  # Unix
         #self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
         #self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
@@ -235,10 +235,9 @@ class PythonEditor(Editor):
 
         # By default, the will fire EVT_STC_CHANGE evented for all mask values
         # (STC_MODEVENTMASKALL). This generates too many events.
-        stc.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT |
-                            wx.stc.STC_MOD_DELETETEXT |
-                            wx.stc.STC_PERFORMED_UNDO |
-                            wx.stc.STC_PERFORMED_REDO)
+        stc.SetModEventMask(
+            wx.stc.STC_MOD_INSERTTEXT | wx.stc.STC_MOD_DELETETEXT |
+            wx.stc.STC_PERFORMED_UNDO | wx.stc.STC_PERFORMED_REDO)
 
         # Listen for changes to the file.
         wx.stc.EVT_STC_CHANGE(stc, stc.GetId(), self._on_stc_changed)
@@ -268,12 +267,11 @@ class PythonEditor(Editor):
         """ Called whenever a change is made to the text of the document. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
-            event        = event
-        )
+            alt_down=event.m_altDown == 1,
+            control_down=event.m_controlDown == 1,
+            shift_down=event.m_shiftDown == 1,
+            key_code=event.m_keyCode,
+            event=event)
 
         # Give other event handlers a chance.
         event.Skip()

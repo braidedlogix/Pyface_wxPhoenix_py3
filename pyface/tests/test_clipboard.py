@@ -12,12 +12,12 @@ class TestObject(object):
 
     def __eq__(self, other):
         if isinstance(other, TestObject):
-            return all(getattr(other, key) == value
-                       for key, value in self.__dict__.items())
+            return all(
+                getattr(other, key) == value
+                for key, value in self.__dict__.items())
 
 
 class TestClipboard(unittest.TestCase):
-
     def setUp(self):
         self.clipboard = clipboard
 

@@ -1,12 +1,10 @@
 """ An action that resets the active perspective. """
 
-
 # Enthought library imports.
 from pyface.api import YES
 
 # Local imports.
 from .workbench_action import WorkbenchAction
-
 
 # The message used when confirming the action.
 MESSAGE = 'Do you want to reset the current "%s" perspective to its defaults?'
@@ -36,5 +34,6 @@ class ResetActivePerspectiveAction(WorkbenchAction):
             window.reset_active_perspective()
 
         return
+
 
 #### EOF ######################################################################

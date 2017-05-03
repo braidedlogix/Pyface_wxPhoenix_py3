@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ The wx specific implementation of a menu manager.
 """
 
@@ -39,7 +38,7 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Str#Unicode
+    name = Str  #Unicode
 
     # Does the menu require a separator before the menu item name?
     separator = Bool(True)
@@ -67,7 +66,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
 
-        id  = wx.NewId()
+        id = wx.NewId()
         sub = self.create_menu(parent, controller)
 
         # fixme: Nasty hack to allow enabling/disabling of menus.
@@ -148,13 +147,12 @@ class _Menu(wx.Menu):
         self.clear()
 
         manager = self._manager
-        parent  = self._parent
+        parent = self._parent
 
         previous_non_empty_group = None
         for group in manager.groups:
             previous_non_empty_group = self._add_group(
-                parent, group, previous_non_empty_group
-            )
+                parent, group, previous_non_empty_group)
 
         return
 
@@ -217,5 +215,6 @@ class _Menu(wx.Menu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
+
 
 #### EOF ######################################################################

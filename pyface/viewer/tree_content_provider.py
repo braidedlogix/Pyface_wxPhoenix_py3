@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for tree content providers. """
 
-
 # Local imports.
 from .content_provider import ContentProvider
 
@@ -64,5 +63,6 @@ class TreeContentProvider(ContentProvider):
         """ Returns True iff the element has children, otherwise False. """
 
         raise NotImplementedError
+
 
 #### EOF ####################################################################

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A page in a wizard. """
 
-
 # Major package imports.
 import wx
 
@@ -30,7 +29,6 @@ class WizardPage(MWizardPage, HasTraits):
     See the IWizardPage interface for the API documentation.
 
     """
-
 
     #### 'IWizardPage' interface ##############################################
 
@@ -89,5 +87,6 @@ class WizardPage(MWizardPage, HasTraits):
         panel.SetBackgroundColour('yellow')
 
         return panel
+
 
 #### EOF ######################################################################

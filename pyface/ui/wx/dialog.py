@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -29,18 +28,17 @@ from pyface.i_dialog import IDialog, MDialog
 from pyface.constant import OK, CANCEL, YES, NO
 from .window import Window
 
-
 # Map wx dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    wx.ID_OK     : OK,
-    wx.ID_CANCEL : CANCEL,
-    wx.ID_YES    : YES,
-    wx.ID_NO     : NO,
-    wx.ID_CLOSE  : CANCEL,
+    wx.ID_OK: OK,
+    wx.ID_CANCEL: CANCEL,
+    wx.ID_YES: YES,
+    wx.ID_NO: NO,
+    wx.ID_CLOSE: CANCEL,
     # There seems to be a bug in wx.SingleChoiceDialog that allows it to return
     # 0 when it is closed via the window (closing it via the buttons works just
     # fine).
-    0            : CANCEL
+    0: CANCEL
 }
 
 
@@ -50,16 +48,15 @@ class Dialog(MDialog, Window):
     interface for the API documentation.
     """
 
-
     #### 'IDialog' interface ##################################################
 
-    cancel_label = Str#Unicode
+    cancel_label = Str  #Unicode
 
     help_id = Str
 
-    help_label = Str#Unicode
+    help_label = Str  #Unicode
 
-    ok_label = Str#Unicode
+    ok_label = Str  #Unicode
 
     resizeable = Bool(True)
 
@@ -69,7 +66,7 @@ class Dialog(MDialog, Window):
 
     #### 'IWindow' interface ##################################################
 
-    title = Str("Dialog")#Unicode("Dialog")
+    title = Str("Dialog")  #Unicode("Dialog")
 
     ###########################################################################
     # Protected 'IDialog' interface.

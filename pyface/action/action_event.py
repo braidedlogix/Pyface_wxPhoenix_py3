@@ -1,6 +1,5 @@
 """ The event passed to an action's 'perform' method. """
 
-
 # Standard library imports.
 import time
 

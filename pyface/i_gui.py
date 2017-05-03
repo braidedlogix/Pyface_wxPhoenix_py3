@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface of a pyface GUI. """
 
-
 # Standard library imports.
 import logging
 import os
@@ -21,7 +20,6 @@ import os
 # Enthought library imports.
 from traits.etsconfig.api import ETSConfig
 from traits.api import Bool, Interface, Unicode
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -187,7 +185,8 @@ class MGUI(object):
     def _default_state_location(self):
         """ Return the default state location. """
 
-        state_location = os.path.join(ETSConfig.application_home, 'pyface', ETSConfig.toolkit)
+        state_location = os.path.join(ETSConfig.application_home, 'pyface',
+                                      ETSConfig.toolkit)
 
         if not os.path.exists(state_location):
             os.makedirs(state_location)

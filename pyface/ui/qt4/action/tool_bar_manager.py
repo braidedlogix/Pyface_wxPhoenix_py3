@@ -115,20 +115,16 @@ class ToolBarManager(ActionManager):
                 # Is a separator required?
                 if previous_non_empty_group is not None and group.separator:
                     separator = tool_bar.addSeparator()
-                    group.on_trait_change(self._separator_visibility_method(separator),
-                                          'visible')
+                    group.on_trait_change(
+                        self._separator_visibility_method(separator),
+                        'visible')
 
                 previous_non_empty_group = group
 
                 # Create a tool bar tool for each item in the group.
                 for item in group.items:
-                    item.add_to_toolbar(
-                        parent,
-                        tool_bar,
-                        self._image_cache,
-                        controller,
-                        self.show_tool_names
-                    )
+                    item.add_to_toolbar(parent, tool_bar, self._image_cache,
+                                        controller, self.show_tool_names)
 
         return
 
@@ -154,12 +150,10 @@ class _ToolBar(QtGui.QToolBar):
         self.tool_bar_manager = tool_bar_manager
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_enabled_changed, 'enabled'
-        )
+            self._on_tool_bar_manager_enabled_changed, 'enabled')
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_visible_changed, 'visible'
-        )
+            self._on_tool_bar_manager_visible_changed, 'visible')
 
         return
 
@@ -180,5 +174,6 @@ class _ToolBar(QtGui.QToolBar):
         self.setVisible(new)
 
         return
+
 
 #### EOF ######################################################################

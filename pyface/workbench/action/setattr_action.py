@@ -1,6 +1,5 @@
 """ An action that sets an attribute. """
 
-
 # Enthought library imports.
 from traits.api import Any, Str
 
@@ -32,5 +31,6 @@ class SetattrAction(WorkbenchAction):
         setattr(self.obj, self.attribute_name, self.value)
 
         return
+
 
 #### EOF ######################################################################

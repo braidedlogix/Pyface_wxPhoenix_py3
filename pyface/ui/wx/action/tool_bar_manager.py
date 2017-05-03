@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ The wx specific implementation of the tool bar manager.
 """
 
@@ -149,13 +148,8 @@ class ToolBarManager(ActionManager):
 
                 # Create a tool bar tool for each item in the group.
                 for item in group.items:
-                    item.add_to_toolbar(
-                        parent,
-                        tool_bar,
-                        self._image_cache,
-                        controller,
-                        self.show_tool_names
-                    )
+                    item.add_to_toolbar(parent, tool_bar, self._image_cache,
+                                        controller, self.show_tool_names)
 
         return
 
@@ -177,7 +171,8 @@ class ToolBarManager(ActionManager):
                         # Only set checked state if control has been created.
                         # Using extra_actions of tasks, it appears that this
                         # may be called multiple times.
-                        tool_bar.ToggleTool(item.control_id, item.action.checked)
+                        tool_bar.ToggleTool(item.control_id,
+                                            item.action.checked)
                         checked = checked or item.action.checked
 
                 # Every item in a radio group MUST be 'radio' style, so we
@@ -212,12 +207,10 @@ class _ToolBar(wx.ToolBar):
         self.tool_bar_manager = tool_bar_manager
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_enabled_changed, 'enabled'
-        )
+            self._on_tool_bar_manager_enabled_changed, 'enabled')
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_visible_changed, 'visible'
-        )
+            self._on_tool_bar_manager_visible_changed, 'visible')
 
         return
 
@@ -257,12 +250,10 @@ class _AuiToolBar(aui.AuiToolBar):
         self.tool_bar_manager = tool_bar_manager
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_enabled_changed, 'enabled'
-        )
+            self._on_tool_bar_manager_enabled_changed, 'enabled')
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_visible_changed, 'visible'
-        )
+            self._on_tool_bar_manager_visible_changed, 'visible')
 
         # we need to defer hiding tools until first time Realize is called so
         # we can get the correct order of the toolbar for reinsertion at the
@@ -304,28 +295,29 @@ class _AuiToolBar(aui.AuiToolBar):
             self.Realize()
             # Update the toolbar in the AUI manager to force toolbar resize
             try:
-                wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+                wx.CallAfter(self.tool_bar_manager.controller.task.window.
+                             _aui_manager.Update)
             except:
                 pass
         elif not state and tool is not None:
             self.RemoveTool(tool_id)
             # Update the toolbar in the AUI manager to force toolbar resize
             try:
-                wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+                wx.CallAfter(self.tool_bar_manager.controller.task.window.
+                             _aui_manager.Update)
             except:
                 pass
 
     def InsertToolInOrder(self, tool_id):
         orig_pos, tool = self.tool_map[tool_id]
-        pos=-1
+        pos = -1
         for pos in range(self.GetToolsCount()):
             existing_tool = self.GetToolByPos(pos)
             existing_id = existing_tool.GetId()
             existing_orig_pos, _ = self.tool_map[tool_id]
             if existing_orig_pos > orig_pos:
                 break
-        self.InsertToolItem(pos+1, tool)
-
+        self.InsertToolItem(pos + 1, tool)
 
     ##### Additional convenience functions for the normal AGW AUI toolbar
 
@@ -355,7 +347,6 @@ class _AuiToolBar(aui.AuiToolBar):
             return True
 
         return False
-
 
     def RemoveTool(self, tool_id):
         """
@@ -392,7 +383,6 @@ class _AuiToolBar(aui.AuiToolBar):
 
         aui.AuiToolBar.OnSize(self, event)
 
-
     ###########################################################################
     # Trait change handlers.
     ###########################################################################
@@ -415,5 +405,6 @@ class _AuiToolBar(aui.AuiToolBar):
 
             pass
         return
+
 
 #### EOF ######################################################################

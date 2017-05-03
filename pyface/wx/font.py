@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Font utilities. """
 
-
 # Major package imports.
 import wx
 
@@ -29,10 +28,15 @@ def clone_font(font):
     face_name = font.GetFaceName()
 
     clone = wx.Font(
-        point_size, family, style, weight, underline, face_name,
-    )
+        point_size,
+        family,
+        style,
+        weight,
+        underline,
+        face_name, )
 
     return clone
+
 
 def set_font_size(window, size):
     """ Recursively sets the font size starting from 'window'. """
@@ -55,6 +59,7 @@ def set_font_size(window, size):
 
     return
 
+
 def increase_font_size(window, delta=2):
     """ Recursively increases the font size starting from 'window'. """
 
@@ -76,12 +81,14 @@ def increase_font_size(window, delta=2):
 
     return
 
+
 def decrease_font_size(window, delta=2):
     """ Recursively decreases the font size starting from 'window'. """
 
     increase_font_size(window, delta=-2)
 
     return
+
 
 def set_bold_font(window):
     """ Set 'window's font to be bold. """
@@ -91,5 +98,6 @@ def set_bold_font(window):
     window.SetFont(font)
 
     return
+
 
 #### EOF ######################################################################

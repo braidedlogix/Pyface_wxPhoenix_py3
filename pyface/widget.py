@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The base implementation of all pyface widgets. """
 
-
 # Import the toolkit specific version.
 from __future__ import absolute_import
 

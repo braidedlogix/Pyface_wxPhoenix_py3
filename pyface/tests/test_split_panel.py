@@ -9,7 +9,6 @@ from ..window import Window
 
 
 class TestHeadingText(unittest.TestCase):
-
     def setUp(self):
         self.gui = GUI()
         self.window = Window()
@@ -42,8 +41,8 @@ class TestHeadingText(unittest.TestCase):
 
     def test_contents(self):
         # test that contents works
-        self.widget = SplitPanel(self.window.control, lhs=HeadingText,
-                                 rhs=HeadingText)
+        self.widget = SplitPanel(
+            self.window.control, lhs=HeadingText, rhs=HeadingText)
         self.gui.process_events()
         self.widget.destroy()
         self.gui.process_events()

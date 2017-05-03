@@ -6,7 +6,6 @@ from ..widget import Widget
 
 
 class TestWidget(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         self.widget = Widget()
 

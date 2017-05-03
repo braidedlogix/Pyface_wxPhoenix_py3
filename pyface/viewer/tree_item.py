@@ -31,7 +31,6 @@ root.append(veg)
 
 """
 
-
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Instance, List, Property
 
@@ -142,5 +141,6 @@ class TreeItem(HasTraits):
         self.insert(index + 1, child)
 
         return (index, child)
+
 
 #### EOF ######################################################################

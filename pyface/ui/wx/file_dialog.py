@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -37,26 +36,25 @@ class FileDialog(MFileDialog, Dialog):
     IFileDialog interface for the API documentation.
     """
 
-
     #### 'IFileDialog' interface ##############################################
 
     action = Enum('open', 'open files', 'save as')
 
-    default_directory = Str#Unicode
+    default_directory = Str  #Unicode
 
-    default_filename = Str#Unicode
+    default_filename = Str  #Unicode
 
-    default_path = Str#Unicode
+    default_path = Str  #Unicode
 
-    directory = Str#Unicode
+    directory = Str  #Unicode
 
-    filename = Str#Unicode
+    filename = Str  #Unicode
 
-    path = Str#Unicode
+    path = Str  #Unicode
 
-    paths = List(Str)#Unicode)
+    paths = List(Str)  #Unicode)
 
-    wildcard = Str#Unicode
+    wildcard = Str  #Unicode
 
     wildcard_index = Int(0)
 
@@ -74,9 +72,9 @@ class FileDialog(MFileDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path  = str(self.control.GetPath())
+        self.path = str(self.control.GetPath())
         # Work around wx bug throwing exception on cancel of file dialog
-        if len(self.path)>0:
+        if len(self.path) > 0:
             self.paths = self.control.GetPaths()
         else:
             self.paths = []
@@ -99,7 +97,8 @@ class FileDialog(MFileDialog, Dialog):
         # components.
         if len(self.default_path) != 0 and len(self.default_directory) == 0 \
             and len(self.default_filename) == 0:
-            default_directory, default_filename = os.path.split(self.default_path)
+            default_directory, default_filename = os.path.split(
+                self.default_path)
         else:
             default_directory = self.default_directory
             default_filename = self.default_filename
@@ -112,9 +111,13 @@ class FileDialog(MFileDialog, Dialog):
             style = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
 
         # Create the actual dialog.
-        dialog = wx.FileDialog(parent, self.title, defaultDir=default_directory,
-                    defaultFile=default_filename, style=style,
-                    wildcard=self.wildcard.rstrip('|'))
+        dialog = wx.FileDialog(
+            parent,
+            self.title,
+            defaultDir=default_directory,
+            defaultFile=default_filename,
+            style=style,
+            wildcard=self.wildcard.rstrip('|'))
 
         dialog.SetFilterIndex(self.wildcard_index)
 
@@ -128,5 +131,6 @@ class FileDialog(MFileDialog, Dialog):
         """ Return the default wildcard. """
 
         return self.WILDCARD_ALL
+
 
 #### EOF ######################################################################

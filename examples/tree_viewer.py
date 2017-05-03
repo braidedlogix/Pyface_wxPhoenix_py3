@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Tree viewer example. """
 
-
 # Standard library imports.
 import os, sys
 
@@ -48,8 +47,7 @@ class MainWindow(SplitApplicationWindow):
         """ Creates the left hand side or top depending on the style. """
 
         self._tree_viewer = FileTreeViewer(
-            parent, input=os.path.abspath(os.curdir), sorter=FileSorter()
-        )
+            parent, input=os.path.abspath(os.curdir), sorter=FileSorter())
 
         self._tree_viewer.on_trait_change(self._on_tree_anytrait_changed)
 

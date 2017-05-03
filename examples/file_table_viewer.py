@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A table viewer for local file systems. """
 
-
 # Standard library imports.
 from os import listdir, stat
 from os.path import basename, isdir, join
@@ -24,7 +23,6 @@ from pyface.api import ImageResource
 from pyface.viewer.api import TableColumnProvider, TableContentProvider
 from pyface.viewer.api import TableLabelProvider, TableViewer
 from traits.api import Instance, Str
-
 
 
 class FileTableContentProvider(TableContentProvider):
@@ -132,6 +130,7 @@ class FileTableColumnProvider(TableColumnProvider):
 
         return alignment
 
+
 class FileTableViewer(TableViewer):
     """ A table viewer for local file systems. """
 
@@ -146,5 +145,6 @@ class FileTableViewer(TableViewer):
     # The label provider provides, err, the labels for the items in the tree
     # (a label can have text and/or an image).
     label_provider = Instance(FileTableLabelProvider, ())
+
 
 ##### EOF #####################################################################

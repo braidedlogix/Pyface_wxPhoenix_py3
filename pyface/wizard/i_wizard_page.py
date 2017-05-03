@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for a page in a wizard. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Interface, Str, Tuple, Unicode
 
@@ -86,5 +85,6 @@ class MWizardPage(object):
         """
 
         pass
+
 
 #### EOF ######################################################################

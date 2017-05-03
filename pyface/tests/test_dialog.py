@@ -7,12 +7,12 @@ from ..constant import OK, CANCEL
 from ..gui import GUI
 from ..toolkit import toolkit_object
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
 class TestDialog(unittest.TestCase):
-
     def setUp(self):
         self.gui = GUI()
         self.dialog = Dialog()
@@ -124,7 +124,8 @@ class TestDialog(unittest.TestCase):
         self.dialog.cancel_label = u"I Don't Think So"
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"I Don't Think So"))
+        tester.open_and_wait(
+            when_opened=lambda x: x.click_widget(u"I Don't Think So"))
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 

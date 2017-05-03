@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -37,7 +36,6 @@ class ImageResource(MImageResource, HasTraits):
     IImageResource interface for the API documentation.
     """
 
-
     #### Private interface ####################################################
 
     # The resource manager reference for the image.
@@ -45,9 +43,9 @@ class ImageResource(MImageResource, HasTraits):
 
     #### 'ImageResource' interface ############################################
 
-    absolute_path = Property(Str)#Property(Unicode)
+    absolute_path = Property(Str)  #Property(Unicode)
 
-    name = Str#Unicode
+    name = Str  #Unicode
 
     search_path = List
 
@@ -106,5 +104,6 @@ class ImageResource(MImageResource, HasTraits):
             absolute_path = self._get_image_not_found().absolute_path
 
         return absolute_path
+
 
 #### EOF ######################################################################

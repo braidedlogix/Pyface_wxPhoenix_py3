@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A log handler that emits records to a splash screen. """
 
-
 # Standard library imports.
 from logging import Handler
 

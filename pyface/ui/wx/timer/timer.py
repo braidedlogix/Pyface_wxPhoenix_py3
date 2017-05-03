@@ -13,12 +13,12 @@
 #  Author: Prabhu Ramachandran <prabhu@aero.iitb.ac.in>
 #
 #-------------------------------------------------------------------------------
-
 """A `wx.Timer` subclass that invokes a specified callback periodically.
 """
 
 # Standard library imports.
 import wx
+
 
 ######################################################################
 # `Timer` class.
@@ -36,7 +36,7 @@ class Timer(wx.Timer):
         given arguments and keyword args after every `millisecs`
         (milliseconds).
         """
-        wx.Timer.__init__(self)#, id=wx.NewId())
+        wx.Timer.__init__(self)  #, id=wx.NewId())
         self.callable = callable
         self.args = args
         self.kw_args = kw_args
@@ -56,4 +56,3 @@ class Timer(wx.Timer):
         except:
             self.Stop()
             raise
-

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The event fired by the tree models/node monitors etc. """
 
-
 # Enthought library imports.
 from traits.api import Any, HasTraits, Int, List
 
@@ -33,5 +32,6 @@ class NodeEvent(HasTraits):
 
     # The starting index for nodes that have been inserted.
     index = Int
+
 
 #### EOF ######################################################################

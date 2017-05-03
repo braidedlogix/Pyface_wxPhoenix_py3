@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for label providers. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits
 
@@ -53,5 +52,6 @@ class LabelProvider(HasTraits):
         """ Can the label text be changed via the viewer? """
 
         return False
+
 
 #### EOF ######################################################################

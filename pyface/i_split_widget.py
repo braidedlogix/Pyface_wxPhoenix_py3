@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Mix-in class for split widgets. """
 
-
 # Enthought library imports.
 from traits.api import Callable, Enum, Float, Interface
 

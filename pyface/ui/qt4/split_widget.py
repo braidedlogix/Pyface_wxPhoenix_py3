@@ -11,7 +11,6 @@
 #------------------------------------------------------------------------------
 """ Mix-in class for split widgets. """
 
-
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -27,7 +26,6 @@ class SplitWidget(MSplitWidget, HasTraits):
     """ The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
-
 
     #### 'ISplitWidget' interface #############################################
 
@@ -67,7 +65,8 @@ class SplitWidget(MSplitWidget, HasTraits):
         else:
             pos = splitter.sizeHint().width()
 
-        splitter.setSizes([int(pos * self.ratio), int(pos * (1.0 - self.ratio))])
+        splitter.setSizes(
+            [int(pos * self.ratio), int(pos * (1.0 - self.ratio))])
 
         return splitter
 
@@ -98,5 +97,6 @@ class SplitWidget(MSplitWidget, HasTraits):
             rhs = QtGui.QWidget(parent)
 
         return rhs
+
 
 #### EOF ######################################################################

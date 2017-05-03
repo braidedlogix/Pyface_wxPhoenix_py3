@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Application window example. """
 
-
 # Standard library imports.
 import os, sys
 
@@ -29,7 +28,6 @@ import wx.lib.wxpTag
 from pyface.api import ApplicationWindow, GUI, ImageResource, ImageWidget
 from pyface.action.api import Action, MenuManager, MenuBarManager
 
-
 # HTML templates.
 HTML = """
 
@@ -42,6 +40,7 @@ HTML = """
 """
 
 PART = """<wxp module="wx" class="Panel"><param name="id" value="%s"><param name="size" value="(50, 50)"></wxp>"""
+
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """
@@ -59,10 +58,9 @@ class MainWindow(ApplicationWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
-            )
-        )
+                Action(
+                    name='E&xit', on_perform=self.close),
+                name='&File', ))
 
         return
 
@@ -89,7 +87,7 @@ class MainWindow(ApplicationWindow):
         # Create the HTML.
         parts = []
         for i in range(N):
-            parts.append(PART % str(wxid+i))
+            parts.append(PART % str(wxid + i))
 
         html = HTML % "".join(parts)
 
@@ -99,7 +97,7 @@ class MainWindow(ApplicationWindow):
 
         # Initialize all embedded wx controls.
         for i in range(N):
-            self._initialize_window(html_window, wxid+i)
+            self._initialize_window(html_window, wxid + i)
 
         sizer.Add(html_window, 1, wx.EXPAND)
 

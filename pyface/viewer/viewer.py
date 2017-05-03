@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for all viewers. """
 
-
 # Enthought library imports.
 from pyface.widget import Widget
 
@@ -27,5 +26,6 @@ class Viewer(Widget):
     """
 
     pass
+
 
 #### EOF ######################################################################

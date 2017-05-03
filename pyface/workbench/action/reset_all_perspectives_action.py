@@ -1,12 +1,10 @@
 """ An action that resets *all* perspectives. """
 
-
 # Enthought library imports.
 from pyface.api import YES
 
 # Local imports.
 from .workbench_action import WorkbenchAction
-
 
 # The message used when confirming the action.
 MESSAGE = 'Do you want to reset ALL perspectives to their defaults?'
@@ -36,5 +34,6 @@ class ResetAllPerspectivesAction(WorkbenchAction):
             window.reset_all_perspectives()
 
         return
+
 
 #### EOF ######################################################################

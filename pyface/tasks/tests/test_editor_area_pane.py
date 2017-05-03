@@ -9,7 +9,6 @@ USING_WX = ETSConfig.toolkit not in ['', 'qt4']
 
 
 class EditorAreaPaneTestCase(unittest.TestCase):
-
     @unittest.skipIf(USING_WX, "EditorAreaPane is not implemented in WX")
     def test_create_editor(self):
         """ Does creating an editor work?

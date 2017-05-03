@@ -14,7 +14,6 @@
 #  Date:   10/18/2005
 #
 #-------------------------------------------------------------------------------
-
 """ Pyface 'DockWindow' support.
 
     This package provides a Pyface 'dockable' window component that allows
@@ -50,4 +49,3 @@ from .dock_window_shell \
 
 from .dock_window_feature \
     import DockWindowFeature
-

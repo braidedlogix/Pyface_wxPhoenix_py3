@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Standard library imports.
 import logging
 
@@ -24,7 +23,6 @@ from pyface.util.guisupport import start_event_loop_qt4
 # Local imports.
 from pyface.i_gui import IGUI, MGUI
 
-
 # Logging.
 logger = logging.getLogger(__name__)
 
@@ -34,7 +32,6 @@ class GUI(MGUI, HasTraits):
     """ The toolkit specific implementation of a GUI.  See the IGUI interface
     for the API documentation.
     """
-
 
     #### 'GUI' interface ######################################################
 
@@ -198,5 +195,6 @@ class _FutureCall(QtCore.QObject):
             self._calls.remove(self)
         finally:
             self._calls_mutex.unlock()
+
 
 #### EOF ######################################################################

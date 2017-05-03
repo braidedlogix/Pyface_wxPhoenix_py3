@@ -8,9 +8,11 @@ class CompletionLexer(object):
     """
 
     # Maps Lexer names to a list of possible name separators
-    separator_map = { 'C' : [ '.', '->' ],
-                      'C++' : [ '.', '->', '::' ],
-                      'Python' : [ '.' ] }
+    separator_map = {
+        'C': ['.', '->'],
+        'C++': ['.', '->', '::'],
+        'Python': ['.']
+    }
 
     def __init__(self, lexer):
         """ Create a CompletionLexer using the specified Pygments lexer.
@@ -30,7 +32,7 @@ class CompletionLexer(object):
         if reversed_tokens and reversed_tokens[0][1].endswith('\n') and \
                 not string.endswith('\n'):
             reversed_tokens.pop(0)
-        
+
         current_op = ''
         for token, text in reversed_tokens:
 
@@ -71,4 +73,3 @@ class CompletionLexer(object):
             self._name_separators = list(name_separators)
 
     lexer = property(get_lexer, set_lexer)
-    

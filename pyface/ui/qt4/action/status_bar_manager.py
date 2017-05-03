@@ -117,4 +117,5 @@ class StatusBarManager(HasTraits):
         # widget - depends on what wx is capable of.
         self.status_bar.showMessage("  ".join(self.messages))
 
+
 #### EOF ######################################################################

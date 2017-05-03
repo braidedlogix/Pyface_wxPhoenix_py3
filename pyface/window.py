@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The abstract implementation of all pyface top-level windows. """
 
-
 # Import the toolkit specific version.
 from __future__ import absolute_import
 

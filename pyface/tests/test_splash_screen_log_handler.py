@@ -20,7 +20,6 @@ class DummyRecord(object):
 
 
 class TestSplashScreenLogHandler(unittest.TestCase):
-
     def setUp(self):
         self.ss = DummySplashScreen()
         self.sslh = SplashScreenLogHandler(self.ss)

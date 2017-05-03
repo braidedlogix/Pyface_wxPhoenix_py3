@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for all window actions. """
 
-
 # Enthought library imports.
 from pyface.window import Window
 from traits.api import Instance

@@ -26,6 +26,7 @@ from traits.api import Any, Bool, Callable, Dict, Function, HasTraits, \
 from .grid_model import GridColumn, GridModel, GridSortEvent
 from .trait_grid_cell_adapter import TraitGridCellAdapter
 
+
 # The classes below are part of the table specification.
 class TraitGridColumn(GridColumn):
     """ Structure for holding column specifications in a TraitGridModel. """
@@ -41,7 +42,7 @@ class TraitGridColumn(GridColumn):
 
     # A dictionary of formats for the display of different types. If it is
     # defined as a callable, then that callable must accept a single argument.
-    formats = Dict(key_trait = Type, value_trait=Trait('', Str, Callable))
+    formats = Dict(key_trait=Type, value_trait=Trait('', Str, Callable))
 
     # A name to designate the type of this column
     typename = Trait(None, None, Str)
@@ -49,6 +50,7 @@ class TraitGridColumn(GridColumn):
     #       more info than we have available at this point
 
     size = Int(-1)
+
 
 class TraitGridSelection(HasTraits):
     """ Structure for holding specification information. """
@@ -58,6 +60,7 @@ class TraitGridSelection(HasTraits):
 
     # The specific trait selected on the object
     trait_name = Trait(None, None, Str)
+
 
 # The meat.
 class TraitGridModel(GridModel):
@@ -69,7 +72,7 @@ class TraitGridModel(GridModel):
     inspected and every trait from that object gets a column."""
 
     # A 2-dimensional list/array containing the grid data.
-    data = List()#HasTraits)
+    data = List()  #HasTraits)
 
     # The column definitions
     columns = Trait(None, None, List(Trait(None, Str, TraitGridColumn)))
@@ -106,7 +109,7 @@ class TraitGridModel(GridModel):
                 # are write-only
                 for name, trait in self.data[0].traits().items():
                     if trait.type != 'event':
-                        self._auto_columns.append(TraitGridColumn(name = name))
+                        self._auto_columns.append(TraitGridColumn(name=name))
             else:
                 self._auto_columns = []
 
@@ -119,10 +122,8 @@ class TraitGridModel(GridModel):
 
         # attach a listener to the column definitions so we refresh when
         # they change
-        self.on_trait_change(self._on_columns_changed,
-                             'columns')
-        self.on_trait_event(self._on_columns_items_changed,
-                            'columns_items')
+        self.on_trait_change(self._on_columns_changed, 'columns')
+        self.on_trait_event(self._on_columns_items_changed, 'columns_items')
         # attach listeners to the column definitions themselves
         self.__manage_column_listeners(self.columns)
 
@@ -190,8 +191,9 @@ class TraitGridModel(GridModel):
         values = []
         for obj in self.data:
             for col in cols:
-                values.append(TraitGridSelection(obj = obj,
-                                                 trait_name = self.__get_column_name(col)))
+                values.append(
+                    TraitGridSelection(
+                        obj=obj, trait_name=self.__get_column_name(col)))
 
         return values
 
@@ -235,10 +237,9 @@ class TraitGridModel(GridModel):
 
         # now fire an event to tell the grid we're sorted
 
-        self.column_sorted = GridSortEvent(index = col, reversed = reverse)
+        self.column_sorted = GridSortEvent(index=col, reversed=reverse)
 
         return
-
 
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
@@ -299,7 +300,7 @@ class TraitGridModel(GridModel):
 
         values = []
         for row_index in rows:
-            values.append(TraitGridSelection(obj = self.data[row_index]))
+            values.append(TraitGridSelection(obj=self.data[row_index]))
 
         return values
 
@@ -314,9 +315,9 @@ class TraitGridModel(GridModel):
 
         # print 'TraitGridModel.get_cell_editor row: ', row, ' col: ', col
 
-        obj        = self.data[row]
+        obj = self.data[row]
         trait_name = self.__get_column_name(col)
-        trait      = obj.base_trait(trait_name)
+        trait = obj.base_trait(trait_name)
         if trait is None:
             return None
 
@@ -333,7 +334,7 @@ class TraitGridModel(GridModel):
         # the potential string formatting
         column = self.__get_column(col)
         obj = self._get_row(row)
-        
+
         value = self._get_data_from_row(obj, column)
         return value
 
@@ -344,7 +345,7 @@ class TraitGridModel(GridModel):
         obj = self.data[row]
         trait_name = self.__get_column_name(col)
 
-        return TraitGridSelection(obj = obj, trait_name = trait_name)
+        return TraitGridSelection(obj=obj, trait_name=trait_name)
 
     def resolve_selection(self, selection_list):
         """ Returns a list of (row, col) grid-cell coordinates that
@@ -385,9 +386,9 @@ class TraitGridModel(GridModel):
         formats = self.__get_column_formats(col)
 
         if value is not None and formats is not None and \
-			type(value)in formats and formats[type(value)] is not None:
-			   #formats.has_key(type(value)) and \
-               #formats[type(value)] is not None:
+   type(value)in formats and formats[type(value)] is not None:
+            #formats.has_key(type(value)) and \
+            #formats[type(value)] is not None:
             try:
                 format = formats[type(value)]
                 if callable(format):
@@ -502,7 +503,7 @@ class TraitGridModel(GridModel):
         if value is None:
             return None
         else:
-            return str(value) #value
+            return str(value)  #value
 
     def _set_data_on_row(self, row, column, value):
         """ Retrieve the data specified by column for this row. Attribute
@@ -520,7 +521,7 @@ class TraitGridModel(GridModel):
                     # case worl.
                     #if type(getattr(row, column)) == bool and \
                     #       type(value) != bool:
-                        # convert the value to a boolean
+                    # convert the value to a boolean
                     #    value = bool(value)
 
                     setattr(row, column, value)
@@ -531,7 +532,7 @@ class TraitGridModel(GridModel):
                 # case worl.
                 #if type(getattr(row, column.name)) == bool and \
                 #       type(value) != bool:
-                    # convert the value to a boolean
+                # convert the value to a boolean
                 #    value = bool(value)
                 setattr(row, column.name, value)
                 success = True
@@ -620,16 +621,15 @@ class TraitGridModel(GridModel):
         coldata = []
         for row in range(row_count):
             try:
-                val=self.get_value(row, col)
+                val = self.get_value(row, col)
                 if val is None:
                     coldata.append(None)
                 else:
-                    coldata.append(val)#self.get_value(row, col))
+                    coldata.append(val)  #self.get_value(row, col))
             except IndexError:
                 coldata.append(None)
 
         return coldata
-
 
     def __get_column(self, col):
 
@@ -694,8 +694,8 @@ class TraitGridModel(GridModel):
         # attach appropriate trait handlers to objects in the list
         if list is not None:
             for item in list:
-                item.on_trait_change(self._on_contained_trait_changed,
-                                     remove = remove)
+                item.on_trait_change(
+                    self._on_contained_trait_changed, remove=remove)
         return
 
     def __manage_column_listeners(self, collist, remove=False):
@@ -703,9 +703,10 @@ class TraitGridModel(GridModel):
         if collist is not None:
             for col in collist:
                 if isinstance(col, TraitGridColumn):
-                    col.on_trait_change(self._on_columns_changed,
-                                        remove = remove)
+                    col.on_trait_change(
+                        self._on_columns_changed, remove=remove)
 
         return
+
 
 #### EOF ####################################################################

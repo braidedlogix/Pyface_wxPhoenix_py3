@@ -8,7 +8,6 @@
 #-----------------------------------------------------------------------------
 """ An action that saves the active perspective as a user perspective. """
 
-
 # Local imports.
 from .user_perspective_name import UserPerspectiveName
 from .workbench_action import WorkbenchAction
@@ -32,7 +31,7 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
     def perform(self, event):
         """ Perform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # Get the name of the new perspective.
@@ -40,8 +39,7 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
         if upn.edit_traits(view='save_as_view').result:
             # Make a clone of the active perspective, but give it the new name.
             perspective = manager.clone_perspective(
-                 window, window.active_perspective, name=upn.name.strip()
-            )
+                window, window.active_perspective, name=upn.name.strip())
 
             # Add it to the window...
             window.perspectives.append(perspective)
@@ -50,5 +48,6 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
             window.active_perspective = perspective
 
         return
+
 
 #### EOF #####################################################################

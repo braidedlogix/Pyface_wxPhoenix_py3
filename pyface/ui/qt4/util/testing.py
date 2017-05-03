@@ -6,7 +6,6 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-
 """ Tools for testing. """
 
 from contextlib import contextmanager
@@ -39,7 +38,7 @@ def delete_widget(widget, timeout=1.0):
 
     timer = QTimer()
     timer.setSingleShot(True)
-    timer.setInterval(timeout*1000)
+    timer.setInterval(timeout * 1000)
     timer.timeout.connect(app.quit)
     widget.destroyed.connect(app.quit)
 
@@ -93,7 +92,7 @@ def print_qt_widget_tree(widget, level=0):
     level = level + 4
     if level == 0:
         print
-    print ' '*level, widget
+    print ' ' * level, widget
     for child in widget.children():
         print_qt_widget_tree(child, level=level)
     if level == 0:

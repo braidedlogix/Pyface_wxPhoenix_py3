@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Expandable example. """
 
-
 # Standard library imports.
 import os, sys
 
@@ -42,28 +41,34 @@ class MainWindow(SplitApplicationWindow):
     direction = Str('vertical')
 
     # The data used to create the SimpleGridModel
-    data = [['bob', 1, True, Float],
-            ['sarah', 45, True, Str],
+    data = [['bob', 1, True, Float], ['sarah', 45, True, Str],
             ['jonas', -3, False, direction]]
 
-    rows = [GridRow(name='Row 1'),
-            GridRow(name='Row 2'),
-            GridRow(name='Row 3')]
+    rows = [
+        GridRow(name='Row 1'), GridRow(name='Row 2'), GridRow(name='Row 3')
+    ]
 
-    cols = [GridColumn(name='Name'),
-            GridColumn(name='Index', read_only=True),
-            GridColumn(name='Veracity'),
-            GridColumn(name='Object')]
+    cols = [
+        GridColumn(name='Name'), GridColumn(
+            name='Index', read_only=True), GridColumn(name='Veracity'),
+        GridColumn(name='Object')
+    ]
 
     # The data used to create the TraitGridModel
-    trait_data = [GridRow(name='Bob', index=1, veracity=True, object=Float),
-                  GridRow(name='Sarah', index=45, veracity=True, object=Str),
-                  GridRow(name='Jonas', index=-3, veracity=False, object=direction)]
+    trait_data = [
+        GridRow(
+            name='Bob', index=1, veracity=True, object=Float), GridRow(
+                name='Sarah', index=45, veracity=True, object=Str), GridRow(
+                    name='Jonas', index=-3, veracity=False, object=direction)
+    ]
 
-    trait_col = [TraitGridColumn(name='name', label='Name'),
-                 TraitGridColumn(name='index', label='Index', read_only=True),
-                 TraitGridColumn(name='veracity', label='Veracity'),
-                 TraitGridColumn(name='object', label='Object')]
+    trait_col = [
+        TraitGridColumn(
+            name='name', label='Name'), TraitGridColumn(
+                name='index', label='Index', read_only=True), TraitGridColumn(
+                    name='veracity', label='Veracity'), TraitGridColumn(
+                        name='object', label='Object')
+    ]
 
     ###########################################################################
     # Protected 'SplitApplicationWindow' interface.
@@ -76,12 +81,12 @@ class MainWindow(SplitApplicationWindow):
         #                                      rows = self.rows,
         #                                      columns = self.cols)
 
-        self._model = model = TraitGridModel(data = self.trait_data,
-                                             columns = self.trait_col,
-                                             row_name_trait = 'name')
+        self._model = model = TraitGridModel(
+            data=self.trait_data,
+            columns=self.trait_col,
+            row_name_trait='name')
 
-        self._grid = grid = Grid(parent, model = model)
-
+        self._grid = grid = Grid(parent, model=model)
 
         self._grid.on_trait_change(self._on_grid_anytrait_changed)
 

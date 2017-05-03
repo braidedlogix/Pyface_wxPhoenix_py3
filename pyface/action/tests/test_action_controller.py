@@ -8,7 +8,6 @@ from ..action_event import ActionEvent
 
 
 class TestActionController(unittest.TestCase):
-
     def setUp(self):
         # test whether function is called by updating list
         # XXX should really use mock

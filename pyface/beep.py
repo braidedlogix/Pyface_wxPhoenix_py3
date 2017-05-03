@@ -1,5 +1,4 @@
 # Copyright 2012 Philip Chimento
-
 """Sound the system bell."""
 
 # Import the toolkit-specific version

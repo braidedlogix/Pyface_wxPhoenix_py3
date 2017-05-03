@@ -1,6 +1,5 @@
 """ A workbench. """
 
-
 # Standard library imports.
 import _pickle as cPickle
 import logging
@@ -19,7 +18,6 @@ from .i_workbench import IWorkbench
 from .user_perspective_manager import UserPerspectiveManager
 from .workbench_window import WorkbenchWindow
 from .window_event import WindowEvent, VetoableWindowEvent
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -238,12 +236,8 @@ class Workbench(HasTraits):
         """ Trait initializer. """
 
         # It would be preferable to base this on GUI.state_location.
-        state_location = os.path.join(
-            ETSConfig.application_home,
-            'pyface',
-            'workbench',
-            ETSConfig.toolkit
-        )
+        state_location = os.path.join(ETSConfig.application_home, 'pyface',
+                                      'workbench', ETSConfig.toolkit)
 
         if not os.path.exists(state_location):
             os.makedirs(state_location)
@@ -418,5 +412,6 @@ class Workbench(HasTraits):
             self.exited = self
 
         return
+
 
 #### EOF ######################################################################

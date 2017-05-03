@@ -1,4 +1,3 @@
-
 #------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
@@ -14,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -42,7 +40,6 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
-
     #### 'ISplashScreen' interface ############################################
 
     image = Instance(ImageResource, ImageResource('splash'))
@@ -51,13 +48,13 @@ class SplashScreen(MSplashScreen, Window):
 
     show_log_messages = Bool(True)
 
-    text = Str#Unicode
+    text = Str  #Unicode
 
     text_color = Any
 
     text_font = Any
 
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
     ###########################################################################
     # Protected 'IWidget' interface.
@@ -79,17 +76,15 @@ class SplashScreen(MSplashScreen, Window):
             # wx Id.
             -1,
             # Window style.
-            style = wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR
-        )
+            style=wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR)
 
         # By default we create a font slightly bigger and slightly more italic
         # than the normal system font ;^)  The font is used inside the event
         # handler for 'EVT_PAINT'.
         self._wx_default_text_font = new_font_like(
             wx.NORMAL_FONT,
-            point_size = wx.NORMAL_FONT.GetPointSize() + 1,
-            style      = wx.ITALIC
-        )
+            point_size=wx.NORMAL_FONT.GetPointSize() + 1,
+            style=wx.ITALIC)
 
         # This allows us to write status text on the splash screen.
         splash_screen.Bind(wx.EVT_PAINT, self._on_paint)
@@ -114,7 +109,7 @@ class SplashScreen(MSplashScreen, Window):
 
         if self.control is not None:
             # Get the window that the splash image is drawn in.
-            window = self.control#.GetSplashWindow()
+            window = self.control  #.GetSplashWindow()
 
             dc = wx.PaintDC(window)
 
@@ -137,5 +132,6 @@ class SplashScreen(MSplashScreen, Window):
 
         # Let the normal wx paint handling do its stuff.
         event.Skip()
+
 
 #### EOF ######################################################################

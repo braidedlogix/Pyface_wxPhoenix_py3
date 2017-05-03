@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Tree example. """
 
-
 # Standard library imports.
 import os, sys
 
@@ -47,8 +46,8 @@ class MainWindow(SplitApplicationWindow):
         """ Creates the left hand side or top depending on the split. """
 
         self._tree = FileTree(
-            parent, root=os.path.abspath(os.curdir),
-        )
+            parent,
+            root=os.path.abspath(os.curdir), )
 
         self._tree.on_trait_change(self._on_tree_anytrait_changed)
 

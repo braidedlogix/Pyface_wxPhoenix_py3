@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A file system tree. """
 
-
 # Standard library imports.
 from os import listdir
 from os.path import basename, isdir, join
@@ -84,5 +83,6 @@ class FileTree(Tree):
 
     # The model that provides the data for the tree.
     model = Instance(FileTreeModel, ())
+
 
 ##### EOF #####################################################################

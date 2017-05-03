@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A tree viewer for local file systems. """
 
-
 # Standard library imports.
 from os import listdir
 from os.path import basename, dirname, isdir, join
@@ -110,5 +109,6 @@ class FileTreeViewer(TreeViewer):
     # The label provider provides, err, the labels for the items in the tree
     # (a label can have text and/or an image).
     label_provider = Instance(FileTreeLabelProvider, ())
+
 
 ##### EOF #####################################################################

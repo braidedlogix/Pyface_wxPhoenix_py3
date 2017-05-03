@@ -13,11 +13,9 @@
 #------------------------------------------------------------------------------
 """ A grid (spreadsheet) widget. """
 
-
 # Major package imports.
 import wx
 from wx.grid import Grid as wxGrid
-
 
 # Local imports.
 from .grid_model import GridModel
@@ -193,7 +191,7 @@ class Grid(wxGrid):
             # Popup a context menu allowing the user to delete the row.
             menu = wx.Menu()
             menu.Append(101, "Delete Row")
-            self.Bind(wx.EVT_MENU, self._on_delete_row, 101)
+            self.Bind(wx.EVT_MENU, self._on_delete_row, id=101)
 
             self.PopupMenu(menu, evt.GetPosition())
 
@@ -263,7 +261,6 @@ class Grid(wxGrid):
 
         return
 
-
     def ResetView(self, grid):
         """
         (wxGrid) -> Reset the grid view.   Call this to
@@ -275,14 +272,16 @@ class Grid(wxGrid):
 
         grid.BeginBatch()
         for current, new, delmsg, addmsg in [
-            (self._rows, self.GetNumberRows(), GRIDTABLE_NOTIFY_ROWS_DELETED, GRIDTABLE_NOTIFY_ROWS_APPENDED),
-            (self._cols, self.GetNumberCols(), GRIDTABLE_NOTIFY_COLS_DELETED, GRIDTABLE_NOTIFY_COLS_APPENDED),
+            (self._rows, self.GetNumberRows(), GRIDTABLE_NOTIFY_ROWS_DELETED,
+             GRIDTABLE_NOTIFY_ROWS_APPENDED),
+            (self._cols, self.GetNumberCols(), GRIDTABLE_NOTIFY_COLS_DELETED,
+             GRIDTABLE_NOTIFY_COLS_APPENDED),
         ]:
             if new < current:
-                msg = GridTableMessage(self,delmsg,new,current-new)
+                msg = GridTableMessage(self, delmsg, new, current - new)
                 grid.ProcessTableMessage(msg)
             elif new > current:
-                msg = GridTableMessage(self,addmsg,new-current)
+                msg = GridTableMessage(self, addmsg, new - current)
                 grid.ProcessTableMessage(msg)
                 self.UpdateValues(grid)
         grid.EndBatch()
@@ -299,8 +298,6 @@ class Grid(wxGrid):
         grid.ForceRefresh()
 
         return
-
-
 
     ###########################################################################
     # Protected interface.
@@ -349,5 +346,6 @@ class Grid(wxGrid):
                 self.MakeCellVisible(newRow, self.GetNumberCols() - 1)
 
         return
+
 
 #### EOF ######################################################################

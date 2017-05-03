@@ -22,7 +22,6 @@ class Clipboard(BaseClipboard):
     """ A dummy clipboard implementationf for the null backend.
     """
 
-
     #---------------------------------------------------------------------------
     #  'data' property methods:
     #---------------------------------------------------------------------------
@@ -69,5 +68,5 @@ class Clipboard(BaseClipboard):
     def _set_file_data(self, data):
         pass
 
-    def _get_has_file_data (self):
+    def _get_has_file_data(self):
         return False

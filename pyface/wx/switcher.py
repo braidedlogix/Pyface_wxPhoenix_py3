@@ -30,14 +30,14 @@ class SwitcherModel(HasTraits):
 
     __traits__ = {
         # The index of the selected 'page'.
-        'selected' : -1,
+        'selected': -1,
     }
 
     def __init__(self):
         """ Creates a new switcher model. """
 
         # The items to display in the switcher control.
-        self.items = [] # (str label, object value)
+        self.items = []  # (str label, object value)
 
         return
 
@@ -131,10 +131,7 @@ class SwitcherControl(wx.Panel):
 
         # Combo.
         self.combo = combo = wx.ComboBox(
-            parent,
-            -1,
-            style=wx.CB_DROPDOWN | wx.CB_READONLY
-        )
+            parent, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
         sizer.Add(combo, 1, wx.EXPAND | wx.ALIGN_CENTER | wx.ALL, 5)
 
         # Ask the model for the available options.
@@ -284,5 +281,6 @@ class Switcher(wx.Panel):
         sizer.Fit(self)
 
         return
+
 
 #### EOF ######################################################################

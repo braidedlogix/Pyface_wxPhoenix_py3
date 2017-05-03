@@ -1,6 +1,5 @@
 """ The tool bar manager for the Envisage workbench window. """
 
-
 # Enthought library imports.
 import pyface.action.api as pyface
 from traits.api import Instance
@@ -29,9 +28,9 @@ class ToolBarManager(pyface.ToolBarManager):
             controller = ActionController(window=self.window)
 
         tool_bar = super(ToolBarManager, self).create_tool_bar(
-            parent, controller=controller
-        )
+            parent, controller=controller)
 
         return tool_bar
+
 
 #### EOF ######################################################################

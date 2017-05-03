@@ -5,7 +5,6 @@ from pyface.tasks.api import Task
 from ..task_window import TaskWindow
 
 
-
 def _task_window_with_named_tasks(*names, **kwargs):
     tasks = [Task(name=name) for name in names]
 
@@ -18,7 +17,6 @@ def _task_window_with_named_tasks(*names, **kwargs):
 
 
 class TestTaskWindow(unittest.TestCase, UnittestTools):
-
     def test_title_default(self):
         task_window = TaskWindow()
 
@@ -26,8 +24,7 @@ class TestTaskWindow(unittest.TestCase, UnittestTools):
         self.assertEqual(task_window.title, '')
 
     def test_title_no_active_task(self):
-        task_window = _task_window_with_named_tasks(
-            'Test Task', 'Test Task 2')
+        task_window = _task_window_with_named_tasks('Test Task', 'Test Task 2')
 
         # should be empty
         self.assertEqual(task_window.title, '')
@@ -125,7 +122,9 @@ class TestTaskWindow(unittest.TestCase, UnittestTools):
 
     def test_set_title_change_active_task(self):
         task_window = _task_window_with_named_tasks(
-            'Test Task', 'Test Task 2', title="Window title",
+            'Test Task',
+            'Test Task 2',
+            title="Window title",
             active_first=True)
         task = task_window.tasks[1]
 

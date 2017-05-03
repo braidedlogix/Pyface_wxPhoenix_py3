@@ -25,13 +25,14 @@ from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 USING_QT = ETSConfig.toolkit not in ['', 'wx']
 
-class TestMessageDialog(unittest.TestCase):
 
+class TestMessageDialog(unittest.TestCase):
     def setUp(self):
         self.gui = GUI()
         self.dialog = SingleChoiceDialog(choices=['red', 'blue', 'green'])
@@ -72,7 +73,8 @@ class TestMessageDialog(unittest.TestCase):
 
     def test_choice_strings(self):
         # test that choice strings work using simple strings
-        self.assertEqual(self.dialog._choice_strings(), ['red', 'blue', 'green'])
+        self.assertEqual(self.dialog._choice_strings(),
+                         ['red', 'blue', 'green'])
 
     def test_choice_strings_convert(self):
         # test that choice strings work using simple strings
@@ -87,7 +89,8 @@ class TestMessageDialog(unittest.TestCase):
 
         self.dialog.choices = [Item(name) for name in ['red', 'blue', 'green']]
         self.dialog.name_attribute = 'description'
-        self.assertEqual(self.dialog._choice_strings(), ['red', 'blue', 'green'])
+        self.assertEqual(self.dialog._choice_strings(),
+                         ['red', 'blue', 'green'])
 
     def test_choice_strings_name_attribute_convert(self):
         # test that choice strings work using attribute name of objects
@@ -133,7 +136,8 @@ class TestMessageDialog(unittest.TestCase):
     def test_close(self):
         # test that closing works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_run(when_opened=lambda x: x.get_dialog_widget().close())
+        tester.open_and_run(
+            when_opened=lambda x: x.get_dialog_widget().close())
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
         self.assertIsNone(self.dialog.choice)

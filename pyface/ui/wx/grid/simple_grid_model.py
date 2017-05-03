@@ -24,6 +24,7 @@ from pyface.wx.drag_and_drop import clipboard as enClipboard
 # local imports
 from .grid_model import GridColumn, GridModel, GridRow
 
+
 class SimpleGridModel(GridModel):
     """ A SimpleGridModel simply builds a table from a 2-dimensional
     list/array containing the data. Optionally users can pass in specifications
@@ -209,10 +210,8 @@ class SimpleGridModel(GridModel):
 
         context_menu = MenuManager(
             Group(
-                _CopyAction(self, row, col, name='Copy'),
-                id = 'Group'
-                )
-            )
+                _CopyAction(
+                    self, row, col, name='Copy'), id='Group'))
 
         return context_menu
 
@@ -282,9 +281,9 @@ class SimpleGridModel(GridModel):
 
         return rowdata
 
+
 # Private class
 class _CopyAction(Action):
-
     def __init__(self, model, row, col, **kw):
 
         super(_CopyAction, self).__init__(**kw)

@@ -1,6 +1,5 @@
 """ The menu bar manager for Envisage workbench windows. """
 
-
 # Enthought library imports.
 from pyface.action.api import MenuBarManager as BaseMenuBarManager
 from traits.api import Instance
@@ -28,9 +27,9 @@ class MenuBarManager(BaseMenuBarManager):
         controller = ActionController(window=self.window)
 
         menu_bar = super(MenuBarManager, self).create_menu_bar(
-            parent, controller=controller
-        )
+            parent, controller=controller)
 
         return menu_bar
+
 
 #### EOF ######################################################################

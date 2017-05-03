@@ -37,9 +37,10 @@ class MultiToolbarWindow(ApplicationWindow):
 
     # Map of toolbar to screen location.
     _tool_bar_locations = Trait({},
-                                TraitDict(Trait(ToolBarManager),
-                                          TraitEnum('top', 'bottom',
-                                                    'left', 'right')))
+                                TraitDict(
+                                    Trait(ToolBarManager),
+                                    TraitEnum('top', 'bottom', 'left',
+                                              'right')))
 
     ###########################################################################
     # Protected 'Window' interface.
@@ -148,5 +149,6 @@ class MultiToolbarWindow(ApplicationWindow):
 
         self._tool_bar_managers.append(tool_bar_manager)
         self._tool_bar_locations[tool_bar_manager] = location
+
 
 #### EOF ######################################################################

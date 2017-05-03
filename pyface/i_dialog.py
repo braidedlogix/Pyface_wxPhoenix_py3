@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The abstract interface for all pyface dialogs. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Enum, Int, Str, Unicode
 

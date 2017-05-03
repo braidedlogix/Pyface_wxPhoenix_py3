@@ -17,7 +17,6 @@ This is the menu that has the tile/cascade actions etc.
 
 """
 
-
 # Enthought library imports.
 from traits.api import Str
 
@@ -30,7 +29,7 @@ class Cascade(WindowAction):
 
     #### 'Action' interface ###################################################
 
-    name    = Str("Ca&scade")
+    name = Str("Ca&scade")
     tooltip = Str("Cascade the windows")
 
     ###########################################################################
@@ -44,12 +43,13 @@ class Cascade(WindowAction):
 
         return
 
+
 class Tile(WindowAction):
     """ Tiles the windows horizontally. """
 
     #### 'Action' interface ###################################################
 
-    name    = Str("&Tile")
+    name = Str("&Tile")
     tooltip = Str("Tile the windows")
 
     ###########################################################################
@@ -63,12 +63,13 @@ class Tile(WindowAction):
 
         return
 
+
 class ArrangeIcons(WindowAction):
     """ Arranges the icons. """
 
     #### 'Action' interface ###################################################
 
-    name    = Str("&Arrange Icons")
+    name = Str("&Arrange Icons")
     tooltip = Str("Arrange the icons")
 
     ###########################################################################
@@ -82,12 +83,13 @@ class ArrangeIcons(WindowAction):
 
         return
 
+
 class Next(WindowAction):
     """ Activates the next window. """
 
     #### 'Action' interface ###################################################
 
-    name    = Str("&Next")
+    name = Str("&Next")
     tooltip = Str("Activate the next window")
 
     ###########################################################################
@@ -101,12 +103,13 @@ class Next(WindowAction):
 
         return
 
+
 class Previous(WindowAction):
     """ Activates the previous window. """
 
     #### 'Action' interface ###################################################
 
-    name    = Str("&Previous")
+    name = Str("&Previous")
     tooltip = Str("Activate the previous window")
 
     ###########################################################################
@@ -120,12 +123,13 @@ class Previous(WindowAction):
 
         return
 
+
 class Close(WindowAction):
     """ Closes the current window. """
 
     #### 'Action' interface ###################################################
 
-    name    = Str("&Close")
+    name = Str("&Close")
     tooltip = Str("Close the current window")
 
     ###########################################################################
@@ -141,12 +145,13 @@ class Close(WindowAction):
 
         return
 
+
 class CloseAll(WindowAction):
     """ Closes all of the child windows. """
 
     #### 'Action' interface ###################################################
 
-    name    = Str("Close A&ll")
+    name = Str("Close A&ll")
     tooltip = Str("Close all of the windows.")
 
     ###########################################################################
@@ -160,6 +165,7 @@ class CloseAll(WindowAction):
             page.Close()
 
         return
+
 
 class MDIWindowMenu(MenuManager):
     """ A menu that mimics the standard MDI window menus.
@@ -185,7 +191,7 @@ class MDIWindowMenu(MenuManager):
             Previous(window=window),
             Close(window=window),
             CloseAll(window=window),
-            name = '&Window'
-        )
+            name='&Window')
+
 
 #### EOF ######################################################################

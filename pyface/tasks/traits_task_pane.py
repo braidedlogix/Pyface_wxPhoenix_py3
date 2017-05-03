@@ -25,7 +25,7 @@ class TraitsTaskPane(TaskPane):
         """ Use the model object for the Traits UI context, if appropriate.
         """
         if self.model:
-            return { 'object': self.model, 'pane': self }
+            return {'object': self.model, 'pane': self}
         return super(TraitsTaskPane, self).trait_context()
 
     ###########################################################################

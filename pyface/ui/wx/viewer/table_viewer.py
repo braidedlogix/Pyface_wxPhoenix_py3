@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A viewer for tabular data. """
 
-
 # Major package imports.
 import wx
 from wx.lib.agw import ultimatelistctrl as ULC
@@ -37,15 +36,16 @@ class TableViewer(ContentViewer):
 
     # The label provider provides, err, the labels for the items in the table
     # (a label can have text and/or an image).
-    label_provider = Instance(TableLabelProvider, factory = TableLabelProvider)
+    label_provider = Instance(TableLabelProvider, factory=TableLabelProvider)
 
     # The column provider provides information about the columns in the table
     # (column headers, width etc).
-    column_provider=Trait(TableColumnProvider(),Instance(TableColumnProvider))
+    column_provider = Trait(TableColumnProvider(),
+                            Instance(TableColumnProvider))
 
     # The colours used to render odd and even numbered rows.
     even_row_background = Color("white")
-    odd_row_background  = Color((245, 245, 255))
+    odd_row_background = Color((245, 245, 255))
 
     # A row has been selected.
     row_selected = Event
@@ -55,7 +55,6 @@ class TableViewer(ContentViewer):
 
     # A drag operation was started on a node.
     row_begin_drag = Event
-
 
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.
@@ -82,9 +81,10 @@ class TableViewer(ContentViewer):
         table.Bind(wx.EVT_LIST_BEGIN_DRAG, self._on_list_begin_drag)
         table.Bind(wx.EVT_LIST_BEGIN_RDRAG, self._on_list_begin_rdrag)
 
-        table.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT,self._on_list_begin_label_edit)
+        table.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT,
+                   self._on_list_begin_label_edit)
 
-        table.Bind(wx.EVT_LIST_END_LABEL_EDIT, self._on_list_end_label_edit )
+        table.Bind(wx.EVT_LIST_END_LABEL_EDIT, self._on_list_end_label_edit)
 
         # fixme: Bug[732104] indicates that this event does not get fired
         # in a virtual list control (it *does* get fired in a regular list
@@ -107,13 +107,11 @@ class TableViewer(ContentViewer):
     def select_row(self, row):
         """ Select the specified row. """
 
-        self.control.SetItemState(
-            row, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED
-        )
+        self.control.SetItemState(row, wx.LIST_STATE_SELECTED,
+                                  wx.LIST_STATE_SELECTED)
 
-        self.control.SetItemState(
-            row, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED
-        )
+        self.control.SetItemState(row, wx.LIST_STATE_FOCUSED,
+                                  wx.LIST_STATE_FOCUSED)
 
         # Make sure that the selected row is visible.
         fudge = max(0, row - 5)
@@ -207,10 +205,10 @@ class TableViewer(ContentViewer):
     ###########################################################################
 
     FORMAT_MAP = {
-        'left'   : wx.LIST_FORMAT_LEFT,
-        'right'  : wx.LIST_FORMAT_RIGHT,
-        'center' : wx.LIST_FORMAT_CENTRE,
-        'centre' : wx.LIST_FORMAT_CENTRE
+        'left': wx.LIST_FORMAT_LEFT,
+        'right': wx.LIST_FORMAT_RIGHT,
+        'center': wx.LIST_FORMAT_CENTRE,
+        'centre': wx.LIST_FORMAT_CENTRE
     }
 
     def _create_widget(self, parent):
@@ -228,7 +226,7 @@ class TableViewer(ContentViewer):
             # Alignment of header text AND ALL cells in the column.
             alignment = self.column_provider.get_alignment(self, index)
             info.m_format = self.FORMAT_MAP.get(alignment, wx.LIST_FORMAT_LEFT)
-            self.control.InsertColumn(index, info)#
+            self.control.InsertColumn(index, info)  #
 
         # Update the table contents and the column widths.
         self._update_contents()
@@ -242,7 +240,7 @@ class TableViewer(ContentViewer):
         self._elements = []
         if self.input is not None:
             # Filtering...
-            for element in  self.content_provider.get_elements(self.input):
+            for element in self.content_provider.get_elements(self.input):
                 for filter in self.filters:
                     if not filter.select(self, self.input, element):
                         break
@@ -291,7 +289,7 @@ class TableViewer(ContentViewer):
         return width
 
 
-class _Table(wx.ListCtrl): #(ULC.UltimateListCtrl):#
+class _Table(wx.ListCtrl):  #(ULC.UltimateListCtrl):#
     """ The wx control that we use to implement the table viewer. """
 
     # Default style.
@@ -323,13 +321,11 @@ class _Table(wx.ListCtrl): #(ULC.UltimateListCtrl):#
         # colour.
         self._even_row_attribute = wx.ListItemAttr()
         self._even_row_attribute.SetBackgroundColour(
-            self._viewer.even_row_background
-        )
+            self._viewer.even_row_background)
 
         self._odd_row_attribute = wx.ListItemAttr()
         self._odd_row_attribute.SetBackgroundColour(
-            self._viewer.odd_row_background
-        )
+            self._viewer.odd_row_background)
 
         return
 
@@ -371,5 +367,6 @@ class _Table(wx.ListCtrl): #(ULC.UltimateListCtrl):#
             attribute = self._odd_row_attribute
 
         return attribute
+
 
 #### EOF ######################################################################

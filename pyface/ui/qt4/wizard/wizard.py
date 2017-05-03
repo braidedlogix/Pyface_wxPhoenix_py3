@@ -11,7 +11,6 @@
 #------------------------------------------------------------------------------
 """ The base class for all pyface wizards. """
 
-
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -30,7 +29,6 @@ class Wizard(MWizard, Dialog):
     See the IWizard interface for the API documentation.
 
     """
-
 
     #### 'IWizard' interface ##################################################
 
@@ -215,5 +213,6 @@ class _Wizard(QtGui.QWizard):
                 id = -1
 
         return id
+
 
 #### EOF ######################################################################

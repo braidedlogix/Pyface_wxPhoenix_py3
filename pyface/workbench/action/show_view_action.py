@@ -1,6 +1,5 @@
 """ An action that shows a dialog to allow the user to choose a view. """
 
-
 # Local imports.
 from .view_chooser import ViewChooser
 from .workbench_action import WorkbenchAction
@@ -40,5 +39,6 @@ class ShowViewAction(WorkbenchAction):
             chooser.view.activate()
 
         return
+
 
 #### EOF ######################################################################

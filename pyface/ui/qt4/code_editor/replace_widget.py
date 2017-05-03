@@ -15,8 +15,8 @@ from pyface.qt import QtGui, QtCore
 
 from .find_widget import FindWidget
 
-class ReplaceWidget(FindWidget):
 
+class ReplaceWidget(FindWidget):
     def __init__(self, parent):
         super(FindWidget, self).__init__(parent)
         self.adv_code_widget = weakref.ref(parent)

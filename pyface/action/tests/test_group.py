@@ -8,7 +8,6 @@ from ..group import Group
 
 
 class TestActionItem(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         # test whether function is called by updating list
         # XXX should really use mock

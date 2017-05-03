@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ A status bar manager realizes itself in a status bar control.
 """
 
@@ -31,7 +30,7 @@ class StatusBarManager(HasTraits):
     message = Property
 
     # The messages to be displayed in the status bar fields.
-    messages = List(Str)#Unicode)
+    messages = List(Str)  #Unicode)
 
     # The toolkit-specific control that represents the status bar.
     status_bar = Any
@@ -114,5 +113,6 @@ class StatusBarManager(HasTraits):
                 self.status_bar.SetStatusText(self.messages[i], i)
 
         return
+
 
 #### EOF ######################################################################

@@ -28,7 +28,6 @@ class ListBox(Widget):
     # Default style.
     STYLE = wx.LB_SINGLE | wx.LB_HSCROLL | wx.LB_NEEDED_SB
 
-
     def __init__(self, parent, **traits):
         """ Creates a new list box. """
 
@@ -44,8 +43,8 @@ class ListBox(Widget):
         return
 
     def dispose(self):
-        self.model.on_trait_change(self._on_model_changed, "list_changed",
-                                   remove = True)
+        self.model.on_trait_change(
+            self._on_model_changed, "list_changed", remove=True)
         self.model.dispose()
         return
 
@@ -119,13 +118,13 @@ class ListBox(Widget):
     def _create_control(self, parent):
         """ Creates the widget. """
 
-        self.control = wx.ListBox(parent, -1, style = self.STYLE)
+        self.control = wx.ListBox(parent, -1, style=self.STYLE)
 
         # Wire it up!
-        wx.EVT_LISTBOX(self.control, self.control.GetId(),
-                       self._on_item_selected)
-        wx.EVT_LISTBOX_DCLICK(self.control, self.control.GetId(),
-                              self._on_item_activated)
+        wx.EVT_LISTBOX(self.control,
+                       self.control.GetId(), self._on_item_selected)
+        wx.EVT_LISTBOX_DCLICK(self.control,
+                              self.control.GetId(), self._on_item_activated)
 
         # Populate the list.
         self._populate()
@@ -140,5 +139,6 @@ class ListBox(Widget):
             self.control.Append(label, item)
 
         return
+
 
 #### EOF ######################################################################

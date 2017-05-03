@@ -27,7 +27,6 @@ from .status_bar_manager import StatusBarManager
 from .tool_bar_manager import ToolBarManager
 from .window_action import WindowAction
 
-
 ###############################################################################
 # This part of the module handles widgets that are still wx specific.  This
 # will all be removed when everything has been ported to PyQt and pyface

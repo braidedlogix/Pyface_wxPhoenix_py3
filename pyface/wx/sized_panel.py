@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A panel sized by a sizer. """
 
-
 # Major package imports.
 import wx
 
@@ -54,5 +53,6 @@ class SizedPanel(wx.Panel):
         self.sizer.Layout()
 
         return
+
 
 #### EOF ######################################################################

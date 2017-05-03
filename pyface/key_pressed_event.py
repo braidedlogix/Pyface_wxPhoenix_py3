@@ -1,6 +1,5 @@
 """ The event that is generated when a key is pressed. """
 
-
 # Enthought library imports.
 from traits.api import Bool, HasTraits, Int, Any
 
@@ -24,5 +23,6 @@ class KeyPressedEvent(HasTraits):
 
     #: The original toolkit specific event.
     event = Any
+
 
 #### EOF ######################################################################

@@ -1,6 +1,5 @@
 """ A Group for toggling the visibility of a task's dock panes. """
 
-
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
 from traits.api import cached_property, Instance, List, on_trait_change, \
@@ -61,6 +60,7 @@ class DockPaneToggleAction(Action):
     def _update_visible(self):
         if self.dock_pane:
             self.visible = self.dock_pane.closable
+
 
 class DockPaneToggleGroup(Group):
     """ A Group for toggling the visibility of a task's dock panes.

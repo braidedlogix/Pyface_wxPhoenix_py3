@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Enthought library imports.
 from traits.api import Any, HasTraits, provides
 
@@ -26,7 +25,6 @@ class Widget(MWidget, HasTraits):
     interface for the API documentation.
     """
 
-
     #### 'IWidget' interface ##################################################
 
     control = Any
@@ -39,5 +37,6 @@ class Widget(MWidget, HasTraits):
 
     def destroy(self):
         self.control = None
+
 
 #### EOF ######################################################################

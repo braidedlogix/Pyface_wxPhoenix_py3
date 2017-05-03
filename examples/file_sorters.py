@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Sorters for local file system viewers. """
 
-
 # Standard library imports.
 from os.path import isdir
 
@@ -43,5 +42,6 @@ class FileSorter(ViewerSorter):
             category = 1
 
         return category
+
 
 #### EOF ######################################################################

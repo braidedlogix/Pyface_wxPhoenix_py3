@@ -123,9 +123,10 @@ class ResourceManager(HasTraits):
                     for extension in extensions:
                         searchpath = '%s/%s%s' % (path, basename, extension)
                         try:
-                            data = resource_string(dirname.__name__, searchpath)
-                            return ImageReference(self.resource_factory,
-                                data = data)
+                            data = resource_string(dirname.__name__,
+                                                   searchpath)
+                            return ImageReference(
+                                self.resource_factory, data=data)
                         except IOError:
                             pass
                 else:
@@ -138,8 +139,7 @@ class ResourceManager(HasTraits):
                     not_used, extension = os.path.splitext(filename)
                     if extension in extensions:
                         reference = ImageReference(
-                            self.resource_factory, filename=filename
-                        )
+                            self.resource_factory, filename=filename)
 
                         return reference
 
@@ -153,8 +153,7 @@ class ResourceManager(HasTraits):
                     try:
                         image_data = zip_file.read(basename + extension)
                         reference = ImageReference(
-                            self.resource_factory, data=image_data
-                        )
+                            self.resource_factory, data=image_data)
 
                         return reference
 
@@ -173,8 +172,6 @@ class ResourceManager(HasTraits):
                     zippath = tail + '/' + zippath
                 else:
                     zippath = tail
-
-
 
             # if we found a zipfile, then look inside it for the image!
             if is_zipfile(filepath):
@@ -200,8 +197,7 @@ class ResourceManager(HasTraits):
                             # the image
                             image_data = zip_file.read(path)
                             reference = ImageReference(
-                                self.resource_factory, data=image_data
-                                )
+                                self.resource_factory, data=image_data)
 
                             # if there was no exception then return the result
                             return reference
@@ -237,5 +233,6 @@ class ResourceManager(HasTraits):
                 break
 
         return resource_path
+
 
 #### EOF ######################################################################

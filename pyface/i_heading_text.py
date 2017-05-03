@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Heading text. """
 
-
 # Enthought library imports.
 from traits.api import Instance, Int, Interface, Unicode
 

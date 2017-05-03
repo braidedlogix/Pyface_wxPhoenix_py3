@@ -1,6 +1,5 @@
 """ The workbench interface. """
 
-
 # Enthought library imports.
 from traits.api import Event, Instance, Interface, List, Str
 from traits.api import provides, VetoableEvent
@@ -101,5 +100,6 @@ class IWorkbench(Interface):
         Returns None if no such editor exists.
 
         """
+
 
 #### EOF ######################################################################

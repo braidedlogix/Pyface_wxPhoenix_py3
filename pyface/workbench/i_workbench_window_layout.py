@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The workbench window layout interface. """
 
-
 # Enthought library imports.
 from traits.api import Event, HasTraits, Instance, Interface, Str
 from traits.api import provides
@@ -387,5 +386,6 @@ class MWorkbenchWindowLayout(HasTraits):
                 editor_references[editor.id] = editor_reference
 
         return editor_references
+
 
 #### EOF ######################################################################

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The default tree content provider. """
 
-
 # Local imports.
 from .tree_content_provider import TreeContentProvider
 
@@ -88,5 +87,6 @@ class DefaultTreeContentProvider(TreeContentProvider):
         """ Creates a new item. """
 
         return TreeItem(**kw)
+
 
 #### EOF ####################################################################

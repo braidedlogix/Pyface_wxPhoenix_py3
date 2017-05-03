@@ -8,7 +8,6 @@
 #-----------------------------------------------------------------------------
 """ An action that renames a user perspective. """
 
-
 # Local imports.
 from .user_perspective_action import UserPerspectiveAction
 from .user_perspective_name import UserPerspectiveName
@@ -29,10 +28,10 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
     # 'Action' interface.
     ###########################################################################
 
-    def perform( self, event):
+    def perform(self, event):
         """ Perform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # Get the new name.
@@ -41,5 +40,6 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
             manager.rename(window.active_perspective, upn.name.strip())
 
         return
+
 
 #### EOF #####################################################################

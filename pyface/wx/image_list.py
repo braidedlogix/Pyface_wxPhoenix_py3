@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A cached image list. """
 
-
 # Major package imports.
 import wx
 
@@ -32,7 +31,7 @@ class ImageList(wx.ImageList):
         self._height = height
 
         # Cache of the indexes of the images in the list!
-        self._cache = {} # {filename : index}
+        self._cache = {}  # {filename : index}
 
         return
 
@@ -104,9 +103,11 @@ class ImageList(wx.ImageList):
     def _scale(self, image):
         """ Scales the specified image (if necessary). """
 
-        if image.GetWidth() != self._width or image.GetHeight()!= self._height:
+        if image.GetWidth() != self._width or image.GetHeight(
+        ) != self._height:
             image.Rescale(self._width, self._height)
 
         return image
+
 
 #### EOF ######################################################################

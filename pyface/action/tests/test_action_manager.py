@@ -9,7 +9,6 @@ from ..group import Group
 
 
 class TestActionItem(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         # test whether function is called by updating list
         # XXX should really use mock
@@ -77,7 +76,8 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         group2 = Group()
         action_manager.append(group2)
         default_group = action_manager._get_default_group()
-        self.assertEqual(action_manager.groups, [self.group, default_group, group2])
+        self.assertEqual(action_manager.groups,
+                         [self.group, default_group, group2])
         self.assertEqual(group2.parent, action_manager)
 
     def test_append_string(self):
@@ -119,7 +119,8 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         group2 = Group()
         action_manager.insert(1, group2)
         default_group = action_manager._get_default_group()
-        self.assertEqual(action_manager.groups, [self.group, group2, default_group])
+        self.assertEqual(action_manager.groups,
+                         [self.group, group2, default_group])
         self.assertEqual(group2.parent, action_manager)
 
     def test_insert_string(self):
@@ -178,13 +179,11 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         self.group.append(action_manager_2)
         result = []
         action_manager.walk(result.append)
-        self.assertEqual(result,
-                         [action_manager,
-                            self.group,
-                                action_manager_2,
-                                    action_manager_2._get_default_group(),
-                                        self.action_item,
-                            action_manager._get_default_group()])
+        self.assertEqual(result, [
+            action_manager, self.group, action_manager_2,
+            action_manager_2._get_default_group(), self.action_item,
+            action_manager._get_default_group()
+        ])
 
     def test_enabled_changed(self):
         self.group.append(self.action_item)

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A menu manager realizes itself in a menu control. """
 
-
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 MenuManager = toolkit_object('action.menu_manager:MenuManager')

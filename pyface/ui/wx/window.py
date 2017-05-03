@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -37,22 +36,21 @@ class Window(MWindow, Widget):
     interface for the API documentation.
     """
 
-
     #### 'IWindow' interface ##################################################
 
     position = Property(Tuple)
 
     size = Property(Tuple)
 
-    title = Str#Unicode
+    title = Str  #Unicode
 
     #### Events #####
 
     activated = Event
 
-    closed =  Event
+    closed = Event
 
-    closing =  Event
+    closing = Event
 
     deactivated = Event
 
@@ -104,9 +102,12 @@ class Window(MWindow, Widget):
                 | wx.CLIP_CHILDREN
 
         control = wx.Frame(
-            parent, -1, self.title, style=style, size=self.size,
-            pos=self.position
-        )
+            parent,
+            -1,
+            self.title,
+            style=style,
+            size=self.size,
+            pos=self.position)
 
         control.SetBackgroundColour(SystemMetrics().dialog_background_color)
 
@@ -122,7 +123,7 @@ class Window(MWindow, Widget):
         return self._position
 
     def _set_position(self, position):
-        """ Property setter for position. """       
+        """ Property setter for position. """
         if self.control is not None:
             self.control.SetPosition(position)
 
@@ -180,11 +181,12 @@ class Window(MWindow, Widget):
         # call event.GetPosition directly, but that would be wrong.  The pixel
         # reported by that call is the pixel just below the window menu and
         # just right of the Windows-drawn border.
- 
+
         try:
-            self._position = event.GetEventObject().GetPosition().Get()#Sizer.GetPosition().Get()
+            self._position = event.GetEventObject().GetPosition(
+            ).Get()  #Sizer.GetPosition().Get()
         except:
-            pass 
+            pass
         event.Skip()
 
     def _wx_on_control_size(self, event):
@@ -203,13 +205,13 @@ class Window(MWindow, Widget):
         """ Called when a key is pressed when the tree has focus. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
-            event        = event
-        )
+            alt_down=event.m_altDown == 1,
+            control_down=event.m_controlDown == 1,
+            shift_down=event.m_shiftDown == 1,
+            key_code=event.m_keyCode,
+            event=event)
 
         event.Skip()
+
 
 #### EOF ######################################################################

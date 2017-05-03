@@ -15,7 +15,6 @@ from pyface.qt import QtGui, QtCore
 
 
 class FindWidget(QtGui.QWidget):
-
     def __init__(self, parent):
         super(FindWidget, self).__init__(parent)
         self.adv_code_widget = weakref.ref(parent)
@@ -71,4 +70,3 @@ class FindWidget(QtGui.QWidget):
 
         control.setLayout(layout)
         return control
-

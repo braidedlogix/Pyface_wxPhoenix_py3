@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -35,7 +34,6 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     """ The toolkit specific implementation of a SystemMetrics.  See the
     ISystemMetrics interface for the API documentation.
     """
-
 
     #### 'ISystemMetrics' interface ###########################################
 
@@ -62,6 +60,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         else:
             color = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUBAR).Get()
 
-        return (color[0]/255., color[1]/255., color[2]/255.)
+        return (color[0] / 255., color[1] / 255., color[2] / 255.)
+
 
 #### EOF ######################################################################

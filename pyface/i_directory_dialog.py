@@ -14,7 +14,6 @@
 """ The interface for a dialog that allows the user to browse for a directory.
 """
 
-
 # Enthought library imports.
 from traits.api import Bool, Unicode
 

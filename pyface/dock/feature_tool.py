@@ -14,7 +14,6 @@
 #  Date:   07/04/2006
 #
 #-------------------------------------------------------------------------------
-
 """ Implements the FeatureTool feature that allows a dragged object
     implementing the IFeatureTool interface to be dropped onto any compatible
     object.
@@ -34,21 +33,21 @@ from pyface.image_resource \
 #  'FeatureTool' class:
 #-------------------------------------------------------------------------------
 
-class FeatureTool ( DockWindowFeature ):
+
+class FeatureTool(DockWindowFeature):
 
     #---------------------------------------------------------------------------
     #  Trait definitions:
     #---------------------------------------------------------------------------
 
-    image = ImageResource( 'feature_tool' )
+    image = ImageResource('feature_tool')
 
     #---------------------------------------------------------------------------
     #  Returns whether a specified object can be dropped on the feature image:
     #---------------------------------------------------------------------------
 
-    def can_drop ( self, object ):
+    def can_drop(self, object):
         """ Returns whether a specified object can be dropped on the feature
             image.
         """
         return True
-

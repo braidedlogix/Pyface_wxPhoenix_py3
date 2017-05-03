@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A tree control with extensible node types. """
 
-
 # Standard library imports.
 import inspect
 
@@ -93,7 +92,7 @@ class NodeTree(Tree):
 
     def _node_right_clicked_changed(self, obj_point):
         """ Called when the right mouse button is clicked on the tree. """
-        obj, point=obj_point
+        obj, point = obj_point
         # Add the node that the right-click occurred on to the selection.
         self.select(obj)
 
@@ -131,7 +130,7 @@ class NodeTree(Tree):
         """ Perform an action. """
 
         # fixme: We need a more formal event structure!
-        event.widget  = self
+        event.widget = self
         event.context = self._context
 
         # fixme: the 'perform' method without taking an event is deprecated!
@@ -178,5 +177,6 @@ class NodeTree(Tree):
             menu_manager.destroy()
 
         return
+
 
 #### EOF ######################################################################

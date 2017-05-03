@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for a dialog that prompts the user for confirmation. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Enum, Instance, Unicode
 

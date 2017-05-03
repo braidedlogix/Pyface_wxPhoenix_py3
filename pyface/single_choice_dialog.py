@@ -18,7 +18,6 @@ from __future__ import absolute_import
 from .constant import OK
 from .toolkit import toolkit_object
 
-
 # Import the toolkit specific version.
 SingleChoiceDialog = toolkit_object('single_choice_dialog:SingleChoiceDialog')
 
@@ -46,9 +45,11 @@ def choose_one(parent, message, choices, title='Choose', cancel=True):
         The selected object, or None if cancelled.
     """
     dialog = SingleChoiceDialog(
-        parent=parent, message=message, choices=choices, title=title,
-        cancel=cancel
-    )
+        parent=parent,
+        message=message,
+        choices=choices,
+        title=title,
+        cancel=cancel)
     result = dialog.open()
     if result == OK:
         choice = dialog.choice

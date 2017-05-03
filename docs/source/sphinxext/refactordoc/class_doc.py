@@ -9,8 +9,8 @@
 #------------------------------------------------------------------------------
 from base_doc import BaseDoc
 from line_functions import get_indent, replace_at, add_indent
-from fields import (max_header_length, max_desc_length,
-                    max_name_length, MethodField, AttributeField)
+from fields import (max_header_length, max_desc_length, max_name_length,
+                    MethodField, AttributeField)
 
 
 class ClassDoc(BaseDoc):
@@ -24,8 +24,8 @@ class ClassDoc(BaseDoc):
                 'Methods': 'methods',
                 'See Also': 'header',
                 'Abstract Methods': 'methods',
-                'Notes':'notes'
-                }
+                'Notes': 'notes'
+            }
 
         super(ClassDoc, self).__init__(lines, headers, verbose)
         return
@@ -61,7 +61,7 @@ class ClassDoc(BaseDoc):
         method_fields = self.extract_fields(indent, MethodField)
 
         lines = []
-        if len(method_fields) > 0 :
+        if len(method_fields) > 0:
             name_length = max_name_length(method_fields)
             method_length = max_header_length(method_fields)
             desc_length = max_desc_length(method_fields)
@@ -71,9 +71,8 @@ class ClassDoc(BaseDoc):
             first_column_str = '=' * (method_length + name_length + 12)
             second_column_str = '=' * desc_length
 
-            border = '{0}{1} {2}'.format(indent,
-                                              first_column_str,
-                                              second_column_str)
+            border = '{0}{1} {2}'.format(indent, first_column_str,
+                                         second_column_str)
             length = len(border)
             empty = length * ' '
             headings = empty[:]

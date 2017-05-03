@@ -9,13 +9,11 @@ import pyface.api
 import pyface.tests
 from ..image_resource import ImageResource
 
-
 SEARCH_PATH = os.path.join(os.path.dirname(pyface.__file__), 'images')
 IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
 
 
 class TestImageResource(unittest.TestCase):
-
     def setUp(self):
         # clear cached "not found" image
         ImageResource._image_not_found = None

@@ -38,9 +38,7 @@ import pkg_resources
 
 from traits.etsconfig.api import ETSConfig
 
-
 logger = logging.getLogger(__name__)
-
 
 try:
     provisional_toolkit = ETSConfig.provisional_toolkit

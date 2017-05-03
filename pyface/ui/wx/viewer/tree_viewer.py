@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A viewer based on a tree control. """
 
-
 # Major package imports.
 import wx
 
@@ -102,15 +101,15 @@ class TreeViewer(ContentViewer):
         wxid = tree.GetId()
 
         # Wire up the wx tree events.
-        tree.Bind(wx.EVT_CHAR,self._on_char)
+        tree.Bind(wx.EVT_CHAR, self._on_char)
         tree.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
         tree.Bind(wx.EVT_RIGHT_DOWN, self._on_right_down)
-        tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED,self._on_tree_item_activated)
+        tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated)
         tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self._on_tree_item_collapsed)
         tree.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self._on_tree_item_collapsing)
         tree.Bind(wx.EVT_TREE_ITEM_EXPANDED, self._on_tree_item_expanded)
         tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self._on_tree_item_expanding)
-        tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT,self._on_tree_begin_label_edit)
+        tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self._on_tree_begin_label_edit)
         tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self._on_tree_end_label_edit)
         tree.Bind(wx.EVT_TREE_BEGIN_DRAG, self._on_tree_begin_drag)
         tree.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_sel_changed)
@@ -188,7 +187,7 @@ class TreeViewer(ContentViewer):
             self.control.Expand(pid)
 
         else:
-            print ('**** pid is None!!! ****')
+            print('**** pid is None!!! ****')
 
         return
 
@@ -262,10 +261,10 @@ class TreeViewer(ContentViewer):
         # element is the actual item data.
         if pid is None:
             if self.show_root:
-                self.control.SetItemData(wxid,  (False, element))
+                self.control.SetItemData(wxid, (False, element))
 
         else:
-            self.control.SetItemData(wxid,  (False, element))
+            self.control.SetItemData(wxid, (False, element))
 
         # Make sure that we can find the element's Id later.
         self._element_to_id_map[self._get_key(element)] = wxid
@@ -582,7 +581,7 @@ class TreeViewer(ContentViewer):
         # Get the element, its id and the point where the event occurred.
         data, wxid, flags, point = self._unpack_event(event)
 
-        if point == (0,0):
+        if point == (0, 0):
             # Apply workaround.
             point = self._point_left_clicked
             wxid, flags = self.control.HitTest(point)
@@ -636,5 +635,6 @@ class TreeViewer(ContentViewer):
         self.key_pressed = event.GetKeyCode()
 
         return
+
 
 #### EOF ######################################################################

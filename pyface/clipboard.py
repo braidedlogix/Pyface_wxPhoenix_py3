@@ -11,7 +11,6 @@
 # Author: Evan Patterson
 # Date: 06/26/09
 #------------------------------------------------------------------------------
-
 """ The interface for manipulating the toolkit clipboard.
 """
 

@@ -98,7 +98,7 @@ class MDIApplicationWindow(ApplicationWindow):
         try:
             self._wx_offset = client_window.GetPosition().Get()
         except:
-            self._wx_offset = (0,0)
+            self._wx_offset = (0, 0)
         if AUI:
             # Let the AUI manager look after the frame.
             self._aui_manager.SetManagedWindow(self.control)
@@ -111,16 +111,18 @@ class MDIApplicationWindow(ApplicationWindow):
         """ Create the toolkit-specific control that represents the window. """
 
         control = wx.MDIParentFrame(
-            parent, -1, self.title, style=wx.DEFAULT_FRAME_STYLE,
-            size=self.size, pos=self.position
-        )
+            parent,
+            -1,
+            self.title,
+            style=wx.DEFAULT_FRAME_STYLE,
+            size=self.size,
+            pos=self.position)
 
         return control
 
     ###########################################################################
     # Private interface.
     ###########################################################################
-
 
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
@@ -144,7 +146,7 @@ class MDIApplicationWindow(ApplicationWindow):
 
         # Scale the image (if necessary).
         image = self._image
-        if image.GetWidth() != width or image.GetHeight()!= height:
+        if image.GetWidth() != width or image.GetHeight() != height:
             image = self._image.Copy()
             image.Rescale(width, height)
 

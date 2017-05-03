@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Base class for workbench dock windows.
 """
 
@@ -23,8 +22,8 @@ import logging
 # Enthought library imports.
 from pyface.dock.api import DockGroup, DockRegion, DockWindow
 
-
 logger = logging.getLogger(__name__)
+
 
 class WorkbenchDockWindow(DockWindow):
     """ Base class for workbench dock windows.
@@ -107,7 +106,7 @@ class WorkbenchDockWindow(DockWindow):
     def get_controls(self, visible_only=True):
         """ Returns all of the dock controls in the window. """
 
-        sizer   = self.control.GetSizer()
+        sizer = self.control.GetSizer()
         section = sizer.GetContents()
 
         return section.get_controls(visible_only=visible_only)
@@ -135,7 +134,7 @@ class WorkbenchDockWindow(DockWindow):
     def reset_regions(self):
         """ Activates the first dock control in every region. """
 
-        sizer   = self.control.GetSizer()
+        sizer = self.control.GetSizer()
         section = sizer.GetContents()
 
         for region in self.get_regions(section):
@@ -151,5 +150,6 @@ class WorkbenchDockWindow(DockWindow):
         sizer.SetStructure(self.control.GetParent(), structure, handler)
 
         return
+
 
 #### EOF ######################################################################

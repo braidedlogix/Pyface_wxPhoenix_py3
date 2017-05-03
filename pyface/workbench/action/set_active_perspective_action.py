@@ -1,6 +1,5 @@
 """ An action that sets the active perspective. """
 
-
 # Enthought library imports.
 from pyface.workbench.api import IPerspective
 from traits.api import Delegate, Instance, on_trait_change
@@ -63,5 +62,6 @@ class SetActivePerspectiveAction(WorkbenchAction):
           and self.perspective.id is self.window.active_perspective.id
 
         return
+
 
 #### EOF ######################################################################

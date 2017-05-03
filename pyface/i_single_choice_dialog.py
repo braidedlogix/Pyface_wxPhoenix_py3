@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for a dialog that prompts for a choice from a list. """
 
-
 # Enthought library imports.
 from traits.api import Any, List, Str
 
@@ -56,6 +55,6 @@ class MSingleChoiceDialog(object):
         if len(choices) == 0:
             raise ValueError("SingleChoiceDialog requires at least 1 choice.")
         elif len(choices) != len(set(choices)):
-            raise ValueError("Dialog choices {} contain repeated string value."
-                             % choices)
+            raise ValueError(
+                "Dialog choices {} contain repeated string value." % choices)
         return choices

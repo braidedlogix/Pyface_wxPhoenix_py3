@@ -19,7 +19,6 @@ FlexGridSizer layouts).
 
 """
 
-
 # Major package imports.
 import wx
 
@@ -48,5 +47,6 @@ class Spacer(wx.Panel):
         #self.SetBackgroundColour("brown")
 
         return
+
 
 #### EOF ######################################################################

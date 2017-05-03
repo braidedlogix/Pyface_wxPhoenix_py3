@@ -10,7 +10,6 @@ IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
 
 
 class TestPyfaceResourceFactory(unittest.TestCase):
-
     def setUp(self):
         self.image_cache = ImageCache(32, 32)
 

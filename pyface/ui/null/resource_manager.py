@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Enthought library imports.
 from pyface.resource.api import ResourceFactory
 
@@ -36,5 +35,6 @@ class PyfaceResourceFactory(ResourceFactory):
     def image_from_data(self, data):
         """ Creates an image from the specified data. """
         return data
+
 
 #### EOF ######################################################################

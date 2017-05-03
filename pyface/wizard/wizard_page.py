@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The implementation of a page in a wizard. """
 
-
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 WizardPage = toolkit_object('wizard.wizard_page:WizardPage')

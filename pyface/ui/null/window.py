@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Enthought library imports.
 from traits.api import Any, Event, Property, provides, Unicode
 from traits.api import Tuple
@@ -29,7 +28,6 @@ class Window(MWindow, Widget):
     interface for the API documentation.
     """
 
-
     #### 'IWindow' interface ##################################################
 
     position = Property(Tuple)
@@ -42,9 +40,9 @@ class Window(MWindow, Widget):
 
     activated = Event
 
-    closed =  Event
+    closed = Event
 
-    closing =  Event
+    closing = Event
 
     deactivated = Event
 
@@ -105,5 +103,6 @@ class Window(MWindow, Widget):
         self._size = size
 
         self.trait_property_changed('size', old, size)
+
 
 #### EOF ######################################################################

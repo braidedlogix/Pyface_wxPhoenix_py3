@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for a dialog that displays a message. """
 
-
 # Enthought library imports.
 from traits.api import Enum, Unicode
 

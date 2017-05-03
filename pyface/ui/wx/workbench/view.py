@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -66,5 +65,6 @@ class View(MView):
             self.control.SetFocus()
 
         return
+
 
 #### EOF ######################################################################

@@ -1,6 +1,5 @@
 """ A workbench window. """
 
-
 # Standard library imports.
 import logging
 
@@ -19,7 +18,6 @@ from .i_workbench_part import IWorkbenchPart
 from .perspective import Perspective
 from .workbench_window_layout import WorkbenchWindowLayout
 from .workbench_window_memento import WorkbenchWindowMemento
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -58,13 +56,13 @@ class WorkbenchWindow(ApplicationWindow):
     editor_area_size = Tuple((100, 100))
 
     # Fired when an editor is about to be opened (or restored).
-    editor_opening = Delegate('layout') # Event(IEditor)
+    editor_opening = Delegate('layout')  # Event(IEditor)
 
     # Fired when an editor has been opened (or restored).
     editor_opened = Delegate('layout')  # Event(IEditor)
 
     # Fired when an editor is about to be closed.
-    editor_closing = Delegate('layout') # Event(IEditor)
+    editor_closing = Delegate('layout')  # Event(IEditor)
 
     # Fired when an editor has been closed.
     editor_closed = Delegate('layout')  # Event(IEditor)
@@ -502,7 +500,7 @@ class WorkbenchWindow(ApplicationWindow):
 
     def reset_all_perspectives(self):
         """ Reset all perspectives back to their original contents. """
-        del_id=[]
+        del_id = []
         # Remove all perspective mementos (except user perspectives).
         #for id in self._memento.perspective_mementos.keys():
         for id, value in self._memento.perspective_mementos.items():
@@ -513,7 +511,8 @@ class WorkbenchWindow(ApplicationWindow):
             del self._memento.perspective_mementos[id]
 
         # Re-display the active perspective.
-        self._show_perspective(self.active_perspective,self.active_perspective)
+        self._show_perspective(self.active_perspective,
+                               self.active_perspective)
 
         return
 
@@ -571,10 +570,8 @@ class WorkbenchWindow(ApplicationWindow):
 
         # The layout of the active perspective.
         self._memento.perspective_mementos[self.active_perspective.id] = (
-            self.layout.get_view_memento(),
-            self.active_view and self.active_view.id or None,
-            self.layout.is_editor_area_visible()
-        )
+            self.layout.get_view_memento(), self.active_view and
+            self.active_view.id or None, self.layout.is_editor_area_visible())
 
         # The layout of the editor area.
         self._memento.editor_area_memento = self.layout.get_editor_memento()
@@ -731,10 +728,8 @@ class WorkbenchWindow(ApplicationWindow):
 
         # Save the current layout of the perspective.
         self._memento.perspective_mementos[perspective.id] = (
-            self.layout.get_view_memento(),
-            self.active_view and self.active_view.id or None,
-            self.layout.is_editor_area_visible()
-        )
+            self.layout.get_view_memento(), self.active_view and
+            self.active_view.id or None, self.layout.is_editor_area_visible())
 
         return
 
@@ -945,5 +940,6 @@ class WorkbenchWindow(ApplicationWindow):
                     self.active_view = None
 
         return
+
 
 #### EOF ######################################################################

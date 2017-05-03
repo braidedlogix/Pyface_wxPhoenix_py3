@@ -32,7 +32,7 @@ class ComboboxFocusHandler(wx.EvtHandler):
 
     def __init__(self):
         wx.EvtHandler.__init__(self)
-        self.Bind( wx.EVT_KILL_FOCUS, self._on_kill_focus)
+        self.Bind(wx.EVT_KILL_FOCUS, self._on_kill_focus)
         return
 
     def _on_kill_focus(self, evt):
@@ -65,7 +65,7 @@ class AbstractGridView(Grid):
         # We have things set up to edit on a single click - so we have to select
         # an initial cursor location that is off of the screen otherwise a cell
         # will be in edit mode as soon as the grid fires up.
-        self.moveTo = [1000,1]
+        self.moveTo = [1000, 1]
         self.edit = False
 
         # this seems like a busy idle ...
@@ -80,7 +80,6 @@ class AbstractGridView(Grid):
 
         return
 
-
     # needed to handle problem in wx 2.6 with combobox cell editors
     def _on_editor_created(self, evt):
 
@@ -91,8 +90,9 @@ class AbstractGridView(Grid):
         return
 
     def init_labels(self):
-        self.SetLabelFont(wx.Font(self.GetFont().GetPointSize(),
-                                  wx.SWISS, wx.NORMAL, wx.BOLD))
+        self.SetLabelFont(
+            wx.Font(self.GetFont().GetPointSize(), wx.SWISS, wx.NORMAL,
+                    wx.BOLD))
         self.SetGridLineColour("blue")
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
@@ -103,7 +103,10 @@ class AbstractGridView(Grid):
         """ If the model says a cell is of a specified type, the grid uses
         the specific renderer and editor set in this method.
         """
-        self.RegisterDataType("LogData", GridCellFloatRenderer(precision=3), GridCellFloatEditor())
+        self.RegisterDataType(
+            "LogData",
+            GridCellFloatRenderer(precision=3),
+            GridCellFloatEditor())
 
         return
 
@@ -230,7 +233,6 @@ class AbstractGridView(Grid):
         evt.Skip()
 
     def OnSelectCell(self, evt):
-
         """ Immediately jumps into editing mode, bypassing the usual select mode
         of a spreadsheet. See also self.OnIdle().
         """
@@ -245,4 +247,6 @@ class AbstractGridView(Grid):
 
     def OnEditorCreated(self, evt):
         evt.Skip()
+
+
 #-------------------------------------------------------------------------------

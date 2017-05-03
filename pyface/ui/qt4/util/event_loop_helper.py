@@ -7,7 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-
 import contextlib
 import threading
 
@@ -53,6 +52,7 @@ class EventLoopHelper(HasStrictTraits):
             Number of seconds to run the event loop in the case that the trait
             change does not occur. Default value is 10.0.
         """
+
         def repeat_loop(condition, repeat):
             # We sendPostedEvents to ensure that enaml events are processed
             self.qt_app.sendPostedEvents()
@@ -61,8 +61,7 @@ class EventLoopHelper(HasStrictTraits):
                 self.gui.invoke_later(condition.set)
             else:
                 self.gui.invoke_later(
-                    repeat_loop, condition=condition, repeat=repeat
-                )
+                    repeat_loop, condition=condition, repeat=repeat)
 
         condition = threading.Event()
         self.gui.invoke_later(repeat_loop, repeat=repeat, condition=condition)
@@ -99,6 +98,7 @@ class EventLoopHelper(HasStrictTraits):
             Number of seconds to run the event loop in the case that the trait
             change does not occur.
         """
+
         def handler():
             if condition():
                 self.qt_app.quit()

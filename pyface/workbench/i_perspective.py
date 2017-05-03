@@ -1,6 +1,5 @@
 """ The perspective interface. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Interface, List, Str, Tuple
 
@@ -38,5 +37,6 @@ class IPerspective(Interface):
 
     def show(self, window):
         """ Called when the perspective is shown in a workbench window. """
+
 
 #### EOF ######################################################################

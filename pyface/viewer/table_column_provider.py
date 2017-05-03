@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Base class for all table column providers. """
 
-
 # Enthought library imports.
 from traits.api import Int
 
@@ -36,5 +35,6 @@ class TableColumnProvider(ColumnProvider):
     # 'TreeContentProvider' and 'TreeLabelProvider'  instead of some
     # combination of the specific and generic viewer classes as in JFace.
     pass
+
 
 #### EOF ######################################################################

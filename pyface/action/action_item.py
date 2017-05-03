@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ An action manager item that represents an actual action. """
 
-
 # Enthought library imports.
 from traits.api import Any, Instance, List, Property, Str, on_trait_change
 
@@ -107,7 +106,11 @@ class ActionItem(ActionManagerItem):
 
             self._wrappers.append(wrapper)
 
-    def add_to_toolbar(self, parent, tool_bar, image_cache, controller,
+    def add_to_toolbar(self,
+                       parent,
+                       tool_bar,
+                       image_cache,
+                       controller,
                        show_labels=True):
         """ Adds the item to a tool bar.
 
@@ -125,9 +128,8 @@ class ActionItem(ActionManagerItem):
             Should the toolbar item show a label.
         """
         if (controller is None) or controller.can_add_to_toolbar(self.action):
-            wrapper = _Tool(
-                parent, tool_bar, image_cache, self, controller, show_labels
-            )
+            wrapper = _Tool(parent, tool_bar, image_cache, self, controller,
+                            show_labels)
 
             # fixme: Martin, who uses this information?
             if controller is None:

@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Major package imports.
 from pyface.qt import QtGui
 
@@ -26,7 +25,6 @@ class ImageCache(MImageCache, HasTraits):
     """ The toolkit specific implementation of an ImageCache.  See the
     IImageCache interface for the API documentation.
     """
-
 
     ###########################################################################
     # 'object' interface.
@@ -49,7 +47,7 @@ class ImageCache(MImageCache, HasTraits):
             if scaled is not image:
                 # The Qt cache is application wide so we only keep the last
                 # size asked for.
-                QtGui.QPixmapCache.remove(filename);
+                QtGui.QPixmapCache.remove(filename)
                 QtGui.QPixmapCache.insert(filename, scaled)
         else:
             # Load the image from the file and add it to the cache.
@@ -71,9 +69,10 @@ class ImageCache(MImageCache, HasTraits):
 
         # Although Qt won't scale the image if it doesn't need to, it will make
         # a deep copy which we don't need.
-        if image.width() != self._width or image.height()!= self._height:
+        if image.width() != self._width or image.height() != self._height:
             image = image.scaled(self._width, self._height)
 
         return image
+
 
 #### EOF ######################################################################

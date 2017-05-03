@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Local imports.
 from traits.api import Event, Bool
 from pyface.workbench.i_editor import MEditor
@@ -75,5 +74,6 @@ class Editor(MEditor):
             self.control.setFocus()
 
         return
+
 
 #### EOF ######################################################################

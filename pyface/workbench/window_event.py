@@ -1,6 +1,5 @@
 """ Window events. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits, Instance, Vetoable
 
@@ -21,5 +20,6 @@ class VetoableWindowEvent(WindowEvent, Vetoable):
     """ A vetoable window lifecycle event. """
 
     pass
+
 
 #### EOF ######################################################################

@@ -25,7 +25,6 @@ from ..image_resource import ImageResource
 from ..ui_traits import (Border, HasBorder, HasMargin, Image, Margin,
                          image_resource_cache, image_bitmap_cache)
 
-
 IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
 
 
@@ -45,7 +44,6 @@ class HasBorderClass(HasTraits):
 
 
 class TestImageTrait(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         # clear all cached images
         image_resource_cache.clear()
@@ -87,12 +85,12 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         self.assertIsInstance(image_class.image, ImageResource)
         self.assertEqual(image_class.image.name, 'dialog-warning.png')
         self.assertIsNone(image_class.image._image_not_found)
-        self.assertEqual(image_class.image._ref.file_name, 'dialog-warning.png')
+        self.assertEqual(image_class.image._ref.file_name,
+                         'dialog-warning.png')
         self.assertEqual(image_class.image._ref.volume_name, 'icons')
 
 
 class TestMargin(unittest.TestCase):
-
     def test_defaults(self):
         margin = Margin()
         self.assertEqual(margin.top, 0)
@@ -123,7 +121,6 @@ class TestMargin(unittest.TestCase):
 
 
 class TestHasMargin(unittest.TestCase, UnittestTools):
-
     def test_defaults(self):
         has_margin = HasMarginClass()
         margin = has_margin.margin
@@ -134,7 +131,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 0)
 
     def test_default_int(self):
-
         class HasMarginClass(HasTraits):
 
             margin = HasMargin(4)
@@ -148,10 +144,9 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 4)
 
     def test_default_one_tuple(self):
-
         class HasMarginClass(HasTraits):
 
-            margin = HasMargin((4,))
+            margin = HasMargin((4, ))
 
         has_margin = HasMarginClass()
         margin = has_margin.margin
@@ -162,7 +157,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 4)
 
     def test_default_two_tuple(self):
-
         class HasMarginClass(HasTraits):
 
             margin = HasMargin((4, 2))
@@ -176,7 +170,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 4)
 
     def test_default_four_tuple(self):
-
         class HasMarginClass(HasTraits):
 
             margin = HasMargin((4, 2, 3, 1))
@@ -214,7 +207,7 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 4)
 
     def test_init_one_tuple(self):
-        has_margin = HasMarginClass(margin=(4,))
+        has_margin = HasMarginClass(margin=(4, ))
         margin = has_margin.margin
 
         self.assertEqual(margin.top, 4)
@@ -260,7 +253,7 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
     def test_set_one_tuple(self):
         has_margin = HasMarginClass()
         with self.assertTraitChanges(has_margin, 'margin', 1):
-            has_margin.margin = (4,)
+            has_margin.margin = (4, )
 
         margin = has_margin.margin
 
@@ -307,7 +300,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
 
 
 class TestBorder(unittest.TestCase):
-
     def test_defaults(self):
         border = Border()
         self.assertEqual(border.top, 0)
@@ -338,7 +330,6 @@ class TestBorder(unittest.TestCase):
 
 
 class TestHasBorder(unittest.TestCase, UnittestTools):
-
     def test_defaults(self):
         has_border = HasBorderClass()
         border = has_border.border
@@ -349,7 +340,6 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 0)
 
     def test_default_int(self):
-
         class HasBorderClass(HasTraits):
 
             border = HasBorder(4)
@@ -363,10 +353,9 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 4)
 
     def test_default_one_tuple(self):
-
         class HasBorderClass(HasTraits):
 
-            border = HasBorder((4,))
+            border = HasBorder((4, ))
 
         has_border = HasBorderClass()
         border = has_border.border
@@ -377,7 +366,6 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 4)
 
     def test_default_two_tuple(self):
-
         class HasBorderClass(HasTraits):
 
             border = HasBorder((4, 2))
@@ -391,7 +379,6 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 4)
 
     def test_default_four_tuple(self):
-
         class HasBorderClass(HasTraits):
 
             border = HasBorder((4, 2, 3, 1))
@@ -429,7 +416,7 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 4)
 
     def test_init_one_tuple(self):
-        has_border = HasBorderClass(border=(4,))
+        has_border = HasBorderClass(border=(4, ))
         border = has_border.border
 
         self.assertEqual(border.top, 4)
@@ -475,7 +462,7 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
     def test_set_one_tuple(self):
         has_border = HasBorderClass()
         with self.assertTraitChanges(has_border, 'border', 1):
-            has_border.border = (4,)
+            has_border.border = (4, )
 
         border = has_border.border
 

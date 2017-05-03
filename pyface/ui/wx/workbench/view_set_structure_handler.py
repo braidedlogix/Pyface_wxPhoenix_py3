@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ The handler used to restore views.
 """
 
@@ -22,7 +21,6 @@ import logging
 
 # Enthought library imports.
 from pyface.dock.api import SetStructureHandler
-
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +52,7 @@ class ViewSetStructureHandler(SetStructureHandler):
         """ Resolves an unresolved dock control *id*. """
 
         window_layout = self.window_layout
-        window        = window_layout.window
+        window = window_layout.window
 
         view = window.get_view_by_id(id)
         if view is not None:
@@ -69,5 +67,6 @@ class ViewSetStructureHandler(SetStructureHandler):
             control = None
 
         return control
+
 
 #### EOF ######################################################################

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Dialog utilities. """
 
-
 # Major package imports.
 import wx
 
@@ -43,6 +42,7 @@ class OpenFileDialog(wx.FileDialog):
 
         return
 
+
 class OpenDirDialog(wx.DirDialog):
     """ An open-directory dialog. """
 
@@ -55,6 +55,7 @@ class OpenDirDialog(wx.DirDialog):
         wx.DirDialog.__init__(self, parent, "Open", style=style, **kw)
 
         return
+
 
 class SaveFileAsDialog(wx.FileDialog):
     """ A save-file dialog. """
@@ -73,77 +74,69 @@ class SaveFileAsDialog(wx.FileDialog):
 def confirmation(parent, message, title=None, default=wx.NO_DEFAULT):
     """ Displays a confirmation dialog. """
 
-    dialog = wx.MessageDialog(
-        parent,
-        message,
-        _get_title(title, parent, 'Confirmation'),
-        wx.YES_NO | default | wx.ICON_EXCLAMATION | wx.STAY_ON_TOP
-    )
+    dialog = wx.MessageDialog(parent, message,
+                              _get_title(title, parent, 'Confirmation'),
+                              wx.YES_NO | default | wx.ICON_EXCLAMATION |
+                              wx.STAY_ON_TOP)
 
     result = dialog.ShowModal()
     dialog.Destroy()
 
     return result
+
 
 def yes_no_cancel(parent, message, title=None, default=wx.NO_DEFAULT):
     """ Displays a Yes/No/Cancel dialog. """
 
-    dialog = wx.MessageDialog(
-        parent,
-        message,
-        _get_title(title, parent, 'Confirmation'),
-        wx.YES_NO | wx.CANCEL | default | wx.ICON_EXCLAMATION | wx.STAY_ON_TOP
-    )
+    dialog = wx.MessageDialog(parent, message,
+                              _get_title(title, parent, 'Confirmation'),
+                              wx.YES_NO | wx.CANCEL | default |
+                              wx.ICON_EXCLAMATION | wx.STAY_ON_TOP)
 
     result = dialog.ShowModal()
     dialog.Destroy()
 
     return result
 
+
 def information(parent, message, title=None):
     """ Displays a modal information dialog. """
 
-    dialog = wx.MessageDialog(
-        parent,
-        message,
-        _get_title(title, parent, 'Information'),
-        wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-    )
+    dialog = wx.MessageDialog(parent, message,
+                              _get_title(title, parent, 'Information'), wx.OK |
+                              wx.ICON_INFORMATION | wx.STAY_ON_TOP)
 
     dialog.ShowModal()
     dialog.Destroy()
 
     return
+
 
 def warning(parent, message, title=None):
     """ Displays a modal warning dialog. """
 
-    dialog = wx.MessageDialog(
-        parent,
-        message,
-        _get_title(title, parent, 'Warning'),
-        wx.OK | wx.ICON_EXCLAMATION | wx.STAY_ON_TOP
-    )
+    dialog = wx.MessageDialog(parent, message,
+                              _get_title(title, parent, 'Warning'), wx.OK |
+                              wx.ICON_EXCLAMATION | wx.STAY_ON_TOP)
 
     dialog.ShowModal()
     dialog.Destroy()
 
     return
+
 
 def error(parent, message, title=None):
     """ Displays a modal error dialog. """
 
-    dialog = wx.MessageDialog(
-        parent,
-        message,
-        _get_title(title, parent, 'Error'),
-        wx.OK | wx.ICON_ERROR | wx.STAY_ON_TOP
-    )
+    dialog = wx.MessageDialog(parent, message,
+                              _get_title(title, parent, 'Error'), wx.OK |
+                              wx.ICON_ERROR | wx.STAY_ON_TOP)
 
     dialog.ShowModal()
     dialog.Destroy()
 
     return
+
 
 def _get_title(title, parent, default):
     """ Get a sensible title for a dialog! """
@@ -156,5 +149,6 @@ def _get_title(title, parent, default):
             title = default
 
     return title
+
 
 #### EOF ######################################################################

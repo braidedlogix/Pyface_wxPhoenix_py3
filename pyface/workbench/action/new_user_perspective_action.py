@@ -8,7 +8,6 @@
 #-----------------------------------------------------------------------------
 """ An action that creates a new (and empty) user perspective. """
 
-
 # Local imports.
 from .user_perspective_name import UserPerspectiveName
 from .workbench_action import WorkbenchAction
@@ -32,16 +31,15 @@ class NewUserPerspectiveAction(WorkbenchAction):
     def perform(self, event):
         """ Peform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # Get the details of the new perspective.
         upn = UserPerspectiveName(name='User Perspective %d' % manager.next_id)
         if upn.edit_traits(view='new_view').result:
             # Create a new (and empty) user perspective.
-            perspective = manager.create_perspective(
-                upn.name.strip(), upn.show_editor_area
-            )
+            perspective = manager.create_perspective(upn.name.strip(),
+                                                     upn.show_editor_area)
 
             # Add it to the window...
             window.perspectives.append(perspective)
@@ -50,5 +48,6 @@ class NewUserPerspectiveAction(WorkbenchAction):
             window.active_perspective = perspective
 
         return
+
 
 #### EOF #####################################################################

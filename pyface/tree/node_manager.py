@@ -22,7 +22,6 @@ from traits.api import HasPrivateTraits, List
 # Local imports
 from .node_type import NodeType
 
-
 # Create a logger for this module.
 logger = logging.getLogger(__name__)
 
@@ -53,7 +52,7 @@ class NodeManager(HasPrivateTraits):
         # nodes that change type dynamically then we will obviously have to
         # re-think this (although we should probably re-think dynamic type
         # changes first ;^).
-        self._node_to_type_map = {} # { Any node : NodeType node_type }
+        self._node_to_type_map = {}  # { Any node : NodeType node_type }
 
         return
 
@@ -134,5 +133,6 @@ class NodeManager(HasPrivateTraits):
             node_type.node_manager = self
 
         return
+
 
 #### EOF ######################################################################

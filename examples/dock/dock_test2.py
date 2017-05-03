@@ -29,7 +29,8 @@ from traitsui.menu \
 #  'TestDock' class:
 #-------------------------------------------------------------------------------
 
-class TestDock ( HasPrivateTraits ):
+
+class TestDock(HasPrivateTraits):
 
     #---------------------------------------------------------------------------
     #  Trait definitions:
@@ -46,17 +47,15 @@ class TestDock ( HasPrivateTraits ):
     #  Traits view definitions:
     #---------------------------------------------------------------------------
 
-    view = View( [ 'button1' ],
-                 [ 'button2' ],
-                 [ 'button3' ],
-                 [ 'button4' ],
-                 [ 'button5' ],
-                 [ 'button6' ],
-                 title     = 'DockWindow Test',
-                 resizable = True,
-                 width     = 0.5,
-                 height    = 0.5,
-                 buttons   = NoButtons )
+    view = View(
+        ['button1'], ['button2'], ['button3'], ['button4'], ['button5'],
+        ['button6'],
+        title='DockWindow Test',
+        resizable=True,
+        width=0.5,
+        height=0.5,
+        buttons=NoButtons)
+
 
 #-------------------------------------------------------------------------------
 #  Run the test program:

@@ -16,11 +16,13 @@ from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction, TaskToggleGroup
 from traits.api import on_trait_change, Property, Instance
 
+
 class Pane1(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane1'
     name = 'Pane 1'
+
 
 class Pane2(DockPane):
     #### TaskPane interface ###################################################
@@ -28,11 +30,13 @@ class Pane2(DockPane):
     id = 'steps.pane2'
     name = 'Pane 2'
 
+
 class Pane3(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane3'
     name = 'Pane 3'
+
 
 class Pane4(DockPane):
     #### TaskPane interface ###################################################
@@ -40,11 +44,13 @@ class Pane4(DockPane):
     id = 'steps.pane4'
     name = 'Pane 4'
 
+
 class Pane5(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane5'
     name = 'Pane 5'
+
 
 class Pane6(DockPane):
     #### TaskPane interface ###################################################
@@ -52,11 +58,13 @@ class Pane6(DockPane):
     id = 'steps.pane6'
     name = 'Pane 6'
 
+
 class Pane7(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane7'
     name = 'Pane 7'
+
 
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
@@ -67,34 +75,38 @@ class ExampleTask(Task):
     id = 'example.example_task'
     name = 'Multi-Tab Editor'
 
-    active_editor = Property(Instance(IEditor),
-                             depends_on='editor_area.active_editor')
+    active_editor = Property(
+        Instance(IEditor), depends_on='editor_area.active_editor')
 
     editor_area = Instance(IEditorAreaPane)
 
-    menu_bar = SMenuBar(SMenu(TaskAction(name='New', method='new',
-                                         accelerator='Ctrl+N'),
-                              id='File', name='&File'),
-                        SMenu(DockPaneToggleGroup(),
-                              TaskToggleGroup(),
-                              id='View', name='&View'))
+    menu_bar = SMenuBar(
+        SMenu(
+            TaskAction(
+                name='New', method='new', accelerator='Ctrl+N'),
+            id='File',
+            name='&File'),
+        SMenu(
+            DockPaneToggleGroup(), TaskToggleGroup(), id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [
+        SToolBar(
+            TaskAction(
+                method='new',
+                tooltip='New file',
+                image=ImageResource('document_new')),
+            image_size=(32, 32)),
+    ]
 
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
 
     def _default_layout_default(self):
-        return TaskLayout(
-            top=HSplitter(
-                PaneItem('steps.pane1'),
-                PaneItem('steps.pane2'),
-                PaneItem('steps.pane3'),
-                ))
+        return TaskLayout(top=HSplitter(
+            PaneItem('steps.pane1'),
+            PaneItem('steps.pane2'),
+            PaneItem('steps.pane3'), ))
 
     def create_central_pane(self):
         """ Create the central pane: the script editor.
@@ -105,7 +117,7 @@ class ExampleTask(Task):
     def create_dock_panes(self):
         """ Create the file browser and connect to its double click event.
         """
-        return [ Pane1(), Pane2(), Pane3() ]
+        return [Pane1(), Pane2(), Pane3()]
 
     ###########################################################################
     # 'ExampleTask' interface.
@@ -126,6 +138,7 @@ class ExampleTask(Task):
             return self.editor_area.active_editor
         return None
 
+
 class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
@@ -135,30 +148,35 @@ class SecondTask(ExampleTask):
     id = 'example.second_task'
     name = 'Second Multi-Tab Editor'
 
-    menu_bar = SMenuBar(SMenu(TaskAction(name='New', method='new',
-                                         accelerator='Ctrl+N'),
-                              id='File', name='&File'),
-                        SMenu(DockPaneToggleGroup(),
-                              TaskToggleGroup(),
-                              id='View', name='&View'))
+    menu_bar = SMenuBar(
+        SMenu(
+            TaskAction(
+                name='New', method='new', accelerator='Ctrl+N'),
+            id='File',
+            name='&File'),
+        SMenu(
+            DockPaneToggleGroup(), TaskToggleGroup(), id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [
+        SToolBar(
+            TaskAction(
+                method='new',
+                tooltip='New file',
+                image=ImageResource('document_new')),
+            image_size=(32, 32)),
+    ]
 
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
 
     def _default_layout_default(self):
-        return TaskLayout(
-            left=VSplitter(
-                PaneItem('steps.pane1'),
-                PaneItem('steps.pane2'),
-                PaneItem('steps.pane3'),
-                ))
-            
+        return TaskLayout(left=VSplitter(
+            PaneItem('steps.pane1'),
+            PaneItem('steps.pane2'),
+            PaneItem('steps.pane3'), ))
+
+
 def main(argv):
     """ A simple example of using Tasks.
     """

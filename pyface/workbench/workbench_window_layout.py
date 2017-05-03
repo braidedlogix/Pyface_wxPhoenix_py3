@@ -13,12 +13,10 @@
 #------------------------------------------------------------------------------
 """ The implementation of a workbench window layout. """
 
-
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 
 WorkbenchWindowLayout = toolkit_object(
-    'workbench.workbench_window_layout:WorkbenchWindowLayout'
-)
+    'workbench.workbench_window_layout:WorkbenchWindowLayout')
 
 ### EOF #######################################################################

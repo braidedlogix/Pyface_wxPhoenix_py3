@@ -80,14 +80,9 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
         if self.resizeable:
             style |= wx.RESIZE_BORDER
 
-        dialog = wx.SingleChoiceDialog(
-            parent,
-            self.message,
-            self.title,
-            self._choice_strings(),
-            style,
-            self.position
-        )
+        dialog = wx.SingleChoiceDialog(parent, self.message, self.title,
+                                       self._choice_strings(), style,
+                                       self.position)
 
         if self.size != (-1, -1):
             dialog.SetSize(self.size)

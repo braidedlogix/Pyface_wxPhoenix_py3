@@ -14,7 +14,6 @@
 """ The 'null' backend specific implementation of the tool bar manager.
 """
 
-
 # Enthought library imports.
 from traits.api import Bool, Enum, Instance, Tuple
 
@@ -76,5 +75,6 @@ class ToolBarManager(ActionManager):
             controller = self.controller
 
         return None
+
 
 #### EOF ######################################################################

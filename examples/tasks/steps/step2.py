@@ -12,6 +12,7 @@ from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction
 from traits.api import on_trait_change, Property, Instance
 
+
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
     """
@@ -21,21 +22,28 @@ class ExampleTask(Task):
     id = 'example.example_task'
     name = 'Multi-Tab Editor'
 
-    active_editor = Property(Instance(IEditor),
-                             depends_on='editor_area.active_editor')
+    active_editor = Property(
+        Instance(IEditor), depends_on='editor_area.active_editor')
 
     editor_area = Instance(IEditorAreaPane)
 
-    menu_bar = SMenuBar(SMenu(TaskAction(name='New', method='new',
-                                         accelerator='Ctrl+N'),
-                              id='File', name='&File'),
-                        SMenu(DockPaneToggleGroup(),
-                              id='View', name='&View'))
+    menu_bar = SMenuBar(
+        SMenu(
+            TaskAction(
+                name='New', method='new', accelerator='Ctrl+N'),
+            id='File',
+            name='&File'),
+        SMenu(
+            DockPaneToggleGroup(), id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [
+        SToolBar(
+            TaskAction(
+                method='new',
+                tooltip='New file',
+                image=ImageResource('document_new')),
+            image_size=(32, 32)),
+    ]
 
     ###########################################################################
     # 'Task' interface.
@@ -65,6 +73,7 @@ class ExampleTask(Task):
         if self.editor_area is not None:
             return self.editor_area.active_editor
         return None
+
 
 def main(argv):
     """ A simple example of using Tasks.

@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 class ListeningAction(Action):
     """ An Action that listens and makes a callback to an object.
     """
-    
+
     #### ListeningAction interface ############################################
-    
+
     # The (extended) name of the method to call. By default, the on_perform
     # function will be called with the event.
     method = Str
@@ -29,7 +29,7 @@ class ListeningAction(Action):
 
     # The object to which the names above apply.
     object = Any
-    
+
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
@@ -43,11 +43,9 @@ class ListeningAction(Action):
 
         if self.object:
             self.object.on_trait_change(
-                self._enabled_update, self.enabled_name, remove=True
-            )
+                self._enabled_update, self.enabled_name, remove=True)
             self.object.on_trait_change(
-                self._visible_update, self.visible_name, remove=True
-            )
+                self._visible_update, self.visible_name, remove=True)
 
     def perform(self, event=None):
         """ Call the appropriate function.
@@ -112,8 +110,8 @@ class ListeningAction(Action):
     def _enabled_update(self):
         if self.enabled_name:
             if self.object:
-                self.enabled = bool(self._get_attr(self.object, 
-                                                   self.enabled_name, False))
+                self.enabled = bool(
+                    self._get_attr(self.object, self.enabled_name, False))
             else:
                 self.enabled = False
         else:
@@ -122,8 +120,8 @@ class ListeningAction(Action):
     def _visible_update(self):
         if self.visible_name:
             if self.object:
-                self.visible = bool(self._get_attr(self.object,
-                                                    self.visible_name, False))
+                self.visible = bool(
+                    self._get_attr(self.object, self.visible_name, False))
             else:
                 self.visible = False
         else:

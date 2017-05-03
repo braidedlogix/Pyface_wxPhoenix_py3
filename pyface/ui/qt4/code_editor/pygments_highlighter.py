@@ -17,7 +17,7 @@ from pygments.styles.default import DefaultStyle
 from pygments.token import Comment
 
 
-def get_tokens_unprocessed(self, text, stack=('root',)):
+def get_tokens_unprocessed(self, text, stack=('root', )):
     """ Split ``text`` into (tokentype, text) pairs.
 
         Monkeypatched to store the final stack on the object itself.
@@ -77,17 +77,18 @@ def get_tokens_unprocessed(self, text, stack=('root',)):
                 pos += 1
             except IndexError:
                 break
-    self._saved_state_stack  = list(statestack)
+    self._saved_state_stack = list(statestack)
+
 
 # Monkeypatch!
 RegexLexer.get_tokens_unprocessed = get_tokens_unprocessed
-
 
 # Even with the above monkey patch to store state, multiline comments do not
 # work since they are stateless (Pygments uses a single multiline regex for
 # these comments, but Qt lexes by line). So we need to add a state for comments
 # to the C and C++ lexers. This means that nested multiline comments will appear
 # to be valid C/C++, but this is better than the alternative for now.
+
 
 def replace_pattern(tokens, new_pattern):
     """ Given a RegexLexer token dictionary 'tokens', replace all patterns that
@@ -98,12 +99,13 @@ def replace_pattern(tokens, new_pattern):
             if isinstance(pattern, tuple) and pattern[1] == new_pattern[1]:
                 state[index] = new_pattern
 
+
 # More monkeypatching!
 comment_start = (r'/\*', Comment.Multiline, 'comment')
-comment_state = [ (r'[^*/]', Comment.Multiline),
-                  (r'/\*', Comment.Multiline, '#push'),
-                  (r'\*/', Comment.Multiline, '#pop'),
-                  (r'[*/]', Comment.Multiline) ]
+comment_state = [
+    (r'[^*/]', Comment.Multiline), (r'/\*', Comment.Multiline, '#push'),
+    (r'\*/', Comment.Multiline, '#pop'), (r'[*/]', Comment.Multiline)
+]
 replace_pattern(CLexer.tokens, comment_start)
 replace_pattern(CppLexer.tokens, comment_start)
 CLexer.tokens['comment'] = comment_state
@@ -114,7 +116,7 @@ class BlockUserData(QtGui.QTextBlockUserData):
     """ Storage for the user data associated with each line.
     """
 
-    syntax_stack = ('root',)
+    syntax_stack = ('root', )
 
     def __init__(self, **kwds):
         QtGui.QTextBlockUserData.__init__(self)
@@ -123,8 +125,8 @@ class BlockUserData(QtGui.QTextBlockUserData):
 
     def __repr__(self):
         attrs = ['syntax_stack']
-        kwds = ', '.join([ '%s=%r' % (attr, getattr(self, attr))
-                           for attr in attrs ])
+        kwds = ', '.join(
+            ['%s=%r' % (attr, getattr(self, attr)) for attr in attrs])
         return 'BlockUserData(%s)' % kwds
 
 
@@ -186,7 +188,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
         if token in self._formats:
             return self._formats[token]
         result = None
-        for key, value in self._style.style_for_token(token) .items():
+        for key, value in self._style.style_for_token(token).items():
             if value:
                 if result is None:
                     result = QtGui.QTextCharFormat()
@@ -229,8 +231,8 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
 
     def _get_color(self, color):
         qcolor = QtGui.QColor()
-        qcolor.setRgb(int(color[:2],base=16),
-                      int(color[2:4], base=16),
-                      int(color[4:6], base=16))
+        qcolor.setRgb(
+            int(color[:2], base=16),
+            int(color[2:4], base=16),
+            int(color[4:6], base=16))
         return qcolor
-

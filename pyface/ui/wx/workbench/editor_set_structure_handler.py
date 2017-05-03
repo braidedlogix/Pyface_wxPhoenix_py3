@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ The handler used to restore editors.
 """
 
@@ -22,7 +21,6 @@ import logging
 
 # Enthought library imports.
 from pyface.dock.api import SetStructureHandler
-
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +53,7 @@ class EditorSetStructureHandler(SetStructureHandler):
         """ Resolves an unresolved dock control id. """
 
         window_layout = self.window_layout
-        window        = window_layout.window
+        window = window_layout.window
 
         try:
             # Get the memento for the editor with this Id.
@@ -96,5 +94,6 @@ class EditorSetStructureHandler(SetStructureHandler):
             raise ValueError('no editor memento with Id %s' % id)
 
         return editor_memento
+
 
 #### EOF ######################################################################

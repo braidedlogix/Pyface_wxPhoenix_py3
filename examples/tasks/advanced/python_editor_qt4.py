@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Standard library imports.
 import sys
 from os.path import basename
@@ -25,6 +24,7 @@ from pyface.tasks.api import Editor
 # Local imports.
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
+
 
 @provides(IPythonEditor)
 class PythonEditor(Editor):
@@ -181,13 +181,13 @@ class PythonEditorEventFilter(QtCore.QObject):
 
             mods = event.modifiers()
             self.key_pressed = KeyPressedEvent(
-                alt_down     = ((mods & QtCore.Qt.AltModifier) ==
-                                QtCore.Qt.AltModifier),
-                control_down = ((mods & QtCore.Qt.ControlModifier) ==
-                                QtCore.Qt.ControlModifier),
-                shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
-                                QtCore.Qt.ShiftModifier),
-                key_code     = kcode,
-                event        = event)
+                alt_down=(
+                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier),
+                control_down=((mods & QtCore.Qt.ControlModifier) ==
+                              QtCore.Qt.ControlModifier),
+                shift_down=((mods & QtCore.Qt.ShiftModifier) ==
+                            QtCore.Qt.ShiftModifier),
+                key_code=kcode,
+                event=event)
 
         return super(PythonEditorEventFilter, self).eventFilter(obj, event)

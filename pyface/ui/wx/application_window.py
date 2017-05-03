@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -43,7 +42,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-
     #### 'IApplicationWindow' interface #######################################
 
     icon = Instance(ImageResource)
@@ -66,9 +64,9 @@ class ApplicationWindow(MApplicationWindow, Window):
     # that by doing that traits never knows that the trait has been set and
     # hence always returns the default value! Using a trait initializer method
     # seems to work however (e.g. 'def _size_default'). Hmmmm....
-##     size = (800, 600)
+    ##     size = (800, 600)
 
-    title = Str("Pyface")#Unicode("Pyface")
+    title = Str("Pyface")  #Unicode("Pyface")
 
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
@@ -81,7 +79,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         #sizer.SetSizeHints(panel)
         #panel.SetSizer(sizer)
         panel.SetBackgroundColour('blue')
-
 
         return panel
 
@@ -99,13 +96,12 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_tool_bar(self, parent):
         tool_bar_managers = self._get_tool_bar_managers()
-        
+
         if len(tool_bar_managers) > 0:
             for tool_bar_manager in reversed(tool_bar_managers):
-                tool_bar = tool_bar_manager.create_tool_bar(parent)#, aui=True)
-                self._add_toolbar_to_aui_manager(
-                    tool_bar
-                )
+                tool_bar = tool_bar_manager.create_tool_bar(
+                    parent)  #, aui=True)
+                self._add_toolbar_to_aui_manager(tool_bar)
             self._aui_manager.Update()
 
     def _set_window_icon(self):
@@ -160,9 +156,12 @@ class ApplicationWindow(MApplicationWindow, Window):
                 | wx.CLIP_CHILDREN
 
         control = wx.Frame(
-            parent, -1, self.title, style=style, size=self.size,
-            pos=self.position
-        )
+            parent,
+            -1,
+            self.title,
+            style=style,
+            size=self.size,
+            pos=self.position)
 
         # Mac/Win needs this, otherwise background color is black
         attr = control.GetDefaultAttributes()
@@ -258,5 +257,6 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _icon_changed(self):
         self._set_window_icon()
+
 
 #### EOF ######################################################################

@@ -20,14 +20,14 @@ except ImportError:
 
 from .default_renderer import DefaultRenderer
 
-class UnitRenderer(DefaultRenderer):
 
+class UnitRenderer(DefaultRenderer):
     def DrawForeground(self, grid, attr, dc, rect, row, col, isSelected):
         dc.SetBackgroundMode(wx.TRANSPARENT)
         text = grid.model.GetValue(row, col)
         #print 'Rendering ', row, col, text, text.__class__
         dc.SetFont(self.font)
-        dc.DrawText(text, rect.x+1, rect.y+1)
+        dc.DrawText(text, rect.x + 1, rect.y + 1)
 
         return
 
@@ -54,21 +54,26 @@ class UnitRenderer(DefaultRenderer):
 
         dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
         return
+
+
 #-------------------------------------------------------------------------------
 
-class MultiUnitRenderer(DefaultRenderer):
 
-    def __init__( self, color="black", font="ARIAL", fontsize=8,
-                  suppress_warnings=False):
+class MultiUnitRenderer(DefaultRenderer):
+    def __init__(self,
+                 color="black",
+                 font="ARIAL",
+                 fontsize=8,
+                 suppress_warnings=False):
 
         self.suppress_warnings = suppress_warnings
-        DefaultRenderer.__init__( self, color, font, fontsize )
+        DefaultRenderer.__init__(self, color, font, fontsize)
 
     def DrawForeground(self, grid, attr, dc, rect, row, col, isSelected):
         dc.SetBackgroundMode(wx.TRANSPARENT)
         text = grid.model.GetValue(row, col)
         dc.SetFont(self.font)
-        dc.DrawText(text, rect.x+1, rect.y+1)
+        dc.DrawText(text, rect.x + 1, rect.y + 1)
 
         return
 
@@ -101,7 +106,8 @@ class MultiUnitRenderer(DefaultRenderer):
             family, other_text = family[:-1].split(' ')
 
         if unit_parser:
-            other_unit = unit_parser.parse_unit(other_text, self.suppress_warnings)
+            other_unit = unit_parser.parse_unit(other_text,
+                                                self.suppress_warnings)
             dimensionally_equivalent = this_unit.can_convert(other_unit)
         else:
             other_unit = None

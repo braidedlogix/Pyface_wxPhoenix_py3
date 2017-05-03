@@ -78,8 +78,7 @@ class LayoutContainer(LayoutItem):
         if items:
             if 'items' in traits:
                 raise ValueError(
-                    "Received 'items' as positional and keyword argument."
-                )
+                    "Received 'items' as positional and keyword argument.")
             else:
                 traits['items'] = list(items)
         super(LayoutContainer, self).__init__(**traits)
@@ -139,10 +138,10 @@ class Splitter(LayoutContainer):
 
     # The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
     # other Splitters.
-    items = List(Either(
-        PaneItem,
-        Tabbed,
-        Instance('pyface.tasks.task_layout.Splitter')), pretty_skip=True)
+    items = List(
+        Either(PaneItem, Tabbed,
+               Instance('pyface.tasks.task_layout.Splitter')),
+        pretty_skip=True)
 
 
 class HSplitter(Splitter):

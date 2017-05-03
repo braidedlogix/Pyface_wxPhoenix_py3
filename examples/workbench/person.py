@@ -1,6 +1,5 @@
 """ A simple example of some object model. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits, Int, Str
 
@@ -22,5 +21,6 @@ class Person(HasTraits):
         """ Return an informal string representation of the object. """
 
         return self.name
+
 
 #### EOF ######################################################################

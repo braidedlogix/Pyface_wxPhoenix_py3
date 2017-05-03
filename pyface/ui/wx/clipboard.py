@@ -22,16 +22,15 @@ from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Data formats
 PythonObjectFormat = wx.DataFormat('PythonObject')
-TextFormat         = wx.DataFormat(wx.DF_TEXT)
-FileFormat         = wx.DataFormat(wx.DF_FILENAME)
+TextFormat = wx.DataFormat(wx.DF_TEXT)
+FileFormat = wx.DataFormat(wx.DF_FILENAME)
 
 # Shortcuts
-cb           = wx.TheClipboard
+cb = wx.TheClipboard
 
 
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
-
 
     #---------------------------------------------------------------------------
     #  'data' property methods:
@@ -57,8 +56,8 @@ class Clipboard(BaseClipboard):
                 if cb.IsSupported(PythonObjectFormat):
                     cdo = wx.CustomDataObject(PythonObjectFormat)
                     if cb.GetData(cdo):
-                        file   = StringIO(cdo.GetData())
-                        klass  = load(file)
+                        file = StringIO(cdo.GetData())
+                        klass = load(file)
                         result = load(file)
             finally:
                 cb.Close()
@@ -137,10 +136,10 @@ class Clipboard(BaseClipboard):
         if cb.Open():
             tfo = wx.FileDataObject()
             if isinstance(data, str):
-                tfo.AddFile(data)#tfo.Sizer.Addile(data)
+                tfo.AddFile(data)  #tfo.Sizer.Addile(data)
             else:
                 for filename in data:
-                    tfo.Addfile(filename)#tfo.Sizer.Addile(filename)
+                    tfo.Addfile(filename)  #tfo.Sizer.Addile(filename)
             cb.SetData(tfo)
             cb.Close()
             cb.Flush()

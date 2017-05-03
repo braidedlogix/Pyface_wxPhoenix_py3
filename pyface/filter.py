@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Base class for all filters. """
 
-
 # Enthought library imports.
 from traits.api import HasPrivateTraits
 
@@ -66,5 +65,6 @@ class Filter(HasPrivateTraits):
         """
 
         return False
+
 
 #### EOF ######################################################################

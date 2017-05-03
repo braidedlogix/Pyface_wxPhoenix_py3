@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for all viewer sorters. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits
 
@@ -67,13 +66,13 @@ class ViewerSorter(HasTraits):
             #result = cmp(category_a, category_b)
             result = category_a.__lt__(category_b)
             if result:
-                result=-1
+                result = -1
             else:
-                result=category_b.__lt__(category_a)
+                result = category_b.__lt__(category_a)
                 if result:
-                    result=1
+                    result = 1
                 else:
-                    result=0
+                    result = 0
 
         else:
             # Get the label text for each element.
@@ -81,43 +80,53 @@ class ViewerSorter(HasTraits):
             # fixme: This is a hack until we decide whethwe we like the
             # JFace(ish) or Swing(ish) models!
             if hasattr(viewer, 'label_provider'):
-              label_a = viewer.label_provider.get_text(viewer, element_a)
-              label_b = viewer.label_provider.get_text(viewer, element_b)
+                label_a = viewer.label_provider.get_text(viewer, element_a)
+                label_b = viewer.label_provider.get_text(viewer, element_b)
 
             else:
                 label_a = viewer.node_model.get_text(viewer, element_a)
                 label_b = viewer.node_model.get_text(viewer, element_b)
 
             # Compare the label text.
-            result = label_a.__lt__(label_b)#cmp(label_a, label_b)
+            result = label_a.__lt__(label_b)  #cmp(label_a, label_b)
 
             if result:
-                result=-1
+                result = -1
             else:
-                result=label_b.__lt__(label_a)
+                result = label_b.__lt__(label_a)
                 if result:
-                    result=1
+                    result = 1
                 else:
-                    result=0
+                    result = 0
         return result
+
     def cmp_to_key(self, mycmp):
         'Convert a cmp= function into a key= function'
+
         class K:
             def __init__(self, obj, *args):
                 self.obj = obj
+
             def __lt__(self, other):
                 return mycmp(self.obj, other.obj) < 0
+
             def __gt__(self, other):
                 return mycmp(self.obj, other.obj) > 0
+
             def __eq__(self, other):
                 return mycmp(self.obj, other.obj) == 0
+
             def __le__(self, other):
                 return mycmp(self.obj, other.obj) <= 0
+
             def __ge__(self, other):
                 return mycmp(self.obj, other.obj) >= 0
+
             def __ne__(self, other):
                 return mycmp(self.obj, other.obj) != 0
+
         return K
+
     def category(self, viewer, parent, element):
         """ Returns the category (an integer) for an element.
 
@@ -148,5 +157,6 @@ class ViewerSorter(HasTraits):
         """
 
         return False
+
 
 #### EOF ######################################################################

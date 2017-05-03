@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Base class for all tree label providers. """
 
-
 # Local imports.
 from .label_provider import LabelProvider
 
@@ -61,5 +60,6 @@ class TreeLabelProvider(LabelProvider):
         """ Returns True is the node is expandanble, otherwise False. """
 
         return True
+
 
 #### EOF ######################################################################

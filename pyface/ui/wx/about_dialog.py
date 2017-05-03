@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -32,7 +31,6 @@ from traits.api import Instance, List, provides, Unicode, Str
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
 from pyface.image_resource import ImageResource
 from .dialog import Dialog
-
 
 _DIALOG_TEXT = '''
 <html>
@@ -75,10 +73,9 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-
     #### 'IAboutDialog' interface #############################################
 
-    additions = List(Str)#List(Unicode)
+    additions = List(Str)  #List(Unicode)
 
     image = Instance(ImageResource, ImageResource('about'))
 
@@ -98,7 +95,7 @@ class AboutDialog(MAboutDialog, Dialog):
 
         # Load the image to be displayed in the about box.
         image = self.image.create_image()
-        path  = self.image.absolute_path
+        path = self.image.absolute_path
 
         # The additional strings.
         additions = '<br />'.join(self.additions)
@@ -120,12 +117,12 @@ class AboutDialog(MAboutDialog, Dialog):
             ok = self.ok_label
 
         # Set the page contents.
-        html.SetPage(
-            _DIALOG_TEXT % (path, additions, py_version, wx_version, ok)
-        )
+        html.SetPage(_DIALOG_TEXT %
+                     (path, additions, py_version, wx_version, ok))
 
         # Make the 'OK' button the default button.
-        ok_button = parent.FindWindowById(wx.ID_OK) #html.Window.FindWindowById(wx.ID_OK)
+        ok_button = parent.FindWindowById(
+            wx.ID_OK)  #html.Window.FindWindowById(wx.ID_OK)
         ok_button.SetDefault()
 
         # Set the height of the HTML window to match the height of the content.
@@ -138,5 +135,6 @@ class AboutDialog(MAboutDialog, Dialog):
         # size!?!
         width, height = html.GetSize().Get()
         parent.SetClientSize((width, height + 10))
+
 
 ### EOF #######################################################################

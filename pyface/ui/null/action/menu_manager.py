@@ -14,7 +14,6 @@
 """ The 'null' backend specific implementation of a menu manager.
 """
 
-
 # Enthought library imports.
 from traits.api import Unicode
 
@@ -64,7 +63,6 @@ class MenuManager(ActionManager, ActionManagerItem):
         """ Adds the item to a tool bar. """
 
         raise ValueError("Cannot add a menu manager to a toolbar.")
-
 
 
 #### EOF ######################################################################

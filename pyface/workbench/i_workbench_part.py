@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for workbench parts. """
 
-
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Instance, Interface
 from traits.api import List, provides, Str, Unicode
@@ -119,5 +118,6 @@ class MWorkbenchPart(HasTraits):
         """ Set the focus to the appropriate control in the part. """
 
         raise NotImplementedError
+
 
 #### EOF ######################################################################

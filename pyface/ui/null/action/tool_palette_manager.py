@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A tool bar manager realizes itself in a tool palette control. """
 
-
 # Enthought library imports.
 from traits.api import Any, Bool, Enum, Instance, Tuple
 

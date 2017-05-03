@@ -32,7 +32,10 @@ class CodeWidget(QtGui.QPlainTextEdit):
     ###########################################################################
     focus_lost = QtCore.Signal()
 
-    def __init__(self, parent, should_highlight_current_line=True, font=None,
+    def __init__(self,
+                 parent,
+                 should_highlight_current_line=True,
+                 font=None,
                  lexer=None):
         super(CodeWidget, self).__init__(parent)
 
@@ -85,8 +88,10 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
         # Key bindings
         self.indent_key = QtGui.QKeySequence(QtCore.Qt.Key_Tab)
-        self.unindent_key = QtGui.QKeySequence(QtCore.Qt.SHIFT + QtCore.Qt.Key_Backtab)
-        self.comment_key = QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_Slash)
+        self.unindent_key = QtGui.QKeySequence(QtCore.Qt.SHIFT +
+                                               QtCore.Qt.Key_Backtab)
+        self.comment_key = QtGui.QKeySequence(QtCore.Qt.CTRL +
+                                              QtCore.Qt.Key_Slash)
         self.backspace_key = QtGui.QKeySequence(QtCore.Qt.Key_Backspace)
 
     def lines(self):
@@ -151,8 +156,10 @@ class CodeWidget(QtGui.QPlainTextEdit):
         """
         if dy:
             self.line_number_widget.scroll(0, dy)
-        self.line_number_widget.update(
-            0, rect.y(), self.line_number_widget.width(), rect.height())
+        self.line_number_widget.update(0,
+                                       rect.y(),
+                                       self.line_number_widget.width(),
+                                       rect.height())
         if rect.contains(self.viewport().rect()):
             self.update_line_number_width()
 
@@ -174,8 +181,8 @@ class CodeWidget(QtGui.QPlainTextEdit):
         if self.should_highlight_current_line:
             selection = QtGui.QTextEdit.ExtraSelection()
             selection.format.setBackground(self.line_highlight_color)
-            selection.format.setProperty(
-                QtGui.QTextFormat.FullWidthSelection, True)
+            selection.format.setProperty(QtGui.QTextFormat.FullWidthSelection,
+                                         True)
             selection.cursor = self.textCursor()
             selection.cursor.clearSelection()
             self.setExtraSelections([selection])
@@ -183,7 +190,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def autoindent_newline(self):
         tab = '\t'
         if self.tabs_as_spaces:
-            tab = ' '*self.tab_width
+            tab = ' ' * self.tab_width
 
         cursor = self.textCursor()
         text = cursor.block().text()
@@ -244,7 +251,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             cursor.beginEditBlock()
 
             removed = self.line_unindent(cursor)
-            position = max(position-removed, 0)
+            position = max(position - removed, 0)
 
             cursor.endEditBlock()
             cursor.setPosition(position)
@@ -321,7 +328,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def line_uncomment(self, cursor, position=0):
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
         text = cursor.block().text()
-        new_text = text[:position] + text[position+1:]
+        new_text = text[:position] + text[position + 1:]
         cursor.movePosition(QtGui.QTextCursor.EndOfBlock,
                             QtGui.QTextCursor.KeepAnchor)
         cursor.removeSelectedText()
@@ -376,7 +383,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
 
-        self.keyPressEvent_action(event) # FIXME: see above
+        self.keyPressEvent_action(event)  # FIXME: see above
 
         # If the cursor is in the middle of the first line, pressing the "up"
         # key causes the cursor to go to the start of the first line, i.e. the
@@ -418,22 +425,25 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def resizeEvent(self, event):
         QtGui.QPlainTextEdit.resizeEvent(self, event)
         contents = self.contentsRect()
-        self.line_number_widget.setGeometry(QtCore.QRect(contents.left(),
-            contents.top(), self.line_number_widget.digits_width(),
-            contents.height()))
+        self.line_number_widget.setGeometry(
+            QtCore.QRect(contents.left(),
+                         contents.top(),
+                         self.line_number_widget.digits_width(),
+                         contents.height()))
 
         # use the viewport width to determine the right edge. This allows for
         # the propper placement w/ and w/o the scrollbar
         right_pos = self.viewport().width() + self.line_number_widget.width() + 1\
                     - self.status_widget.sizeHint().width()
-        self.status_widget.setGeometry(QtCore.QRect(right_pos,
-            contents.top(), self.status_widget.sizeHint().width(),
-            contents.height()))
+        self.status_widget.setGeometry(
+            QtCore.QRect(right_pos,
+                         contents.top(),
+                         self.status_widget.sizeHint().width(),
+                         contents.height()))
 
     def focusOutEvent(self, event):
         QtGui.QPlainTextEdit.focusOutEvent(self, event)
         self.focus_lost.emit()
-
 
     def sizeHint(self):
         # Suggest a size that is 80 characters wide and 40 lines tall.
@@ -633,7 +643,9 @@ class AdvancedCodeWidget(QtGui.QWidget):
         find_cursor = document.find(search_text, self.code.textCursor(), flags)
         if find_cursor.isNull() and wrap:
             if direction == 'backward':
-                find_cursor = document.find(search_text, document.characterCount()-1, flags)
+                find_cursor = document.find(search_text,
+                                            document.characterCount() - 1,
+                                            flags)
             else:
                 find_cursor = document.find(search_text, 0, flags)
 
@@ -643,10 +655,12 @@ class AdvancedCodeWidget(QtGui.QWidget):
                 find_cursor.removeSelectedText()
                 find_cursor.insertText(replace)
                 find_cursor.endEditBlock()
-                find_cursor.movePosition(
-                    QtGui.QTextCursor.Left, QtGui.QTextCursor.MoveAnchor,len(replace))
-                find_cursor.movePosition(
-                    QtGui.QTextCursor.Right, QtGui.QTextCursor.KeepAnchor,len(replace))
+                find_cursor.movePosition(QtGui.QTextCursor.Left,
+                                         QtGui.QTextCursor.MoveAnchor,
+                                         len(replace))
+                find_cursor.movePosition(QtGui.QTextCursor.Right,
+                                         QtGui.QTextCursor.KeepAnchor,
+                                         len(replace))
                 self.code.setTextCursor(find_cursor)
             else:
                 self.code.setTextCursor(find_cursor)
@@ -669,8 +683,8 @@ class AdvancedCodeWidget(QtGui.QWidget):
         if not self.active_find_widget:
             self.enable_find()
         search_text = unicode(self.active_find_widget.line_edit.text())
-        cursor = self.find_in_document(search_text=search_text,
-                                       direction='backward')
+        cursor = self.find_in_document(
+            search_text=search_text, direction='backward')
         if cursor:
             return 1
         return 0
@@ -695,8 +709,8 @@ class AdvancedCodeWidget(QtGui.QWidget):
         count = 0
         cursor = self.code.textCursor()
         cursor.beginEditBlock()
-        while self.find_in_document(search_text=search_text,
-                                    replace=replace_text) != None:
+        while self.find_in_document(
+                search_text=search_text, replace=replace_text) != None:
             count += 1
         cursor.endEditBlock()
         return count
@@ -763,7 +777,7 @@ if __name__ == '__main__':
         f = open(sys.argv[1], 'r')
         window.code.setPlainText(f.read())
 
-    window.code.set_info_lines([3,4,8])
+    window.code.set_info_lines([3, 4, 8])
 
     window.resize(640, 640)
     window.show()

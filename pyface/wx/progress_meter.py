@@ -13,8 +13,8 @@
 #------------------------------------------------------------------------------
 import wx
 
-class ProgressDialog(wx.ProgressDialog):
 
+class ProgressDialog(wx.ProgressDialog):
     def __init__(self, *args, **kwds):
 
         wx.ProgressDialog.__init__(self, *args, **kwds)

@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A wizard model that can be chained with other wizards. """
 
-
 # Enthought library imports.
 from traits.api import Instance
 
@@ -74,5 +73,6 @@ class ChainedWizard(Wizard):
             self._update()
 
         return
+
 
 #### EOF ######################################################################

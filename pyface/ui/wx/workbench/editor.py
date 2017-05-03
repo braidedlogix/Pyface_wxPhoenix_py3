@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -60,5 +59,6 @@ class Editor(MEditor):
             self.control.SetFocus()
 
         return
+
 
 #### EOF ######################################################################

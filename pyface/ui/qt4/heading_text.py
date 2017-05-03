@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -27,7 +26,6 @@ class HeadingText(MHeadingText, Widget):
     """ The toolkit specific implementation of a HeadingText.  See the
     IHeadingText interface for the API documentation.
     """
-
 
     #### 'IHeadingText' interface #############################################
 
@@ -78,5 +76,6 @@ class HeadingText(MHeadingText, Widget):
 
         if self.control is not None:
             self._set_text(new)
+
 
 #### EOF ######################################################################

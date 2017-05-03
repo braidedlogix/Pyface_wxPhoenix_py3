@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Major package imports.
 from pyface.qt import QtGui
 
@@ -26,7 +25,6 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     """ The toolkit specific implementation of a SystemMetrics.  See the
     ISystemMetrics interface for the API documentation.
     """
-
 
     #### 'ISystemMetrics' interface ###########################################
 
@@ -44,10 +42,12 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         return QtGui.QApplication.instance().desktop().screenGeometry().width()
 
     def _get_screen_height(self):
-        return QtGui.QApplication.instance().desktop().screenGeometry().height()
+        return QtGui.QApplication.instance().desktop().screenGeometry().height(
+        )
 
     def _get_dialog_background_color(self):
-        color = QtGui.QApplication.instance().palette().color(QtGui.QPalette.Window)
+        color = QtGui.QApplication.instance().palette().color(
+            QtGui.QPalette.Window)
 
         return (color.redF(), color.greenF(), color.blueF())
 

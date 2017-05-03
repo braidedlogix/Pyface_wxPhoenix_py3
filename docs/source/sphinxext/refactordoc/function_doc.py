@@ -18,9 +18,14 @@ class FunctionDoc(BaseDoc):
     def __init__(self, lines, headers=None, verbose=False):
 
         if headers is None:
-            headers = {'Returns': 'returns', 'Arguments': 'arguments',
-                       'Parameters': 'arguments', 'Raises': 'raises',
-                       'Yields': 'returns', 'Notes':'notes'}
+            headers = {
+                'Returns': 'returns',
+                'Arguments': 'arguments',
+                'Parameters': 'arguments',
+                'Raises': 'raises',
+                'Yields': 'returns',
+                'Notes': 'notes'
+            }
 
         super(FunctionDoc, self).__init__(lines, headers, verbose)
         return
@@ -86,4 +91,3 @@ class FunctionDoc(BaseDoc):
         self.insert_lines(descriptions, index)
         self.index += len(descriptions)
         return descriptions
-

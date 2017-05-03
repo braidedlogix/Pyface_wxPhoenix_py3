@@ -14,7 +14,6 @@
 """ A simple progress dialog window which allows itself to be updated
 """
 
-
 # Import the toolkit specific version.
 from __future__ import absolute_import
 

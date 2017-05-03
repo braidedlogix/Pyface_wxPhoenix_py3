@@ -9,7 +9,6 @@ from ..image_resource import ImageResource
 
 
 class TestApplicationWindow(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         self.gui = GUI()
         self.window = ApplicationWindow()
@@ -100,9 +99,7 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
                 Action(name="Save"),
                 Action(name="Close"),
                 Action(name="Quit"),
-                name='File',
-            )
-        )
+                name='File', ))
         self.window._create()
         self.window.show(True)
         self.gui.process_events()
@@ -113,12 +110,16 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
     def test_toolbar(self):
         # test that toolbar gets created as expected
         self.window.tool_bar_manager = ToolBarManager(
-            Action(name="New", image=ImageResource('core')),
-            Action(name="Open", image=ImageResource('core')),
-            Action(name="Save", image=ImageResource('core')),
-            Action(name="Close", image=ImageResource('core')),
-            Action(name="Quit", image=ImageResource('core')),
-        )
+            Action(
+                name="New", image=ImageResource('core')),
+            Action(
+                name="Open", image=ImageResource('core')),
+            Action(
+                name="Save", image=ImageResource('core')),
+            Action(
+                name="Close", image=ImageResource('core')),
+            Action(
+                name="Quit", image=ImageResource('core')), )
         self.window._create()
         self.window.show(True)
         self.gui.process_events()
@@ -129,8 +130,7 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
     def test_statusbar(self):
         # test that status bar gets created as expected
         self.window.status_bar_manager = StatusBarManager(
-            message="hello world",
-        )
+            message="hello world", )
         self.window._create()
         self.window.show(True)
         self.gui.process_events()

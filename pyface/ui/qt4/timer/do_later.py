@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Major package imports.
 from pyface.qt import QtCore
 
@@ -29,9 +28,8 @@ class DoLaterTimer(QtCore.QTimer):
 
         global active_timers
         for timer in self.active_timers:
-            if ((timer.callable == callable) and
-                (timer.args     == args)     and
-                (timer.kw_args  == kw_args)):
+            if ((timer.callable == callable) and (timer.args == args) and
+                (timer.kw_args == kw_args)):
                 timer.start(interval)
                 return
 

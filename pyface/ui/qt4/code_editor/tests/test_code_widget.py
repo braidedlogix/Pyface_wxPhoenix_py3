@@ -18,7 +18,6 @@ from pyface.qt.QtTest import QTest
 
 # Enthought library imports.
 
-
 # Local imports.
 from pyface.ui.qt4.code_editor.code_widget import CodeWidget, AdvancedCodeWidget
 

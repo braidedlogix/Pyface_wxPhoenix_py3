@@ -1,6 +1,5 @@
 """ The default perspective menu for a workbench window. """
 
-
 # Enthought library imports.
 from pyface.action.api import Group, MenuManager
 from traits.api import Instance, List, on_trait_change
@@ -54,7 +53,6 @@ class PerspectiveMenuManager(MenuManager):
 
             # Create a group containing the reset actions.
             self._create_reset_perspective_group(self.window)
-
         ]
 
         return groups
@@ -96,7 +94,7 @@ class PerspectiveMenuManager(MenuManager):
         # fixme: Not sure if alphabetic sorting is appropriate in all cases,
         # but it will do for now!
         perspectives = window.perspectives[:]
-        perspectives.sort(key=lambda x:x.name)
+        perspectives.sort(key=lambda x: x.name)
 
         # For each perspective, create an action that sets the active
         # perspective to it.
@@ -104,9 +102,7 @@ class PerspectiveMenuManager(MenuManager):
         for perspective in perspectives:
             group.append(
                 SetActivePerspectiveAction(
-                    perspective=perspective, window=window
-                )
-            )
+                    perspective=perspective, window=window))
 
         return group
 
@@ -117,8 +113,7 @@ class PerspectiveMenuManager(MenuManager):
             NewUserPerspectiveAction(window=window),
             SaveAsUserPerspectiveAction(window=window),
             RenameUserPerspectiveAction(window=window),
-            DeleteUserPerspectiveAction(window=window)
-        )
+            DeleteUserPerspectiveAction(window=window))
 
         return group
 
@@ -127,9 +122,9 @@ class PerspectiveMenuManager(MenuManager):
 
         group = Group(
             ResetActivePerspectiveAction(window=window),
-            ResetAllPerspectivesAction(window=window)
-        )
+            ResetAllPerspectivesAction(window=window))
 
         return group
+
 
 #### EOF ######################################################################

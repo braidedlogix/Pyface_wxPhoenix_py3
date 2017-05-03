@@ -8,7 +8,6 @@
 # Thanks for using Enthought open source!
 """ A viewer based on a tree control. """
 
-
 # Import the toolkit specific version.
 from __future__ import absolute_import
 

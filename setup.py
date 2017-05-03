@@ -27,7 +27,7 @@ def read_module(module, package='pyface'):
     """
     base_dir = os.path.dirname(__file__)
     module_name = package + '.' + module
-    path = os.path.join(base_dir, package, module+'.py')
+    path = os.path.join(base_dir, package, module + '.py')
     with open(path, 'r') as fp:
         code = compile(fp.read(), module_name, 'exec')
     context = {}
@@ -49,8 +49,9 @@ def git_version():
         env['LANG'] = 'C'
         env['LC_ALL'] = 'C'
         out = subprocess.Popen(
-            cmd, stdout=subprocess.PIPE, env=env,
-        ).communicate()[0]
+            cmd,
+            stdout=subprocess.PIPE,
+            env=env, ).communicate()[0]
         return out
 
     try:
@@ -110,10 +111,12 @@ if not is_released:
         fullversion += '.dev{0}'.format(dev_num)
 
     with open(filename, "wt") as fp:
-        fp.write(template.format(version=VERSION,
-                                 full_version=fullversion,
-                                 git_revision=git_rev,
-                                 is_released=IS_RELEASED))
+        fp.write(
+            template.format(
+                version=VERSION,
+                full_version=fullversion,
+                git_revision=git_rev,
+                is_released=IS_RELEASED))
 
     return fullversion
 
@@ -124,12 +127,15 @@ if __name__ == "__main__":
     __requires__ = data['__requires__']
     __extras_require__ = data['__extras_require__']
 
-    setup(name='pyface',
-          version=__version__,
-          url='https://docs.enthought.com/pyface',
-          author='David C. Morrill, et al.',
-          author_email='dmorrill@enthought.com',
-          classifiers=[c.strip() for c in """\
+    setup(
+        name='pyface',
+        version=__version__,
+        url='https://docs.enthought.com/pyface',
+        author='David C. Morrill, et al.',
+        author_email='dmorrill@enthought.com',
+        classifiers=[
+            c.strip()
+            for c in """\
               Development Status :: 5 - Production/Stable
               Intended Audience :: Developers
               Intended Audience :: Science/Research
@@ -147,38 +153,40 @@ if __name__ == "__main__":
               Topic :: Scientific/Engineering
               Topic :: Software Development
               Topic :: Software Development :: Libraries
-              """.splitlines() if len(c.split()) > 0],
-          description='traits-capable windowing framework',
-          long_description=open('README.rst').read(),
-          download_url=('https://github.com/enthought/pyface'),
-          install_requires=__requires__,
-          extras_require=__extras_require__,
-          license='BSD',
-          maintainer='ETS Developers',
-          maintainer_email='enthought-dev@enthought.com',
-          package_data={'': [
-            'image/library/*.zip',
-            'images/*',
-            'action/images/*',
-            'dock/images/*',
-            'tree/images/*',
-            'tests/images/*',
-            'ui/qt4/images/*',
-            'ui/wx/images/*',
-            'ui/wx/grid/images/*',
-          ]},
-          packages=find_packages(),
-          entry_points = {
-              'pyface.toolkits': [
-                  'qt4 = pyface.ui.qt4.init:toolkit_object',
-                  'wx = pyface.ui.wx.init:toolkit_object',
-                  'null = pyface.ui.null.init:toolkit_object',
-              ],
-          },
-          platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
-          zip_safe=False,
-          use_2to3=True,
-          use_2to3_exclude_fixers=[
+              """.splitlines() if len(c.split()) > 0
+        ],
+        description='traits-capable windowing framework',
+        long_description=open('README.rst').read(),
+        download_url=('https://github.com/enthought/pyface'),
+        install_requires=__requires__,
+        extras_require=__extras_require__,
+        license='BSD',
+        maintainer='ETS Developers',
+        maintainer_email='enthought-dev@enthought.com',
+        package_data={
+            '': [
+                'image/library/*.zip',
+                'images/*',
+                'action/images/*',
+                'dock/images/*',
+                'tree/images/*',
+                'tests/images/*',
+                'ui/qt4/images/*',
+                'ui/wx/images/*',
+                'ui/wx/grid/images/*',
+            ]
+        },
+        packages=find_packages(),
+        entry_points={
+            'pyface.toolkits': [
+                'qt4 = pyface.ui.qt4.init:toolkit_object',
+                'wx = pyface.ui.wx.init:toolkit_object',
+                'null = pyface.ui.null.init:toolkit_object',
+            ],
+        },
+        platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
+        zip_safe=False,
+        use_2to3=True,
+        use_2to3_exclude_fixers=[
             'lib2to3.fixes.fix_next',  # we have several .next() methods, no iterators
-          ],
-    )
+        ], )

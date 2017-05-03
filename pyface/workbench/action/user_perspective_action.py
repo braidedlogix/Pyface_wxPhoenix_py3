@@ -8,7 +8,6 @@
 #-----------------------------------------------------------------------------
 """ The base class for user perspective actions. """
 
-
 # Enthought library imports.
 from traits.api import on_trait_change
 
@@ -57,5 +56,6 @@ class UserPerspectiveAction(WorkbenchAction):
           and self._is_user_perspective(self.window.active_perspective)
 
         return
+
 
 #### EOF #####################################################################

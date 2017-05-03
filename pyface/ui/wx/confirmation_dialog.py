@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -36,7 +35,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     IConfirmationDialog interface for the API documentation.
     """
 
-
     #### 'IConfirmationDialog' interface ######################################
 
     cancel = Bool(False)
@@ -45,15 +43,15 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     image = Instance(ImageResource)
 
-    message = Str#Unicode
+    message = Str  #Unicode
 
-    informative = Str#Unicode
+    informative = Str  #Unicode
 
-    detail = Str#Unicode
+    detail = Str  #Unicode
 
-    no_label = Str#Unicode
+    no_label = Str  #Unicode
 
-    yes_label = Str#Unicode
+    yes_label = Str  #Unicode
 
     ###########################################################################
     # Protected 'IDialog' interface.
@@ -72,7 +70,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         if self.default == YES:
             yes.SetDefault()
         #wx.EVT_BUTTON(parent, wx.ID_YES, self._on_yes)
-        parent.Bind(wx.EVT_BUTTON,self._on_yes, yes)
+        parent.Bind(wx.EVT_BUTTON, self._on_yes, yes)
         sizer.AddButton(yes)
 
         # 'NO' button.
@@ -100,7 +98,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
                 cancel.SetDefault()
 
             #wx.EVT_BUTTON(parent, wx.ID_CANCEL, self._wx_on_cancel)
-            parent.Bind(wx.EVT_BUTTON,self._wx_on_cancel, cancel)
+            parent.Bind(wx.EVT_BUTTON, self._wx_on_cancel, cancel)
             sizer.AddButton(cancel)
 
         sizer.Realize()
@@ -149,5 +147,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         """ Called when the 'No' button is pressed. """
 
         self.control.EndModal(wx.ID_NO)
+
 
 #### EOF ######################################################################

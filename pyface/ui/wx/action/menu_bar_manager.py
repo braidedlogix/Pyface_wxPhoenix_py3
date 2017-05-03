@@ -13,7 +13,6 @@
 #  Author: Enthought, Inc.
 #
 #------------------------------------------------------------------------------
-
 """ The wx specific implementation of a menu bar manager.
 """
 
@@ -50,5 +49,6 @@ class MenuBarManager(ActionManager):
                 menu_bar.Append(menu, item.name)
 
         return menu_bar
+
 
 #### EOF ######################################################################

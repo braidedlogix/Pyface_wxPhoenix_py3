@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Application window example. """
 
-
 # Standard library imports.
 import os, sys
 
@@ -41,12 +40,10 @@ class MainWindow(MDIApplicationWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
-            ),
-
-            MDIWindowMenu(self)
-        )
+                Action(
+                    name='E&xit', on_perform=self.close),
+                name='&File', ),
+            MDIWindowMenu(self))
 
         # Set the size of the window
         self.size = (640, 480)

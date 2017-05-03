@@ -14,7 +14,6 @@
 """ The implementation of a dialog that allows the user to open/save files etc.
 """
 
-
 # Import the toolkit specific version.
 from __future__ import absolute_import
 

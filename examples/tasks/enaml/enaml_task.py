@@ -19,14 +19,12 @@ class EnamlTask(Task):
     id = 'example.enaml_task'
     name = 'Enaml Demo'
 
-
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
 
     def _default_layout_default(self):
-        return TaskLayout(
-            left=PaneItem('example.dummy_dock_pane'))
+        return TaskLayout(left=PaneItem('example.dummy_dock_pane'))
 
     def create_central_pane(self):
         """ Create the central pane: the script editor.
@@ -37,4 +35,3 @@ class EnamlTask(Task):
         """ Create the file browser and connect to its double click event.
         """
         return [DummyDockPane()]
-

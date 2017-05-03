@@ -31,4 +31,5 @@ class ResourceFactory:
 
         raise NotImplemented
 
+
 #### EOF ######################################################################

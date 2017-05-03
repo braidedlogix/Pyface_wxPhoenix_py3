@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for all pyface wizards. """
 
-
 # Enthought library imports.
 from traits.api import Bool, Instance, List, Unicode
 from pyface.i_dialog import IDialog
@@ -129,9 +128,8 @@ class MWizard(object):
 
         controller.on_trait_change(self._update, 'complete')
 
-        controller.on_trait_change(
-            self._on_current_page_changed, 'current_page'
-        )
+        controller.on_trait_change(self._on_current_page_changed,
+                                   'current_page')
 
         return
 
@@ -156,5 +154,6 @@ class MWizard(object):
         self.controller.dispose_pages()
 
         return
+
 
 #### EOF ######################################################################

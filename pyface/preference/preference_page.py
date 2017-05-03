@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for all preference pages. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits
 
@@ -40,5 +39,6 @@ class PreferencePage(HasTraits):
         """ Show the help topic for this preference page."""
 
         pass
+
 
 #### EOF ######################################################################

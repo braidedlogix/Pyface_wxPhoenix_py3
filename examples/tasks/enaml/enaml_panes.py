@@ -34,10 +34,10 @@ class DummyTaskPane(EnamlTaskPane):
             from employee_view import EmployeeView
         from employee import Employer, Employee
 
-        boss_john = Employer(first_name='John', last_name='Paw',
-                             company_name="Packrat's Cats")
-        employee_mary = Employee(first_name='Mary', last_name='Sue',
-                                 boss=boss_john)
+        boss_john = Employer(
+            first_name='John', last_name='Paw', company_name="Packrat's Cats")
+        employee_mary = Employee(
+            first_name='Mary', last_name='Sue', boss=boss_john)
 
         view = EmployeeView(employee=employee_mary)
         return view

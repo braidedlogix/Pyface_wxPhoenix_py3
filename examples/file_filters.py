@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Filters for local file system viewers. """
 
-
 # Standard library imports.
 from os.path import isdir
 
@@ -34,5 +33,6 @@ class AllowOnlyFolders(ViewerFilter):
         """
 
         return isdir(element)
+
 
 #### EOF ######################################################################

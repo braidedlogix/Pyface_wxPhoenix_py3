@@ -8,7 +8,6 @@ from ..split_dialog import SplitDialog
 
 
 class TestDialog(unittest.TestCase):
-
     def setUp(self):
         self.gui = GUI()
         self.dialog = SplitDialog()

@@ -66,17 +66,16 @@ class Employee(Person):
 
 if __name__ == '__main__':
     # Create an employee with a boss
-    boss_john = Employer(first_name='John', last_name='Paw', 
-                         company_name="Packrat's Cats")
-    employee_mary = Employee(first_name='Mary', last_name='Sue', 
-                             boss=boss_john)
+    boss_john = Employer(
+        first_name='John', last_name='Paw', company_name="Packrat's Cats")
+    employee_mary = Employee(
+        first_name='Mary', last_name='Sue', boss=boss_john)
 
     # Import our Enaml EmployeeView
     import enaml
     with enaml.imports():
         from employee_view import EmployeeView
-    
+
     # Create a view and show it.
     view = EmployeeView(employee=employee_mary)
     #view.show()
-

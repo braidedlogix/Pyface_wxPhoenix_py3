@@ -16,8 +16,8 @@
 from .checkbox_image_renderer import CheckboxImageRenderer
 from .grid_cell_renderer import GridCellRenderer
 
-class CheckboxRenderer(GridCellRenderer):
 
+class CheckboxRenderer(GridCellRenderer):
     def __init__(self, **traits):
 
         # base-class constructor
@@ -40,5 +40,6 @@ class CheckboxRenderer(GridCellRenderer):
             pass
 
         return True
+
 
 #### EOF ######################################################################

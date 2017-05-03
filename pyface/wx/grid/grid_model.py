@@ -47,7 +47,6 @@ class GridModel(HasTraits):
     # Fired when the data in the model has changed.
     model_changed = Event
 
-
     def __init__(self, **traits):
         """ Create a new grid model. """
 
@@ -120,9 +119,7 @@ class GridModel(HasTraits):
             # Tell the grid that we've added a row.
             #
             # N.B wxGridTableMessage(table, whatWeDid, howMany)
-            message = GridTableMessage(
-                self, GRIDTABLE_NOTIFY_ROWS_APPENDED, 1
-            )
+            message = GridTableMessage(self, GRIDTABLE_NOTIFY_ROWS_APPENDED, 1)
 
             # Trait event notification.
             self.model_changed = message
@@ -179,9 +176,8 @@ class GridModel(HasTraits):
         # N.B Because of a bug in wxPython we have to send a "rows appended"
         # --- message with a negative number, instead of the "rows deleted"
         #     message 8^() TINSTAFS!
-        message = GridTableMessage(
-            self, GRIDTABLE_NOTIFY_ROWS_APPENDED, -num_rows
-        )
+        message = GridTableMessage(self, GRIDTABLE_NOTIFY_ROWS_APPENDED,
+                                   -num_rows)
 
         # Trait event notification.
         self.model_changed = message
@@ -278,5 +274,6 @@ class _GridTableBase(PyGridTableBase):
         """ Called when the view is deleting rows. """
 
         return self.model.DeleteRows(pos, num_rows)
+
 
 #### EOF ######################################################################

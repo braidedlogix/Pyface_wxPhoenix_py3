@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ A status bar manager realizes itself in a status bar control. """
 
-
 # Enthought library imports.
 from traits.api import Any, HasTraits, List, Property, Str, Unicode
 
@@ -79,5 +78,6 @@ class StatusBarManager(HasTraits):
     def _messages_items_changed(self):
         """ Sets the text displayed on the status bar. """
         return
+
 
 #### EOF ######################################################################

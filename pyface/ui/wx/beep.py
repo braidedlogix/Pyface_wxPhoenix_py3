@@ -1,5 +1,4 @@
 # Copyright 2012 Philip Chimento
-
 """adv.Sound the system bell, Wx implementation."""
 
 import wx

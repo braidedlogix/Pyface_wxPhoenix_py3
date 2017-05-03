@@ -19,11 +19,11 @@ if SKIP_REASON is not None:
     class GuiTestAssistant(object):
         pass
 
+
 from pyface.tasks.api import EnamlDockPane, Task
 
 
 class DummyDockPane(EnamlDockPane):
-
     def create_component(self):
         return Label(text='test label')
 

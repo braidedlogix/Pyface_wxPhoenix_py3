@@ -1,6 +1,5 @@
 """ The default perspective. """
 
-
 # Standard library imports.
 import logging
 
@@ -10,7 +9,6 @@ from traits.api import Bool, HasTraits, List, provides, Str, Tuple
 # Local imports.
 from .i_perspective import IPerspective
 from .perspective_item import PerspectiveItem
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -147,9 +145,8 @@ class Perspective(HasTraits):
             # and perspective_item traits.
             view.style_hint = item.style_hint
             # Add the view to the window.
-            window.add_view(
-                view, item.position, relative_to, (item.width, item.height)
-            )
+            window.add_view(view, item.position, relative_to,
+                            (item.width, item.height))
 
         else:
             # The reason that we don't just barf here is that a perspective
@@ -184,10 +181,10 @@ class Perspective(HasTraits):
             relative_to = None
 
         # Add the view to the window.
-        window.add_view(
-            view, view.position, relative_to, (view.width, view.height)
-        )
+        window.add_view(view, view.position, relative_to,
+                        (view.width, view.height))
 
         return
+
 
 #### EOF ######################################################################

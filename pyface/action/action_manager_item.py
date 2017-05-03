@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Abstract base class for all action manager items. """
 
-
 # Enthought library imports.
 from traits.api import Bool, HasTraits, Instance, Str
 

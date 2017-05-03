@@ -13,7 +13,6 @@
 #------------------------------------------------------------------------------
 """ Mulit-tool bar example. """
 
-
 # Standard library imports.
 import os, sys
 
@@ -50,30 +49,29 @@ class MainWindow(MultiToolbarWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
-            )
-        )
+                Action(
+                    name='E&xit', on_perform=self.close),
+                name='&File', ))
 
         # Add a menu bar at each location.
         self.add_tool_bar(
-            ToolBarManager(Action(name='Foo'), orientation='horizontal')
-        )
+            ToolBarManager(
+                Action(name='Foo'), orientation='horizontal'))
 
         self.add_tool_bar(
-            ToolBarManager(Action(name='Bar'), orientation='horizontal'),
-            location = 'bottom'
-        )
+            ToolBarManager(
+                Action(name='Bar'), orientation='horizontal'),
+            location='bottom')
 
         self.add_tool_bar(
-            ToolBarManager(Action(name='Baz'), orientation='vertical'),
-            location = 'left'
-        )
+            ToolBarManager(
+                Action(name='Baz'), orientation='vertical'),
+            location='left')
 
         self.add_tool_bar(
-            ToolBarManager(Action(name='Buz'), orientation='vertical'),
-            location = 'right'
-        )
+            ToolBarManager(
+                Action(name='Buz'), orientation='vertical'),
+            location='right')
 
         return
 

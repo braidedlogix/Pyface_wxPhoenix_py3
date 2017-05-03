@@ -16,6 +16,7 @@ from line_functions import is_empty, get_indent, fix_backspace
 #  Classes
 #------------------------------------------------------------------------------
 
+
 class BaseDoc(object):
     """Base abstract docstring refactoring class.
 
@@ -46,7 +47,7 @@ class BaseDoc(object):
 
     """
 
-    def __init__(self, lines, headers = None, verbose=False):
+    def __init__(self, lines, headers=None, verbose=False):
         """ Initialize the class
 
         The method setups the class attributes and starts parsing the
@@ -91,7 +92,8 @@ class BaseDoc(object):
         while not self.eol:
             header = self.is_section()
             if header:
-                self.remove_if_empty(self.index + 2)  # Remove space after header
+                self.remove_if_empty(
+                    self.index + 2)  # Remove space after header
                 self._refactor(header)
             else:
                 self.index += 1
@@ -134,7 +136,6 @@ class BaseDoc(object):
         self.insert_lines(descriptions, index)
         self.index += len(descriptions)
         return descriptions
-
 
     def extract_fields(self, indent='', field_type=None):
         """Extract the fields from the docstring
@@ -243,7 +244,8 @@ class BaseDoc(object):
         header = self.peek()
         line2 = self.peek(1)
         if self.verbose:
-            print 'current line is: {0} at index {1}'.format(header, self.index)
+            print 'current line is: {0} at index {1}'.format(header,
+                                                             self.index)
 
         # check for underline type format
         underline = re.match(r'\s*\S+\s*\Z', line2)
@@ -283,7 +285,6 @@ class BaseDoc(object):
             if not is_empty(line):
                 break
             self.index += 1
-
 
     def get_next_paragraph(self):
         """ Get the next paragraph designated by an empty line.
@@ -352,4 +353,3 @@ class BaseDoc(object):
 
         """
         return self._docstring
-

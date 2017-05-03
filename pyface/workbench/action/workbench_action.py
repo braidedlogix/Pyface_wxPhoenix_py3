@@ -1,6 +1,5 @@
 """ Abstract base class for all workbench actions. """
 
-
 # Enthought library imports.
 from pyface.workbench.api import WorkbenchWindow
 from pyface.action.api import Action
@@ -16,5 +15,6 @@ class WorkbenchAction(Action):
     #
     # This is set by the framework.
     window = Instance(WorkbenchWindow)
+
 
 #### EOF ######################################################################

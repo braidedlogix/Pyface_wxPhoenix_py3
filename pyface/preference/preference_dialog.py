@@ -8,7 +8,6 @@
 # Thanks for using Enthought open source!
 """ The preference dialog. """
 
-
 # Import the toolkit specific version.
 from __future__ import absolute_import
 

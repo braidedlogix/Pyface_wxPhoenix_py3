@@ -10,7 +10,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Standard library imports.
 from logging import DEBUG
 
@@ -33,7 +32,6 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
-
     #### 'ISplashScreen' interface ############################################
 
     image = Instance(ImageResource, ImageResource('splash'))
@@ -48,7 +46,7 @@ class SplashScreen(MSplashScreen, Window):
 
     text_font = Any
 
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
     ###########################################################################
     # Protected 'IWidget' interface.
@@ -84,5 +82,6 @@ class SplashScreen(MSplashScreen, Window):
             text_color = QtGui.QColor(self.text_color)
 
         control.showMessage(self.text, QtCore.Qt.AlignLeft, text_color)
+
 
 #### EOF ######################################################################

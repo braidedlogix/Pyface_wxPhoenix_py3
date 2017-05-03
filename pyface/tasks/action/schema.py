@@ -56,6 +56,7 @@ class ActionSchema(Schema):
     #: Items is overwritten to be empty and read-only to avoid assigning to
     #: it by mistake.
     items = Property()
+
     def _get_items(self):
         return []
 
@@ -146,10 +147,13 @@ class ToolBarSchema(Schema):
     tool_bar_manager_factory = Callable(ToolBarManager)
 
     def create(self, children):
-        traits = dict(id=self.id, name=self.name, image_size=self.image_size,
-                      orientation=self.orientation, 
-                      show_divider=self.show_divider,
-                      show_tool_names=self.show_tool_names)
+        traits = dict(
+            id=self.id,
+            name=self.name,
+            image_size=self.image_size,
+            orientation=self.orientation,
+            show_divider=self.show_divider,
+            show_tool_names=self.show_tool_names)
         return self.tool_bar_manager_factory(*children, **traits)
 
 

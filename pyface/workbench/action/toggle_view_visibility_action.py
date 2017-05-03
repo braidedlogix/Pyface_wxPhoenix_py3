@@ -1,6 +1,5 @@
 """ An action that toggles a view's visibility (ie. hides/shows it). """
 
-
 # Enthought library imports.
 from pyface.workbench.api import IView
 from traits.api import Delegate, Instance
@@ -103,5 +102,6 @@ class ToggleViewVisibilityAction(WorkbenchAction):
             view.show()
 
         return
+
 
 #### EOF ######################################################################

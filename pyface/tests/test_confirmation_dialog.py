@@ -9,12 +9,12 @@ from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
 class TestConfirmationDialog(unittest.TestCase):
-
     def setUp(self):
         self.gui = GUI()
         self.dialog = ConfirmationDialog()
@@ -189,7 +189,6 @@ class TestConfirmationDialog(unittest.TestCase):
 
 
 class TestConfirm(unittest.TestCase):
-
     def setUp(self):
         self.gui = GUI()
 

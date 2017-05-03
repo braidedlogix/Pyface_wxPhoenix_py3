@@ -15,7 +15,6 @@
 directory.
 """
 
-
 # Import the toolkit specific version.
 from __future__ import absolute_import
 

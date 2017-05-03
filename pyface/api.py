@@ -44,7 +44,6 @@ from .ui_traits import Alignment, Border, HasBorder, HasMargin, Image, Margin
 from .window import Window
 from .widget import Widget
 
-
 # ----------------------------------------------------------------------------
 # Legacy and Wx-specific imports.
 # ----------------------------------------------------------------------------

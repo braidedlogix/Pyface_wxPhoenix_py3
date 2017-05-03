@@ -1,6 +1,5 @@
 """ The default action controller for menus, menu bars and tool bars. """
 
-
 # Enthought library imports.
 from traits.api import HasTraits
 
