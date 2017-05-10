@@ -83,7 +83,7 @@ class Dialog(MDialog, Window):
 
         self._wx_ok = ok = wx.Button(parent, wx.ID_OK, label)
         ok.SetDefault()
-        parent.Bind(wx.EVT_BUTTON, self._wx_on_ok, wx.ID_OK)
+        parent.Bind(wx.EVT_BUTTON, self._wx_on_ok, id=wx.ID_OK)
         sizer.AddButton(ok)
 
         # The 'Cancel' button.
@@ -93,7 +93,7 @@ class Dialog(MDialog, Window):
             label = "Cancel"
 
         self._wx_cancel = cancel = wx.Button(parent, wx.ID_CANCEL, label)
-        parent.Bind(wx.EVT_BUTTON, self._wx_on_cancel, wx.ID_CANCEL)
+        parent.Bind(wx.EVT_BUTTON, self._wx_on_cancel, id=wx.ID_CANCEL)
         sizer.AddButton(cancel)
 
         # The 'Help' button.
@@ -104,7 +104,7 @@ class Dialog(MDialog, Window):
                 label = "Help"
 
             help = wx.Button(parent, wx.ID_HELP, label)
-            parent.Bind(wx.EVT_BUTTON, self._wx_on_help, wx.ID_HELP)
+            parent.Bind(wx.EVT_BUTTON, self._wx_on_help, id=wx.ID_HELP)
             sizer.AddButton(help)
 
         sizer.Realize()

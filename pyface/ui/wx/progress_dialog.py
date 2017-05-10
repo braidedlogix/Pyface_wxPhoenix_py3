@@ -281,7 +281,7 @@ class ProgressDialog(MProgressDialog, Window):
             # 'Cancel' button.
             self._cancel = cancel = wx.Button(dialog, wx.ID_CANCEL,
                                               self.cancel_button_label)
-            dialog.Bind(wx.EVT_BUTTON, self._on_cancel, wx.ID_CANCEL)
+            dialog.Bind(wx.EVT_BUTTON, self._on_cancel, id=wx.ID_CANCEL)
             sizer.Add(cancel, 0, wx.LEFT, 10)
 
             button_size = cancel.GetSize()
@@ -311,9 +311,8 @@ class ProgressDialog(MProgressDialog, Window):
         horiz_spacer = 50
 
         progress_bar_size = self.progress_bar.control.GetSize()
-        self.dialog_size.x = max(
-            self.dialog_size.x,
-            progress_bar_size.x + 2 * self.margin + horiz_spacer)
+        self.dialog_size.x = max(self.dialog_size.x, progress_bar_size.x + 2 *
+                                 self.margin + horiz_spacer)
         self.dialog_size.y += progress_bar_size.y + 2 * self.margin
 
     def _create_message(self, dialog, parent_sizer):

@@ -1630,7 +1630,7 @@ class _GridTableBase(GridTableBase):
         except NotImplementedError:
             pass
 
-        if typename == None:
+        if typename is None:
             typename = GRID_VALUE_STRING
 
         return typename

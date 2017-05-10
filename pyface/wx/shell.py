@@ -21,8 +21,11 @@ __author__ = "Patrick K. O'Brien <pobrien@orbtech.com>"
 __cvsid__ = "$Id: shell.py,v 1.2 2003/06/13 17:59:34 dmorrill Exp $"
 __revision__ = "$Revision: 1.2 $" [11:-2]
 
+import wx
+import wx.stc
 from wx import *
 from wx.stc import *
+wx.StyledTextCtrl=wx.stc.StyledTextCtrl
 import keyword
 import os
 import sys
@@ -35,9 +38,9 @@ from .drag_and_drop import clipboard as enClipboard
 
 sys.ps3 = '<-- '  # Input prompt.
 
-NAVKEYS = (WXK_END, WXK_LEFT, WXK_RIGHT, WXK_UP, WXK_DOWN, WXK_PRIOR, WXK_NEXT)
+NAVKEYS = (WXK_END, WXK_LEFT, WXK_RIGHT, WXK_UP, WXK_DOWN)
 
-if wxPlatform == '__WXMSW__':
+if wx.Platform == '__WXMSW__':
     faces = {
         'times': 'Times New Roman',
         'mono': 'Courier New',
@@ -126,15 +129,15 @@ F9                Pop-up window of matching History items.
         if hasattr(self.other, name):
             return getattr(self.other, name)
         else:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def __setattr__(self, name, value):
-        if self.__dict__.has_key(name):
+        if name in self.__dict__:
             self.__dict__[name] = value
         elif hasattr(self.other, name):
             return setattr(self.other, name, value)
         else:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def _getAttributeNames(self):
         """Return list of magic attributes to extend introspection."""
@@ -150,14 +153,14 @@ F9                Pop-up window of matching History items.
         return list
 
 
-class Shell(wxStyledTextCtrl):
+class Shell(wx.StyledTextCtrl):
     """PyCrust Shell based on wxStyledTextCtrl."""
 
     name = 'PyCrust Shell'
     revision = __revision__
 
-    def __init__(self, parent, id=-1, pos=wxDefaultPosition, \
-                 size=wxDefaultSize, style=wxCLIP_CHILDREN, introText='', \
+    def __init__(self, parent, id=-1, pos=wx.DefaultPosition, \
+                 size=wx.DefaultSize, style=wx.CLIP_CHILDREN, introText='', \
                  locals=None, InterpClass=None, *args, **kwds):
         """Create a PyCrust Shell instance."""
         wxStyledTextCtrl.__init__(self, parent, id, pos, size, style)
@@ -170,7 +173,7 @@ class Shell(wxStyledTextCtrl):
         # Add the current working directory "." to the search path.
         sys.path.insert(0, os.curdir)
         # Import a default interpreter class if one isn't provided.
-        if InterpClass == None:
+        if InterpClass is None:
             from PyCrust.interpreter import Interpreter
         else:
             Interpreter = InterpClass
@@ -246,10 +249,10 @@ class Shell(wxStyledTextCtrl):
 
     def config(self):
         """Configure shell based on user preferences."""
-        self.SetMarginType(1, wxSTC_MARGIN_NUMBER)
+        self.SetMarginType(1, wx.STC_MARGIN_NUMBER)
         self.SetMarginWidth(1, 40)
 
-        self.SetLexer(wxSTC_LEX_PYTHON)
+        self.SetLexer(wx.STC_LEX_PYTHON)
         self.SetKeyWords(0, ' '.join(keyword.kwlist))
 
         self.setStyles(faces)
@@ -289,8 +292,8 @@ class Shell(wxStyledTextCtrl):
 
         This simply sets "close", "exit" and "quit" to a helpful string.
         """
-        import __builtin__
-        __builtin__.close = __builtin__.exit = __builtin__.quit = \
+        import builtins
+        builtins.close = builtins.exit = builtins.quit = \
             'Click on the close button to leave the application.'
 
     def quit(self):
@@ -313,7 +316,7 @@ class Shell(wxStyledTextCtrl):
         if startupScript and os.path.isfile(startupScript):
             startupText = 'Startup script executed: ' + startupScript
             self.push('print(%s;execfile(%s))' % \
-                      (`startupText`, `startupScript`))
+                      (repr(startupText), repr(startupScript)))
         else:
             self.push('')
 
@@ -321,36 +324,36 @@ class Shell(wxStyledTextCtrl):
         """Configure font size, typeface and color for lexer."""
 
         # Default style
-        self.StyleSetSpec(wxSTC_STYLE_DEFAULT,
+        self.StyleSetSpec(wx.STC_STYLE_DEFAULT,
                           "face:%(mono)s,size:%(size)d,back:%(backcol)s" %
                           faces)
 
         self.StyleClearAll()
 
         # Built in styles
-        self.StyleSetSpec(wxSTC_STYLE_LINENUMBER,
+        self.StyleSetSpec(wx.STC_STYLE_LINENUMBER,
                           "back:#C0C0C0,face:%(mono)s,size:%(lnsize)d" % faces)
-        self.StyleSetSpec(wxSTC_STYLE_CONTROLCHAR, "face:%(mono)s" % faces)
-        self.StyleSetSpec(wxSTC_STYLE_BRACELIGHT, "fore:#0000FF,back:#FFFF88")
-        self.StyleSetSpec(wxSTC_STYLE_BRACEBAD, "fore:#FF0000,back:#FFFF88")
+        self.StyleSetSpec(wx.STC_STYLE_CONTROLCHAR, "face:%(mono)s" % faces)
+        self.StyleSetSpec(wx.STC_STYLE_BRACELIGHT, "fore:#0000FF,back:#FFFF88")
+        self.StyleSetSpec(wx.STC_STYLE_BRACEBAD, "fore:#FF0000,back:#FFFF88")
 
         # Python styles
-        self.StyleSetSpec(wxSTC_P_DEFAULT, "face:%(mono)s" % faces)
-        self.StyleSetSpec(wxSTC_P_COMMENTLINE,
-                          "fore:#007F00,face:%(mono)s" % faces)
-        self.StyleSetSpec(wxSTC_P_NUMBER, "")
-        self.StyleSetSpec(wxSTC_P_STRING, "fore:#7F007F,face:%(mono)s" % faces)
-        self.StyleSetSpec(wxSTC_P_CHARACTER,
-                          "fore:#7F007F,face:%(mono)s" % faces)
-        self.StyleSetSpec(wxSTC_P_WORD, "fore:#00007F,bold")
-        self.StyleSetSpec(wxSTC_P_TRIPLE, "fore:#7F0000")
-        self.StyleSetSpec(wxSTC_P_TRIPLEDOUBLE, "fore:#000033,back:#FFFFE8")
-        self.StyleSetSpec(wxSTC_P_CLASSNAME, "fore:#0000FF,bold")
-        self.StyleSetSpec(wxSTC_P_DEFNAME, "fore:#007F7F,bold")
-        self.StyleSetSpec(wxSTC_P_OPERATOR, "")
-        self.StyleSetSpec(wxSTC_P_IDENTIFIER, "")
-        self.StyleSetSpec(wxSTC_P_COMMENTBLOCK, "fore:#7F7F7F")
-        self.StyleSetSpec(wxSTC_P_STRINGEOL,
+        self.StyleSetSpec(wx.STC_P_DEFAULT, "face:%(mono)s" % faces)
+        self.StyleSetSpec(wx.STC_P_COMMENTLINE, "fore:#007F00,face:%(mono)s" %
+                          faces)
+        self.StyleSetSpec(wx.STC_P_NUMBER, "")
+        self.StyleSetSpec(wx.STC_P_STRING, "fore:#7F007F,face:%(mono)s" % faces)
+        self.StyleSetSpec(wx.STC_P_CHARACTER, "fore:#7F007F,face:%(mono)s" %
+                          faces)
+        self.StyleSetSpec(wx.STC_P_WORD, "fore:#00007F,bold")
+        self.StyleSetSpec(wx.STC_P_TRIPLE, "fore:#7F0000")
+        self.StyleSetSpec(wx.STC_P_TRIPLEDOUBLE, "fore:#000033,back:#FFFFE8")
+        self.StyleSetSpec(wx.STC_P_CLASSNAME, "fore:#0000FF,bold")
+        self.StyleSetSpec(wx.STC_P_DEFNAME, "fore:#007F7F,bold")
+        self.StyleSetSpec(wx.STC_P_OPERATOR, "")
+        self.StyleSetSpec(wx.STC_P_IDENTIFIER, "")
+        self.StyleSetSpec(wx.STC_P_COMMENTBLOCK, "fore:#7F7F7F")
+        self.StyleSetSpec(wx.STC_P_STRINGEOL,
                           "fore:#000000,face:%(mono)s,back:#E0C0E0,eolfilled" %
                           faces)
 
@@ -370,7 +373,7 @@ class Shell(wxStyledTextCtrl):
 
         # Check before.
         if charBefore and chr(charBefore) in '[]{}()' \
-        and styleBefore == wxSTC_P_OPERATOR:
+        and styleBefore == wx.STC_P_OPERATOR:
             braceAtCaret = caretPos - 1
 
         # Check after.
@@ -622,10 +625,10 @@ class Shell(wxStyledTextCtrl):
         # to the beginning if we don't find anything.
         if (self.historyIndex <= -1) \
         or (self.historyIndex >= len(self.history)-2):
-            searchOrder = range(len(self.history))
+            searchOrder = list(range(len(self.history)))
         else:
-            searchOrder = range(self.historyIndex+1, len(self.history)) + \
-                          range(self.historyIndex)
+            searchOrder = list(range(self.historyIndex+1, len(self.history))) + \
+                          list(range(self.historyIndex))
         for i in searchOrder:
             command = self.history[i]
             if command[:len(searchText)] == searchText:
@@ -835,7 +838,7 @@ class Shell(wxStyledTextCtrl):
         self.prompt()
         try:
             while not reader.input:
-                wxYield()
+                wx.Yield()
             input = reader.input
         finally:
             reader.input = ''
@@ -850,7 +853,7 @@ class Shell(wxStyledTextCtrl):
 
     def ask(self, prompt='Please enter your response:'):
         """Get response from the user using a dialog box."""
-        dialog = wxTextEntryDialog(None, prompt, \
+        dialog = wx.TextEntryDialog(None, prompt, \
                                    'Input Dialog (Raw)', '')
         try:
             if dialog.ShowModal() == wxID_OK:
@@ -1001,8 +1004,8 @@ class Shell(wxStyledTextCtrl):
     def CanPaste(self):
         """Return true if a paste should succeed."""
         if self.CanEdit() and \
-           (wxStyledTextCtrl.CanPaste(self) or \
-            wxTheClipboard.IsSupported(PythonObject)):
+           (wx.StyledTextCtrl.CanPaste(self) or \
+            wx.TheClipboard.IsSupported(PythonObject)):
             return 1
         else:
             return 0
@@ -1034,19 +1037,19 @@ class Shell(wxStyledTextCtrl):
             command = command.replace(os.linesep + sys.ps1, os.linesep)
             command = self.lstripPrompt(text=command)
             data = wxTextDataObject(command)
-            if wxTheClipboard.Open():
-                wxTheClipboard.SetData(data)
-                wxTheClipboard.Close()
+            if wx.TheClipboard.Open():
+                wx.TheClipboard.SetData(data)
+                wx.TheClipboard.Close()
 
     def CopyWithPrompts(self):
         """Copy selection, including prompts, and place it on the clipboard."""
         if self.CanCopy():
             command = self.GetSelectedText()
 
-            data = wxTextDataObject(command)
-            if wxTheClipboard.Open():
-                wxTheClipboard.SetData(data)
-                wxTheClipboard.Close()
+            data = wx.TextDataObject(command)
+            if wx.TheClipboard.Open():
+                wx.TheClipboard.SetData(data)
+                wx.TheClipboard.Close()
 
     def Paste(self):
         """Replace selection with clipboard contents."""
@@ -1054,7 +1057,7 @@ class Shell(wxStyledTextCtrl):
             try:
                 if wxTheClipboard.IsSupported(wxDataFormat(wxDF_TEXT)):
                     data = wxTextDataObject()
-                    if wxTheClipboard.GetData(data):
+                    if wx.TheClipboard.GetData(data):
                         self.ReplaceSelection('')
                         command = data.GetText()
                         command = command.rstrip()
@@ -1064,7 +1067,7 @@ class Shell(wxStyledTextCtrl):
                         command = command.replace(os.linesep, '\n')
                         command = command.replace('\n', os.linesep + sys.ps2)
                         self.write(command)
-                if wxTheClipboard.IsSupported(PythonObject) and \
+                if wx.TheClipboard.IsSupported(PythonObject) and \
                        self.python_obj_paste_handler is not None:
                     # note that the presence of a PythonObject on the
                     # clipboard is really just a signal to grab the data
@@ -1072,16 +1075,16 @@ class Shell(wxStyledTextCtrl):
                     data = enClipboard.data
                     self.python_obj_paste_handler(data)
             finally:
-                wxTheClipboard.Close()
+                wx.TheClipboard.Close()
 
             return
 
     def PasteAndRun(self):
         """Replace selection with clipboard contents, run commands."""
-        if wxTheClipboard.Open():
-            if wxTheClipboard.IsSupported(wxDataFormat(wxDF_TEXT)):
-                data = wxTextDataObject()
-                if wxTheClipboard.GetData(data):
+        if wx.TheClipboard.Open():
+            if wx.TheClipboard.IsSupported(wxDataFormat(wxDF_TEXT)):
+                data = wx.TextDataObject()
+                if wx.TheClipboard.GetData(data):
                     endpos = self.GetTextLength()
                     self.SetCurrentPos(endpos)
                     startpos = self.promptPosEnd
@@ -1114,7 +1117,7 @@ class Shell(wxStyledTextCtrl):
                         command = command.replace('\n', os.linesep + sys.ps2)
                         self.write(command)
                         self.processLine()
-            wxTheClipboard.Close()
+            wx.TheClipboard.Close()
 
     def wrap(self, wrap=1):
         """Sets whether text is word wrapped."""
@@ -1131,22 +1134,22 @@ class Shell(wxStyledTextCtrl):
         self.SetZoom(points)
 
 
-wxID_SELECTALL = wxNewId()
-ID_AUTOCOMP = wxNewId()
-ID_AUTOCOMP_SHOW = wxNewId()
-ID_AUTOCOMP_INCLUDE_MAGIC = wxNewId()
-ID_AUTOCOMP_INCLUDE_SINGLE = wxNewId()
-ID_AUTOCOMP_INCLUDE_DOUBLE = wxNewId()
-ID_CALLTIPS = wxNewId()
-ID_CALLTIPS_SHOW = wxNewId()
+wxID_SELECTALL = wx.NewId()
+ID_AUTOCOMP = wx.NewId()
+ID_AUTOCOMP_SHOW = wx.NewId()
+ID_AUTOCOMP_INCLUDE_MAGIC = wx.NewId()
+ID_AUTOCOMP_INCLUDE_SINGLE = wx.NewId()
+ID_AUTOCOMP_INCLUDE_DOUBLE = wx.NewId()
+ID_CALLTIPS = wx.NewId()
+ID_CALLTIPS_SHOW = wx.NewId()
 
-ID_FILLING = wxNewId()
-ID_FILLING_AUTO_UPDATE = wxNewId()
-ID_FILLING_SHOW_METHODS = wxNewId()
-ID_FILLING_SHOW_CLASS = wxNewId()
-ID_FILLING_SHOW_DICT = wxNewId()
-ID_FILLING_SHOW_DOC = wxNewId()
-ID_FILLING_SHOW_MODULE = wxNewId()
+ID_FILLING = wx.NewId()
+ID_FILLING_AUTO_UPDATE = wx.NewId()
+ID_FILLING_SHOW_METHODS = wx.NewId()
+ID_FILLING_SHOW_CLASS = wx.NewId()
+ID_FILLING_SHOW_DICT = wx.NewId()
+ID_FILLING_SHOW_DOC = wx.NewId()
+ID_FILLING_SHOW_MODULE = wx.NewId()
 
 
 class ShellMenu:
@@ -1215,24 +1218,24 @@ class ShellMenu:
         b.Append(self.helpMenu, '&Help')
         self.SetMenuBar(b)
 
-        self.Bind(wx.EVT_MENU, self.OnExit, id=wx.ID_EXIT)
-        self.Bind(wx.EVT_MENU, self.OnUndo, id=wx.ID_UNDO)
-        self.Bind(wx.EVT_MENU, self.OnRedo, id=wx.ID_REDO)
-        self.Bind(wx.EVT_MENU, self.OnCut, id=wx.ID_CUT)
-        self.Bind(wx.EVT_MENU, self.OnCopy, id=wx.ID_COPY)
-        self.Bind(wx.EVT_MENU, self.OnPaste, id=wx.ID_PASTE)
-        self.Bind(wx.EVT_MENU, self.OnClear, id=wx.ID_CLEAR)
-        self.Bind(wx.EVT_MENU, self.OnSelectAll, id=wx.ID_SELECTALL)
-        self.Bind(wx.EVT_MENU, self.OnAbout, id=wx.ID_ABOUT)
-        self.Bind(wx.EVT_MENU, \
-                 self.OnAutoCompleteShow, id=ID_AUTOCOMP_SHOW)
-        self.Bind(wx.EVT_MENU, \
+        self.Bind(EVT_MENU, self.OnExit, id=wx.ID_EXIT)
+        self.Bind(EVT_MENU, self.OnUndo, id=wx.ID_UNDO)
+        self.Bind(EVT_MENU, self.OnRedo, id=wx.ID_REDO)
+        self.Bind(EVT_MENU, self.OnCut, id=wx.ID_CUT)
+        self.Bind(EVT_MENU, self.OnCopy, id=wx.ID_COPY)
+        self.Bind(EVT_MENU, self.OnPaste, id=wx.ID_PASTE)
+        self.Bind(EVT_MENU, self.OnClear, id=wx.ID_CLEAR)
+        self.Bind(EVT_MENU, self.OnSelectAll, id=wx.ID_SELECTALL)
+        self.Bind(EVT_MENU, self.OnAbout, id=wx.ID_ABOUT)
+        self.Bind(EVT_MENU, \
+                 self.OnAutoCompleteShow, ID_AUTOCOMP_SHOW)
+        self.Bind(EVT_MENU, \
                  self.OnAutoCompleteIncludeMagic, id=ID_AUTOCOMP_INCLUDE_MAGIC)
-        self.Bind(wx.EVT_MENU, \
+        self.Bind(EVT_MENU, \
                  self.OnAutoCompleteIncludeSingle, id=ID_AUTOCOMP_INCLUDE_SINGLE)
-        self.Bind(wx.EVT_MENU, \
+        self.Bind(EVT_MENU, \
                  self.OnAutoCompleteIncludeDouble, id=ID_AUTOCOMP_INCLUDE_DOUBLE)
-        self.Bind(wx.EVT_MENU, \
+        self.Bind(EVT_MENU, \
                  self.OnCallTipsShow, id=ID_CALLTIPS_SHOW)
 
         self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=wx.ID_UNDO)
@@ -1242,44 +1245,28 @@ class ShellMenu:
         self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=wx.ID_PASTE)
         self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=wx.ID_CLEAR)
         self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_AUTOCOMP_SHOW)
-        self.Bind(
-            EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_AUTOCOMP_INCLUDE_MAGIC)
-        self.Bind(
-            EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_AUTOCOMP_INCLUDE_SINGLE)
-        self.Bind(
-            EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_AUTOCOMP_INCLUDE_DOUBLE)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_AUTOCOMP_INCLUDE_MAGIC)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_AUTOCOMP_INCLUDE_SINGLE)
+        self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_AUTOCOMP_INCLUDE_DOUBLE)
         self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_CALLTIPS_SHOW)
 
         if hasattr(self, 'crust'):
-            self.Bind(
-                wx.EVT_MENU,
-                self.OnFillingAutoUpdate,
-                id=ID_FILLING_AUTO_UPDATE)
-            self.Bind(
-                wx.EVT_MENU,
-                self.OnFillingShowMethods,
-                id=ID_FILLING_SHOW_METHODS)
-            self.Bind(
-                wx.EVT_MENU, self.OnFillingShowClass, id=ID_FILLING_SHOW_CLASS)
-            self.Bind(
-                wx.EVT_MENU, self.OnFillingShowDict, id=ID_FILLING_SHOW_DICT)
-            self.Bind(
-                wx.EVT_MENU, self.OnFillingShowDoc, id=ID_FILLING_SHOW_DOC)
-            self.Bind(
-                wx.EVT_MENU,
-                self.OnFillingShowModule,
-                id=ID_FILLING_SHOW_MODULE)
-            self.Bind(
-                EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_AUTO_UPDATE)
-            self.Bind(
-                EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_METHODS)
-            self.Bind(
-                EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_CLASS)
-            self.Bind(
-                EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_DICT)
+            self.Bind(EVT_MENU, self.OnFillingAutoUpdate,
+                      id=ID_FILLING_AUTO_UPDATE)
+            self.Bind(EVT_MENU, self.OnFillingShowMethods,
+                      id=ID_FILLING_SHOW_METHODS)
+            self.Bind(EVT_MENU, self.OnFillingShowClass, id=ID_FILLING_SHOW_CLASS)
+            self.Bind(EVT_MENU, self.OnFillingShowDict, id=ID_FILLING_SHOW_DICT)
+            self.Bind(EVT_MENU, self.OnFillingShowDoc, id=ID_FILLING_SHOW_DOC)
+            self.Bind(EVT_MENU, self.OnFillingShowModule,
+                      id=ID_FILLING_SHOW_MODULE)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_AUTO_UPDATE)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu,
+                      id=ID_FILLING_SHOW_METHODS)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_CLASS)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_DICT)
             self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_DOC)
-            self.Bind(
-                EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_MODULE)
+            self.Bind(EVT_UPDATE_UI, self.OnUpdateMenu, id=ID_FILLING_SHOW_MODULE)
 
     def OnExit(self, event):
         self.Close(True)
@@ -1318,7 +1305,7 @@ class ShellMenu:
                'Python Version: %s\n' % sys.version.split()[0] + \
                'wxPython Version: %s\n' % wx.__version__ + \
                'Platform: %s\n' % sys.platform
-        dialog = wxMessageDialog(self, text, title, wxOK | wxICON_INFORMATION)
+        dialog = wxMessageDialog(self, text, title, wx.OK | wx.ICON_INFORMATION)
         dialog.ShowModal()
         dialog.Destroy()
 
