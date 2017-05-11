@@ -513,7 +513,7 @@ class DockWindow(HasPrivateTraits):
             update_rect = self.control.UpdateRegion.Box
             for child in self.control.Children:
                 if not child.HasTransparentBackground() and \
-                        child.Rect.ContainsRect(update_rect):
+                        child.Rect.Contains(update_rect):
                     return True
         return False
 
