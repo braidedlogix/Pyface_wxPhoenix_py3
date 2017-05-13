@@ -59,7 +59,7 @@ def git_version():
     except OSError:
         out = ''
 
-    git_description = out.strip().decode('ascii')
+    git_description = out.strip()#.decode('ascii')
     expr = r'.*?\-(?P<count>\d+)-g(?P<hash>[a-fA-F0-9]+)'
     match = re.match(expr, git_description)
     if match is None:
