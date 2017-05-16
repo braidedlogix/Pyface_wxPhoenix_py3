@@ -52,7 +52,7 @@ def git_version():
             cmd,
             stdout=subprocess.PIPE,
             env=env, ).communicate()[0]
-        return out
+        return str(out)
 
     try:
         out = _minimal_ext_cmd(['git', 'describe', '--tags'])
