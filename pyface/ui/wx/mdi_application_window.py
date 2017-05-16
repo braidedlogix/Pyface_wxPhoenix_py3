@@ -161,7 +161,7 @@ class MDIApplicationWindow(ApplicationWindow):
         """ Called when the frame is resized. """
 
         wx.adv.LayoutAlgorithm().LayoutMDIFrame(self.control)
-
+        event.Skip()
         return
 
     def _on_erase_background(self, event):

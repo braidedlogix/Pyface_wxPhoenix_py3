@@ -38,7 +38,7 @@ def main(argv):
     # Create some workbench windows.
     x = 300
     y = 300
-    for i in range(2):
+    for i in range(1):
         window = workbench.create_window(position=(x, y), size=(800, 600))
         window.open()
 

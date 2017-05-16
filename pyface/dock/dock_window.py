@@ -533,7 +533,7 @@ class DockWindow(HasPrivateTraits):
                 # fixme: This is temporary code to work around a problem in
                 #        ProAVA2 that we are still trying to track down...
                 pass
-
+        event.Skip()
     #---------------------------------------------------------------------------
     #  Handles the left mouse button being pressed:
     #---------------------------------------------------------------------------
