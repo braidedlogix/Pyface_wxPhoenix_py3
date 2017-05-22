@@ -290,8 +290,8 @@ class TaskWindow(ApplicationWindow):
     def get_window_layout(self):
         """ Returns a TaskWindowLayout for the current state of the window.
         """
-        result = TaskWindowLayout(
-            position=self.position, size=self.size, size_state=self.size_state)
+        result = TaskWindowLayout(position=self.position, size=self.size,
+                                  size_state=self.size_state)
         for state in self._states:
             if state == self._active_state:
                 result.active_task = state.task.id
@@ -312,7 +312,7 @@ class TaskWindow(ApplicationWindow):
 
         # Store layouts for the tasks, including the active task.
         for layout in window_layout.items:
-            if isinstance(layout, basestring):
+            if isinstance(layout, str):
                 continue
             state = self._get_state(layout.id)
             if state:
@@ -367,10 +367,8 @@ class TaskWindow(ApplicationWindow):
             for area in ('top', 'right', 'bottom', 'left'):
                 item = getattr(layout, area)
                 if item:
-                    panes.extend([
-                        self.get_dock_pane(pane_item.id)
-                        for pane_item in item.iterleaves()
-                    ])
+                    panes.extend([ self.get_dock_pane(pane_item.id)
+                                   for pane_item in item.iterleaves() ])
         return panes
 
     def _get_state(self, id_or_task):
@@ -420,7 +418,7 @@ class TaskWindow(ApplicationWindow):
 
     @on_trait_change('_states[]')
     def _states_updated(self):
-        self.tasks = [state.task for state in self._states]
+        self.tasks = [ state.task for state in self._states ]
 
 
 class TaskState(HasStrictTraits):

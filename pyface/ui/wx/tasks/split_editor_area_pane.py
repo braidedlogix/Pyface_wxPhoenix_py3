@@ -6,12 +6,11 @@ from traits.api import provides
 
 # Local imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane
-from editor_area_pane import EditorAreaPane
+from .editor_area_pane import EditorAreaPane
 
 ###############################################################################
 # 'AdvancedEditorAreaPane' class.
 ###############################################################################
-
 
 @provides(IEditorAreaPane)
 class SplitEditorAreaPane(EditorAreaPane):
@@ -19,5 +18,5 @@ class SplitEditorAreaPane(EditorAreaPane):
 
     See the IAdvancedEditorAreaPane interface for API documentation.
     """
-
+    
     # No additional functionality over the standard EditorAreaPane in wx yet.

@@ -32,14 +32,14 @@ class TaskWindowLayout(LayoutContainer):
             return self.active_task
         elif self.items:
             first = self.items[0]
-            return first if isinstance(first, basestring) else first.id
+            return first if isinstance(first, str) else first.id
         return None
 
     def get_tasks(self):
         """ Returns the IDs of the tasks in the layout.
         """
-        return [(item if isinstance(item, basestring) else item.id)
-                for item in self.items]
+        return [ (item if isinstance(item, str) else item.id)
+                 for item in self.items ]
 
     def is_equivalent_to(self, layout):
         """ Returns whether two layouts are equivalent, i.e. whether they

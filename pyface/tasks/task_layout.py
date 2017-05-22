@@ -1,5 +1,5 @@
 # Standard library imports.
-from cStringIO import StringIO
+from io import StringIO
 import sys
 
 # Enthought library imports.
@@ -40,7 +40,7 @@ class LayoutItem(HasStrictTraits):
 
         args = [(None, arg) for arg in self.pargs()]
         traits = []
-        for name, trait in sorted(self.traits().iteritems()):
+        for name, trait in sorted(self.traits().items()):
             if not trait.pretty_skip and not trait.transient:
                 value = getattr(self, name)
                 if trait.default != value:
@@ -78,7 +78,8 @@ class LayoutContainer(LayoutItem):
         if items:
             if 'items' in traits:
                 raise ValueError(
-                    "Received 'items' as positional and keyword argument.")
+                    "Received 'items' as positional and keyword argument."
+                )
             else:
                 traits['items'] = list(items)
         super(LayoutContainer, self).__init__(**traits)
@@ -138,10 +139,10 @@ class Splitter(LayoutContainer):
 
     # The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
     # other Splitters.
-    items = List(
-        Either(PaneItem, Tabbed,
-               Instance('pyface.tasks.task_layout.Splitter')),
-        pretty_skip=True)
+    items = List(Either(
+        PaneItem,
+        Tabbed,
+        Instance('pyface.tasks.task_layout.Splitter')), pretty_skip=True)
 
 
 class HSplitter(Splitter):
