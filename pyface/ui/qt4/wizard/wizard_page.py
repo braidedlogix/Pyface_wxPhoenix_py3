@@ -11,6 +11,7 @@
 #------------------------------------------------------------------------------
 """ A page in a wizard. """
 
+
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -26,6 +27,7 @@ class WizardPage(MWizardPage, HasTraits):
     See the IWizardPage interface for the API documentation.
 
     """
+
 
     #### 'IWizardPage' interface ##############################################
 
@@ -119,7 +121,7 @@ class _WizardPage(QtGui.QWizardPage):
         """ Reimplemented to call the IWizard's 'next'. """
 
         if self.pyface_wizard is not None:
-            self.pyface_wizard.next()
+            next(self.pyface_wizard)
 
     def cleanupPage(self):
         """ Reimplemented to call the IWizard's 'previous'. """
@@ -136,6 +138,5 @@ class _WizardPage(QtGui.QWizardPage):
         """ The trait handler for when the page's completion state changes. """
 
         self.completeChanged.emit()
-
 
 #### EOF ######################################################################

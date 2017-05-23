@@ -10,6 +10,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -28,6 +29,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     """ The toolkit specific implementation of a ConfirmationDialog.  See the
     IConfirmationDialog interface for the API documentation.
     """
+
 
     #### 'IConfirmationDialog' interface ######################################
 
@@ -108,8 +110,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         # The 'Cancel' button.
         if self.cancel:
             if self.cancel_label:
-                btn = dlg.addButton(self.cancel_label,
-                                    QtGui.QMessageBox.RejectRole)
+                btn = dlg.addButton(self.cancel_label, QtGui.QMessageBox.RejectRole)
             else:
                 btn = dlg.addButton(QtGui.QMessageBox.Cancel)
 
@@ -135,6 +136,5 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         else:
             retval = _RESULT_MAP[retval]
         return retval
-
 
 #### EOF ######################################################################

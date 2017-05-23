@@ -11,6 +11,7 @@
 #------------------------------------------------------------------------------
 """ The base class for all pyface wizards. """
 
+
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -29,6 +30,7 @@ class Wizard(MWizard, Dialog):
     See the IWizard interface for the API documentation.
 
     """
+
 
     #### 'IWizard' interface ##################################################
 
@@ -50,7 +52,7 @@ class Wizard(MWizard, Dialog):
     # because it expected by IWizard, and users may wish to hook in custom code
     # before changing a page.
 
-    def next(self):
+    def __next__(self):
         pass
 
     def previous(self):
@@ -108,7 +110,7 @@ class Wizard(MWizard, Dialog):
         """ Called when the 'Help' button is pressed. """
 
         # FIXME: Hook into a help system.
-        print "Show help for", self.help_id
+        print("Show help for", self.help_id)
 
     #### Trait handlers #######################################################
 
@@ -206,13 +208,12 @@ class _Wizard(QtGui.QWizard):
         if page is None:
             id = -1
         else:
-            for id, p in self._ids.items():
+            for id, p in list(self._ids.items()):
                 if p is page:
                     break
             else:
                 id = -1
 
         return id
-
 
 #### EOF ######################################################################

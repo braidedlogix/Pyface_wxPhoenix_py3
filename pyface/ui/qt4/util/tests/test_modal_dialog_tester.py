@@ -6,10 +6,12 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
+
 """ Tests for the tabular editor tester. """
 
+
 import unittest
-import cStringIO
+import io
 
 from pyface.qt import QtGui
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
@@ -22,6 +24,7 @@ from pyface.util.testing import skip_if_no_traitsui
 
 
 class MyClass(HasStrictTraits):
+
     def default_traits_view(self):
         from traitsui.api import CancelButton, OKButton, View
 
@@ -106,7 +109,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         with self.assertRaises(AssertionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = io.StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=failure)
             self.assertIn('raise self.failureException(msg)', alt_stderr)
@@ -124,7 +127,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         with self.assertRaises(ZeroDivisionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = io.StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
@@ -137,9 +140,11 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     self.assertTrue(
-                        tester.has_widget('OK', QtGui.QAbstractButton))
+                        tester.has_widget('OK', QtGui.QAbstractButton)
+                    )
                     self.assertFalse(
-                        tester.has_widget(text='I am a virtual button'))
+                        tester.has_widget(text='I am a virtual button')
+                    )
             finally:
                 tester.close()
 
@@ -154,7 +159,8 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
                         type_=QtGui.QAbstractButton,
-                        test=lambda x: x.text() == 'OK')
+                        test=lambda x: x.text() == 'OK'
+                    )
                     self.assertIsInstance(widget, QtGui.QPushButton)
             finally:
                 tester.close()

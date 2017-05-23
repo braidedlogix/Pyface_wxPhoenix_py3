@@ -11,6 +11,7 @@
 #------------------------------------------------------------------------------
 """ The PyQt specific implementation of a menu manager. """
 
+
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -66,17 +67,13 @@ class MenuManager(ActionManager, ActionManagerItem):
         submenu.menuAction().setText(self.name)
         menu.addMenu(submenu)
 
-    def add_to_toolbar(self,
-                       parent,
-                       tool_bar,
-                       image_cache,
-                       controller,
+    def add_to_toolbar(self, parent, tool_bar, image_cache, controller,
                        show_labels=True):
         """ Adds the item to a tool bar. """
         menu = self.create_menu(parent, controller)
         if self.action:
-            tool_action = _Tool(parent, tool_bar, image_cache, self,
-                                controller, show_labels).control
+            tool_action = _Tool(
+                parent, tool_bar, image_cache, self, controller, show_labels).control
             tool_action.setMenu(menu)
         else:
             tool_action = menu.menuAction()
@@ -84,8 +81,8 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         tool_action.setText(self.name)
         tool_button = tool_bar.widgetForAction(tool_action)
-        tool_button.setPopupMode(tool_button.MenuButtonPopup
-                                 if self.action else tool_button.InstantPopup)
+        tool_button.setPopupMode(tool_button.MenuButtonPopup if self.action
+                                 else tool_button.InstantPopup)
 
 
 class _Menu(QtGui.QMenu):
@@ -135,7 +132,7 @@ class _Menu(QtGui.QMenu):
 
         for item in self.menu_items:
             item.dispose()
-
+            
         self.menu_items = []
 
         super(_Menu, self).clear()
@@ -151,12 +148,12 @@ class _Menu(QtGui.QMenu):
         self.clear()
 
         manager = self._manager
-        parent = self._parent
+        parent  = self._parent
 
         previous_non_empty_group = None
         for group in manager.groups:
-            previous_non_empty_group = self._add_group(
-                parent, group, previous_non_empty_group)
+            previous_non_empty_group = self._add_group(parent, group,
+                    previous_non_empty_group)
 
         self.setEnabled(manager.enabled)
 
@@ -220,6 +217,5 @@ class _Menu(QtGui.QMenu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
-
 
 #### EOF ######################################################################

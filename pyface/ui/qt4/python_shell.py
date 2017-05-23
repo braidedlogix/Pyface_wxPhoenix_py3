@@ -12,9 +12,9 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports.
-import __builtin__
+import builtins
 from code import compile_command, InteractiveInterpreter
-from cStringIO import StringIO
+from io import StringIO
 import sys
 from time import time
 
@@ -27,23 +27,24 @@ from traits.api import Event, provides
 from traits.util.clean_strings import python_name
 
 # Local imports.
-from code_editor.pygments_highlighter import PygmentsHighlighter
-from console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
+from .code_editor.pygments_highlighter import PygmentsHighlighter
+from .console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
     HistoryConsoleWidget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
 
+
 #-------------------------------------------------------------------------------
 # 'PythonShell' class:
 #-------------------------------------------------------------------------------
-
 
 @provides(IPythonShell)
 class PythonShell(MPythonShell, Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
+
 
     #### 'IPythonShell' interface #############################################
 
@@ -100,12 +101,12 @@ class PythonShell(MPythonShell, Widget):
         name = 'dragged'
 
         if hasattr(obj, 'name') \
-           and isinstance(obj.name, basestring) and len(obj.name) > 0:
+           and isinstance(obj.name, str) and len(obj.name) > 0:
             py_name = python_name(obj.name)
 
             # Make sure that the name is actually a valid Python identifier.
             try:
-                if eval(py_name, {py_name: True}):
+                if eval(py_name, {py_name : True}):
                     name = py_name
             except Exception:
                 pass
@@ -118,7 +119,6 @@ class PythonShell(MPythonShell, Widget):
 #-------------------------------------------------------------------------------
 # 'PythonWidget' class:
 #-------------------------------------------------------------------------------
-
 
 class PythonWidget(HistoryConsoleWidget):
     """ A basic in-process Python interpreter.
@@ -377,15 +377,15 @@ class PythonWidget(HistoryConsoleWidget):
             if len(leftover) == 1:
                 leftover = leftover[0]
                 if symbol is None:
-                    names = self.interpreter.locals.keys()
-                    names += __builtin__.__dict__.keys()
+                    names = list(self.interpreter.locals.keys())
+                    names += list(builtins.__dict__.keys())
                 else:
                     names = dir(symbol)
-                completions = [n for n in names if n.startswith(leftover)]
+                completions = [ n for n in names if n.startswith(leftover) ]
                 if completions:
                     cursor = self._get_cursor()
-                    cursor.movePosition(
-                        QtGui.QTextCursor.Left, n=len(context[-1]))
+                    cursor.movePosition(QtGui.QTextCursor.Left,
+                                        n=len(context[-1]))
                     self._complete_with_items(cursor, completions)
 
     def _get_banner(self):
@@ -410,14 +410,14 @@ class PythonWidget(HistoryConsoleWidget):
         """ Find a python object in the interpeter namespace from a context (a
             list of names).
         """
-        context = map(str, context)
+        context = list(map(str, context))
         if len(context) == 0:
             return None, context
 
         base_symbol_string = context[0]
         symbol = self.interpreter.locals.get(base_symbol_string, None)
         if symbol is None:
-            symbol = __builtin__.__dict__.get(base_symbol_string, None)
+            symbol = builtins.__dict__.get(base_symbol_string, None)
         if symbol is None:
             return None, context
 
@@ -450,11 +450,9 @@ class PythonWidget(HistoryConsoleWidget):
         if position == self._get_cursor().position():
             self._call_tip()
 
-
 #-------------------------------------------------------------------------------
 # 'PythonWidgetHighlighter' class:
 #-------------------------------------------------------------------------------
-
 
 class PythonWidgetHighlighter(PygmentsHighlighter):
     """ A PygmentsHighlighter that can be turned on and off and that ignores
@@ -462,8 +460,8 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
     """
 
     def __init__(self, python_widget):
-        super(PythonWidgetHighlighter,
-              self).__init__(python_widget._control.document())
+        super(PythonWidgetHighlighter, self).__init__(
+            python_widget._control.document())
         self._current_offset = 0
         self._python_widget = python_widget
         self.highlighting_on = False
@@ -509,11 +507,9 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
         start += self._current_offset
         super(PythonWidgetHighlighter, self).setFormat(start, count, format)
 
-
 #-------------------------------------------------------------------------------
 # 'PyfacePythonWidget' class:
 #-------------------------------------------------------------------------------
-
 
 class PyfacePythonWidget(PythonWidget):
     """ A PythonWidget customized to support the IPythonShell interface.
@@ -548,13 +544,14 @@ class PyfacePythonWidget(PythonWidget):
 
         mods = event.modifiers()
         self._pyface_widget.key_pressed = KeyPressedEvent(
-            alt_down=((mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier),
-            control_down=((mods & QtCore.Qt.ControlModifier) ==
-                          QtCore.Qt.ControlModifier),
-            shift_down=(
-                (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier),
-            key_code=kcode,
-            event=event)
+            alt_down     = ((mods & QtCore.Qt.AltModifier) ==
+                            QtCore.Qt.AltModifier),
+            control_down = ((mods & QtCore.Qt.ControlModifier) ==
+                            QtCore.Qt.ControlModifier),
+            shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
+                            QtCore.Qt.ShiftModifier),
+            key_code     = kcode,
+            event        = event)
 
         super(PyfacePythonWidget, self).keyPressEvent(event)
 
@@ -562,7 +559,6 @@ class PyfacePythonWidget(PythonWidget):
 #-------------------------------------------------------------------------------
 # '_DropEventFilter' class:
 #-------------------------------------------------------------------------------
-
 
 class _DropEventEmitter(QtCore.QObject):
     """ Handle object drops on widget. """

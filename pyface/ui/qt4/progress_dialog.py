@@ -122,14 +122,14 @@ class ProgressDialog(MProgressDialog, Window):
             self.progress_bar.setValue(value)
 
             if (self.max != self.min):
-                percent = (float(value) - self.min) / (self.max - self.min)
+                percent = (float(value) - self.min)/(self.max - self.min)
             else:
                 percent = 1.0
 
             if self.show_time and (percent != 0):
                 current_time = time.time()
                 elapsed = current_time - self._start_time
-                estimated = elapsed / percent
+                estimated = elapsed/percent
                 remaining = estimated - elapsed
 
                 self._set_time_label(elapsed, self._elapsed_control)
@@ -174,8 +174,7 @@ class ProgressDialog(MProgressDialog, Window):
         buttons = QtGui.QDialogButtonBox()
 
         if self.can_cancel:
-            buttons.addButton(self.cancel_button_label,
-                              QtGui.QDialogButtonBox.RejectRole)
+            buttons.addButton(self.cancel_button_label, QtGui.QDialogButtonBox.RejectRole)
         if self.can_ok:
             buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
@@ -194,8 +193,7 @@ class ProgressDialog(MProgressDialog, Window):
         dummy.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
 
         label = QtGui.QLabel("unknown", dialog)
-        label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft |
-                           QtCore.Qt.AlignRight)
+        label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft | QtCore.Qt.AlignRight)
 
         sub_layout = QtGui.QHBoxLayout()
 
@@ -228,12 +226,9 @@ class ProgressDialog(MProgressDialog, Window):
         if not self.show_time:
             return
 
-        self._elapsed_control = self._create_label(dialog, layout,
-                                                   "Elapsed time : ")
-        self._estimated_control = self._create_label(dialog, layout,
-                                                     "Estimated time : ")
-        self._remaining_control = self._create_label(dialog, layout,
-                                                     "Remaining time : ")
+        self._elapsed_control = self._create_label(dialog, layout, "Elapsed time : ")
+        self._estimated_control = self._create_label(dialog, layout, "Estimated time : ")
+        self._remaining_control = self._create_label(dialog, layout, "Remaining time : ")
 
     def _create_control(self, parent):
         return QtGui.QDialog(parent)
@@ -244,9 +239,9 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_contents(self, parent):
         dialog = parent
-        layout = QtGui.QVBoxLayout(dialog)
-        layout.setContentsMargins(self.margin, self.margin, self.margin,
-                                  self.margin)
+        layout  = QtGui.QVBoxLayout(dialog)
+        layout.setContentsMargins(self.margin, self.margin,
+                                  self.margin, self.margin)
 
         # The 'guts' of the dialog.
         self._create_message(dialog, layout)

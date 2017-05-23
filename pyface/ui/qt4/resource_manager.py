@@ -10,6 +10,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+
 # Major package imports.
 from pyface.qt import QtCore, QtGui, QtSvg
 
@@ -48,6 +49,5 @@ class PyfaceResourceFactory(ResourceFactory):
         image.loadFromData(data)
 
         return image
-
 
 #### EOF ######################################################################

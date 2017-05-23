@@ -17,13 +17,13 @@ from .util import set_focus
 # 'EditorAreaPane' class.
 ###############################################################################
 
-
 @provides(IEditorAreaPane)
 class EditorAreaPane(TaskPane, MEditorAreaPane):
     """ The toolkit-specific implementation of a EditorAreaPane.
 
     See the IEditorAreaPane interface for API documentation.
     """
+
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -59,7 +59,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self.control.setCurrentIndex)
-        for i in xrange(1, 10):
+        for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
@@ -174,11 +174,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             visible = self.control.count() > 1 if self.hide_tab_bar else True
             self.control.tabBar().setVisible(visible)
 
-
 ###############################################################################
 # Auxillary classes.
 ###############################################################################
-
 
 class EditorAreaWidget(QtGui.QTabWidget):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
@@ -203,7 +201,6 @@ class EditorAreaWidget(QtGui.QTabWidget):
         active_editor = self.editor_area.active_editor
         if active_editor:
             set_focus(active_editor.control)
-
 
 class EditorAreaDropFilter(QtCore.QObject):
     """ Implements drag and drop support.

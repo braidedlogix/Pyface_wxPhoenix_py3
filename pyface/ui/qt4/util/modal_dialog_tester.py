@@ -14,11 +14,12 @@ import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, qt_api
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
 from .testing import find_qt_widget
+
 
 BUTTON_TEXT = {
     OK: 'OK',
@@ -56,7 +57,6 @@ class ModalDialogTester(object):
          manager is used from the GuiTestAssistant when necessary.
 
     """
-
     def __init__(self, function):
         #: The command to call that will cause a dialog to open.
         self.function = function
@@ -197,6 +197,7 @@ class ModalDialogTester(object):
         finally:
             condition_timer.stop()
             condition_timer.timeout.disconnect(handler)
+            self._dialog_widget = None
             self.assert_no_errors_collected()
 
     def open(self, *args, **kwargs):
@@ -240,7 +241,8 @@ class ModalDialogTester(object):
             yield
         except Exception:
             self._event_loop_error.append(
-                (sys.exc_info()[0], traceback.format_exc()))
+                (sys.exc_info()[0], traceback.format_exc())
+            )
 
     def assert_no_errors_collected(self):
         """ Assert that the tester has not collected any errors.
@@ -262,7 +264,13 @@ class ModalDialogTester(object):
         """
         control = self.get_dialog_widget()
         widget = find_qt_widget(
-            control, type_, test=lambda widget: widget.text() == text)
+            control,
+            type_,
+            test=lambda widget: widget.text() == text
+        )
+        if widget is None:
+            # this will only occur if there is some problem with the test
+            raise RuntimeError("Could not find matching child widget.")
         widget.click()
 
     def click_button(self, button_id):

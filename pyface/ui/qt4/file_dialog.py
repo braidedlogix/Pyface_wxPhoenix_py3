@@ -10,6 +10,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+
 # Standard library imports.
 import os
 
@@ -29,6 +30,7 @@ class FileDialog(MFileDialog, Dialog):
     """ The toolkit specific implementation of a FileDialog.  See the
     IFileDialog interface for the API documentation.
     """
+
 
     #### 'IFileDialog' interface ##############################################
 
@@ -63,7 +65,7 @@ class FileDialog(MFileDialog, Dialog):
     def create_wildcard(cls, description, extension):
         """ Creates a wildcard for a given extension. """
 
-        if isinstance(extension, basestring):
+        if isinstance(extension, str):
             pattern = extension
 
         else:
@@ -88,8 +90,8 @@ class FileDialog(MFileDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = unicode(files[0])
-            self.paths = [unicode(file) for file in files]
+            self.path = str(files[0])
+            self.paths = [str(file) for file in files]
         else:
             self.path = ''
             self.paths = ['']
@@ -114,8 +116,7 @@ class FileDialog(MFileDialog, Dialog):
         # components.
         if len(self.default_path) != 0 and len(self.default_directory) == 0 \
             and len(self.default_filename) == 0:
-            default_directory, default_filename = os.path.split(
-                self.default_path)
+            default_directory, default_filename = os.path.split(self.default_path)
         else:
             default_directory = self.default_directory
             default_filename = self.default_filename
@@ -159,6 +160,5 @@ class FileDialog(MFileDialog, Dialog):
         """ Return the default wildcard. """
 
         return self.WILDCARD_ALL
-
 
 #### EOF ######################################################################

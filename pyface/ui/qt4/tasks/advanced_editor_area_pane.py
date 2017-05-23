@@ -19,13 +19,13 @@ from .util import set_focus
 # 'AdvancedEditorAreaPane' class.
 ###############################################################################
 
-
 @provides(IAdvancedEditorAreaPane)
 class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     """ The toolkit-specific implementation of an AdvancedEditorAreaPane.
 
     See the IAdvancedEditorAreaPane interface for API documentation.
     """
+
 
     #### Private interface ####################################################
 
@@ -59,7 +59,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self._activate_tab)
-        for i in xrange(1, 10):
+        for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
@@ -183,7 +183,6 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 # Auxillary classes.
 ###############################################################################
 
-
 class EditorAreaMainWindowLayout(MainWindowLayout):
     """ A MainWindowLayout for implementing AdvancedEditorAreaPane.
 
@@ -284,10 +283,8 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def get_dock_widgets(self):
         """ Gets all visible dock widgets.
         """
-        return [
-            child for child in self.children()
-            if isinstance(child, QtGui.QDockWidget) and child.isVisible()
-        ]
+        return [ child for child in self.children()
+                 if isinstance(child, QtGui.QDockWidget) and child.isVisible() ]
 
     def get_dock_widgets_for_bar(self, tab_bar):
         """ Get the dock widgets, in order, attached to given tab bar.
@@ -344,10 +341,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
         editor_area = self.editor_area
         choices = tabified if len(tabified) >= 2 else visible
         if len(choices) >= 2 and editor_widget == next_widget:
-            i = choices.index(editor_widget)
-            next_widget = choices[i + 1] if i + 1 < len(choices) else choices[
-                i - 1]
-            editor_area.activate_editor(next_widget.editor)
+             i = choices.index(editor_widget)
+             next_widget = choices[i+1] if i+1 < len(choices) else choices[i-1]
+             editor_area.activate_editor(next_widget.editor)
 
         # Update tab bar hide state.
         if len(tabified) == 2:
@@ -427,8 +423,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
             if widget.geometry() == self._rubber_band.geometry():
                 self.set_hover_widget(widget)
 
-        elif self._drag_widget == widget and event.type(
-        ) == QtCore.QEvent.Move:
+        elif self._drag_widget == widget and event.type() == QtCore.QEvent.Move:
             if len(self._tear_widgets) == 1 and not self._tear_handled:
                 widget = self._tear_widgets[0]
                 widget.set_title_bar(True)
@@ -469,11 +464,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
                     QtCore.QCoreApplication.sendEvent(widget, press_event)
                     return True
 
-                event = QtGui.QMouseEvent(QtCore.QEvent.MouseMove,
-                                          event.pos(),
-                                          event.globalPos(),
-                                          event.button(),
-                                          event.buttons(), event.modifiers())
+                event = QtGui.QMouseEvent(
+                        QtCore.QEvent.MouseMove, event.pos(), event.globalPos(),
+                        event.button(), event.buttons(), event.modifiers())
                 QtCore.QCoreApplication.sendEvent(self._drag_widget, event)
                 return True
 
@@ -545,8 +538,8 @@ class EditorWidget(QtGui.QDockWidget):
         # Update the minimum size.
         contents_minsize = editor.control.minimumSize()
         style = self.style()
-        contents_minsize.setHeight(contents_minsize.height(
-        ) + style.pixelMetric(style.PM_DockWidgetHandleExtent))
+        contents_minsize.setHeight(contents_minsize.height()
+            + style.pixelMetric(style.PM_DockWidgetHandleExtent))
         self.setMinimumSize(contents_minsize)
 
         self.dockLocationChanged.connect(self.update_title_bar)

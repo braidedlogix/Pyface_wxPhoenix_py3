@@ -10,6 +10,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+
 # Enthought library imports.
 from pyface.workbench.i_view import MView
 
@@ -56,6 +57,5 @@ class View(MView):
             self.control.setFocus()
 
         return
-
 
 #### EOF ######################################################################

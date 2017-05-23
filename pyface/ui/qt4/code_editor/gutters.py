@@ -33,7 +33,6 @@ class GutterWidget(QtGui.QWidget):
         """
         self.parent().wheelEvent(event)
 
-
 class StatusGutterWidget(GutterWidget):
     """ Draws status markers
     """
@@ -56,23 +55,19 @@ class StatusGutterWidget(GutterWidget):
 
         cw = self.parent()
 
-        pixels_per_block = self.height() / float(cw.blockCount())
+        pixels_per_block = self.height()/float(cw.blockCount())
 
         for line in self.info_lines:
-            painter.fillRect(
-                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
-                QtCore.Qt.green)
+            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
+                            QtCore.Qt.green)
 
         for line in self.warn_lines:
-            painter.fillRect(
-                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
-                QtCore.Qt.yellow)
+            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
+                            QtCore.Qt.yellow)
 
         for line in self.error_lines:
-            painter.fillRect(
-                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
-                QtCore.Qt.red)
-
+            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
+                            QtCore.Qt.red)
 
 class LineNumberWidget(GutterWidget):
     """ Draw line numbers.
@@ -92,7 +87,7 @@ class LineNumberWidget(GutterWidget):
         nlines = max(1, self.parent().blockCount())
         ndigits = max(self.min_char_width,
                       int(math.floor(math.log10(nlines) + 1)))
-        width = max(self.fontMetrics().width(u'0' * ndigits) + 3,
+        width = max(self.fontMetrics().width('0' * ndigits) + 3,
                     self.min_width)
         return width
 
@@ -109,18 +104,18 @@ class LineNumberWidget(GutterWidget):
         cw = self.parent()
         block = cw.firstVisibleBlock()
         blocknum = block.blockNumber()
-        top = cw.blockBoundingGeometry(block).translated(cw.contentOffset(
-        )).top()
+        top = cw.blockBoundingGeometry(block).translated(
+            cw.contentOffset()).top()
         bottom = top + int(cw.blockBoundingRect(block).height())
 
         while block.isValid() and top <= event.rect().bottom():
             if block.isVisible() and bottom >= event.rect().top():
                 painter.setPen(QtCore.Qt.black)
-                painter.drawText(0, top,
-                                 self.width() - 2,
+                painter.drawText(0, top, self.width() - 2,
                                  self.fontMetrics().height(),
                                  QtCore.Qt.AlignRight, str(blocknum + 1))
-            block = block.next()
+            block = next(block)
             top = bottom
             bottom = top + int(cw.blockBoundingRect(block).height())
             blocknum += 1
+

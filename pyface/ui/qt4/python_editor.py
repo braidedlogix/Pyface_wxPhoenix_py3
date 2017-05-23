@@ -10,6 +10,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+
 # Standard library imports.
 import sys
 
@@ -31,6 +32,7 @@ class PythonEditor(MPythonEditor, Widget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
+
 
     #### 'IPythonEditor' interface ############################################
 
@@ -172,13 +174,13 @@ class PythonEditorEventFilter(QtCore.QObject):
 
             mods = event.modifiers()
             self.key_pressed = KeyPressedEvent(
-                alt_down=(
-                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier),
-                control_down=((mods & QtCore.Qt.ControlModifier) ==
-                              QtCore.Qt.ControlModifier),
-                shift_down=((mods & QtCore.Qt.ShiftModifier) ==
-                            QtCore.Qt.ShiftModifier),
-                key_code=kcode,
-                event=event)
+                alt_down     = ((mods & QtCore.Qt.AltModifier) ==
+                                QtCore.Qt.AltModifier),
+                control_down = ((mods & QtCore.Qt.ControlModifier) ==
+                                QtCore.Qt.ControlModifier),
+                shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
+                                QtCore.Qt.ShiftModifier),
+                key_code     = kcode,
+                event        = event)
 
         return super(PythonEditorEventFilter, self).eventFilter(obj, event)

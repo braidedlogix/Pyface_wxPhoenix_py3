@@ -33,7 +33,9 @@ class GuiTestAssistant(UnittestTools):
         self.qt_app = qt_app
         self.gui = GUI()
         self.event_loop_helper = EventLoopHelper(
-            qt_app=self.qt_app, gui=self.gui)
+            qt_app=self.qt_app,
+            gui=self.gui
+        )
         self.traitsui_raise_patch = mock.patch(
             'traitsui.qt4.ui_base._StickyDialog.raise_')
         self.traitsui_raise_patch.start()
@@ -123,11 +125,7 @@ class GuiTestAssistant(UnittestTools):
             self.fail('Timed out waiting for condition')
 
     @contextlib.contextmanager
-    def assertTraitChangesInEventLoop(self,
-                                      obj,
-                                      trait,
-                                      condition,
-                                      count=1,
+    def assertTraitChangesInEventLoop(self, obj, trait, condition, count=1,
                                       timeout=10.0):
         """Runs the real Qt event loop, collecting trait change events until
         the provided condition evaluates to True.
@@ -162,8 +160,8 @@ class GuiTestAssistant(UnittestTools):
                 msg = ("Expected {} event on {} to be fired at least {} "
                        "times, but the event was only fired {} times "
                        "before timeout ({} seconds).")
-                msg = msg.format(trait, obj, count, actual_event_count,
-                                 timeout)
+                msg = msg.format(
+                    trait, obj, count, actual_event_count, timeout)
                 self.fail(msg)
         finally:
             collector.stop_collecting()
@@ -201,19 +199,18 @@ class GuiTestAssistant(UnittestTools):
         def make_handler(trait):
             def handler():
                 set_event(trait)
-
             return handler
 
         handlers = {trait: make_handler(trait) for trait in traits}
 
-        for trait, handler in handlers.iteritems():
+        for trait, handler in handlers.items():
             traits_object.on_trait_change(handler, trait)
         try:
             with self.event_loop_until_condition(
                     condition=condition.is_set, timeout=timeout):
                 yield
         finally:
-            for trait, handler in handlers.iteritems():
+            for trait, handler in handlers.items():
                 traits_object.on_trait_change(handler, trait, remove=True)
 
     @contextlib.contextmanager

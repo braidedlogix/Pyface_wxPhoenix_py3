@@ -14,7 +14,7 @@
 
 # Standard library imports
 from io import BytesIO
-from cPickle import dumps, load, loads
+from pickle import dumps, load, loads
 
 # System library imports
 from pyface.qt import QtCore, QtGui
@@ -98,11 +98,11 @@ class Clipboard(BaseClipboard):
             return []
 
     def _set_file_data(self, data):
-        if isinstance(data, basestring):
+        if isinstance(data, str):
             data = [data]
         mime_data = QtCore.QMimeData()
         mime_data.setUrls([QtCore.QUrl(path) for path in data])
         cb.setMimeData(mime_data)
 
-    def _get_has_file_data(self):
+    def _get_has_file_data (self):
         return cb.mimeData().hasUrls()

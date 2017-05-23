@@ -26,7 +26,8 @@ class TestGuiTestAssistant(GuiTestAssistant, unittest.TestCase):
 
         # Failing case.
         with self.assertRaises(AssertionError):
-            with self.event_loop_until_traits_change(obj, 'spam', timeout=0.1):
+            with self.event_loop_until_traits_change(obj, 'spam',
+                                                     timeout=0.1):
                 obj.eggs = True
 
     def test_event_loop_until_traits_change_with_multiple_traits_success(self):
@@ -40,14 +41,14 @@ class TestGuiTestAssistant(GuiTestAssistant, unittest.TestCase):
         # event_loop_until_traits_change calls self.fail on timeout.
         obj = ExampleObject()
         with self.assertRaises(AssertionError):
-            with self.event_loop_until_traits_change(
-                    obj, 'spam', 'eggs', timeout=0.1):
+            with self.event_loop_until_traits_change(obj, 'spam', 'eggs',
+                                                     timeout=0.1):
                 obj.eggs = True
 
         # event_loop_until_traits_change calls self.fail on timeout.
         with self.assertRaises(AssertionError):
-            with self.event_loop_until_traits_change(
-                    obj, 'spam', 'eggs', timeout=0.1):
+            with self.event_loop_until_traits_change(obj, 'spam', 'eggs',
+                                                     timeout=0.1):
                 obj.spam = True
 
     def test_event_loop_until_traits_change_with_no_traits_success(self):

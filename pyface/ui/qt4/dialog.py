@@ -10,6 +10,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
@@ -21,14 +22,15 @@ from pyface.i_dialog import IDialog, MDialog
 from pyface.constant import OK, CANCEL, YES, NO
 from .window import Window
 
+
 # Map PyQt dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    int(QtGui.QDialog.Accepted): OK,
-    int(QtGui.QDialog.Rejected): CANCEL,
-    int(QtGui.QMessageBox.Ok): OK,
-    int(QtGui.QMessageBox.Cancel): CANCEL,
-    int(QtGui.QMessageBox.Yes): YES,
-    int(QtGui.QMessageBox.No): NO
+    int(QtGui.QDialog.Accepted):     OK,
+    int(QtGui.QDialog.Rejected):     CANCEL,
+    int(QtGui.QMessageBox.Ok):       OK,
+    int(QtGui.QMessageBox.Cancel):   CANCEL,
+    int(QtGui.QMessageBox.Yes):      YES,
+    int(QtGui.QMessageBox.No):       NO
 }
 
 
@@ -37,6 +39,7 @@ class Dialog(MDialog, Window):
     """ The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
+
 
     #### 'IDialog' interface ##################################################
 
@@ -91,8 +94,7 @@ class Dialog(MDialog, Window):
         # display it but can't actually use it.
         if len(self.help_id) > 0:
             if self.help_label:
-                buttons.addButton(self.help_label,
-                                  QtGui.QDialogButtonBox.HelpRole)
+                buttons.addButton(self.help_label, QtGui.QDialogButtonBox.HelpRole)
             else:
                 buttons.addButton(QtGui.QDialogButtonBox.Help)
 
