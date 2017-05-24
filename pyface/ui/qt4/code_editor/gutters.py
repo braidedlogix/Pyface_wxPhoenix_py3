@@ -114,7 +114,7 @@ class LineNumberWidget(GutterWidget):
                 painter.drawText(0, top, self.width() - 2,
                                  self.fontMetrics().height(),
                                  QtCore.Qt.AlignRight, str(blocknum + 1))
-            block = next(block)
+            block = block.next()
             top = bottom
             bottom = top + int(cw.blockBoundingRect(block).height())
             blocknum += 1
