@@ -5,7 +5,10 @@ if qt_api == 'pyqt':
 
 elif qt_api == 'pyqt5':
     from PyQt5.QtWidgets import *
-    from PyQt5.QtWebKitWidgets import *
+    try:
+        from PyQt5.QtWebKitWidgets import *
+    except:
+        from PyQt5.QtWebEngineWidgets import *
 
 else:
     from PySide.QtWebKit import *
