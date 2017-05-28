@@ -18,12 +18,12 @@
 # Major package imports
 import wx
 
-from wx.grid import PyGridCellRenderer
+from wx.grid import GridCellRenderer
 from wx.grid import GridCellStringRenderer
 from wx import SOLID, Brush, Rect, TRANSPARENT_PEN
 
 
-class GridCellImageRenderer(PyGridCellRenderer):
+class GridCellImageRenderer(GridCellRenderer):
     """ A renderer which will display a cell-specific image in addition to some
         text displayed in the same way the standard string renderer normally
         would. """
@@ -35,7 +35,7 @@ class GridCellImageRenderer(PyGridCellRenderer):
             get_image_for_cell(row, col) to specify an image to appear
             in the cell at row, col. """
 
-        PyGridCellRenderer.__init__(self)
+        GridCellRenderer.__init__(self)
 
         # save the string renderer to use for text.
         self._string_renderer = GridCellStringRenderer()
