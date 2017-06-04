@@ -160,11 +160,12 @@ class Grid(Widget):
 
         # Flag set when columns are resizing:
         self._user_col_size = False
-
         # Create the toolkit-specific control.
         self.control = self._grid = grid = wxGrid(parent, -1)
         grid.grid = self
-
+        self._moveTo = None
+        self._edit = False
+        grid.Bind(wx.EVT_IDLE, self._on_idle)
         # Set when moving edit cursor:
         grid._no_reset_col = False
         grid._no_reset_row = False
@@ -244,6 +245,7 @@ class Grid(Widget):
         # Initialize wx handlers:
         self._notify_select = True
         grid.Bind(wx.grid.EVT_GRID_SELECT_CELL, self._on_select_cell)
+        #grid.Bind(wx.grid.EVT_GRID_CELL_CHANGED, self._on_select_cell)
         grid.Bind(wx.grid.EVT_GRID_RANGE_SELECT, self._on_range_select)
         grid.Bind(wx.grid.EVT_GRID_COL_SIZE, self._on_col_size)
         grid.Bind(wx.grid.EVT_GRID_ROW_SIZE, self._on_row_size)
@@ -300,8 +302,7 @@ class Grid(Widget):
 
         self.__autosize()
 
-        self._edit = False
-        grid.Bind(wx.EVT_IDLE, self._on_idle)
+
 
     def dispose(self):
         # Remove all wx handlers:
@@ -680,6 +681,7 @@ class Grid(Widget):
     def _on_size(self, evt):
         """ Called when the grid is resized. """
         self.__autosize()
+        evt.Skip()
 
     # needed to handle problem in wx 2.6 with combobox cell editors
     def _on_editor_created(self, evt):
@@ -710,14 +712,13 @@ class Grid(Widget):
                                      control.GetId()))
 
     def _on_grid_window_paint(self, evt):
-
         # fixme: this is a total h*ck to get rid of the scrollbars that appear
         # on a grid under wx2.6 when it starts up. these appear whether or
         # not needed, and disappear as soon as the grid is resized. hopefully
         # we will be able to remove this egregious code on some future version
         # of wx.
-        self._grid.SetColSize(0, self._grid.GetColSize(0) + 1)
-        self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
+        #self._grid.SetColSize(0, self._grid.GetColSize(0) + 1)
+        #self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
 
         evt.Skip()
 
@@ -771,23 +772,22 @@ class Grid(Widget):
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
         row, col = evt.GetRow(), evt.GetCol()
+        self._moveTo = (row,col)
         self.cell_left_clicked = self.model.click = (row, col)
-
         # Try to find a renderer for this cell:
         renderer = self.model.get_cell_renderer(row, col)
-
         # If the renderer has defined a handler then call it:
         result = False
         if renderer is not None:
             result = renderer.on_left_click(self, row, col)
-
+        #print("self._grid.GetParent()", self._grid.GetParent().GetParent().GetParent())
         # if the handler didn't tell us to stop further handling then skip
         if not result:
             if (self.selection_mode != '') or (not self.edit_on_first_click):
                 self._grid.SelectBlock(row, col, row, col, evt.ControlDown())
 
             self._edit = True
-            evt.Skip()
+        evt.Skip()
 
     def _on_range_select(self, evt):
         if evt.Selecting():
@@ -998,30 +998,30 @@ class Grid(Widget):
         # has meaning to the edit control.
         key_code = evt.GetKeyCode()
 
-        if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
-            self._move_to_next_cell(evt.ShiftDown())
+        #if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
+        #    evt.Skip()#self._move_to_next_cell(evt.ShiftDown())
 
-        elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
-            if evt.ShiftDown():
-                # fixme: in a split window the shift tab is being eaten
-                # by tabbing between the splits
-                self._move_to_previous_cell()
+        #elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
+        #    if evt.ShiftDown():
+        #        # fixme: in a split window the shift tab is being eaten
+        #        # by tabbing between the splits
+        #        self._move_to_previous_cell()
 
-            else:
-                self._move_to_next_cell()
+        #    else:
+        #        self._move_to_next_cell()
 
-        elif key_code == ASCII_C:
-            data = self.__get_drag_value()
+        #elif key_code == ASCII_C:
+        #    data = self.__get_drag_value()
             # deposit the data in our singleton clipboard
-            enClipboard.data = data
+        #    enClipboard.data = data
 
             # build a wxCustomDataObject to notify the system clipboard
             # that some in-process data is available
-            data_object = wx.CustomDataObject(PythonObject)
-            data_object.SetData('dummy')
-            if TheClipboard.Open():
-                TheClipboard.SetData(data_object)
-                TheClipboard.Close()
+        #    data_object = wx.CustomDataObject(PythonObject)
+        #    data_object.SetData('dummy')
+        #    if TheClipboard.Open():
+        #        TheClipboard.SetData(data_object)
+        #        TheClipboard.Close()
 
         evt.Skip()
 
@@ -1323,7 +1323,6 @@ class Grid(Widget):
 
     def __get_selected_rows_and_cols(self):
         """ Return lists of the selected rows and the selected columns. """
-
         # note: because the wx grid control is so screwy, we have limited
         # the selection behavior. we only allow single cells to be selected,
         # or whole row, or whole columns.
@@ -1389,7 +1388,6 @@ class Grid(Widget):
 
     def __autosize(self):
         """ Autosize the grid with appropriate flags. """
-
         model = self.model
         grid = self._grid
         if grid is not None and self.autosize:

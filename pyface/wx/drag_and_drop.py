@@ -55,7 +55,7 @@ class FileDropSource(wx.DropSource):
             files = [files]
 
         for file in files:
-            data_object.Sizer.Addile(file)
+            data_object.AddFile(file)
 
         # Create the drop source and begin the drag and drop operation:
         super(FileDropSource, self).__init__(source)
