@@ -1339,7 +1339,7 @@ class Grid(Widget):
         bottom_right = self._grid.GetSelectionBlockBottomRight()
         selection_mode = self._grid.GetSelectionMode()
 
-        if selection_mode == wxGrid.wxGridSelectRows:
+        if selection_mode == wxGrid.GridSelectRows:
             # handle rows differently. figure out which rows were
             # selected. turns out that in this case, wx adds a "block"
             # per row, so we have to cycle over the list returned by
@@ -1357,7 +1357,7 @@ class Grid(Widget):
                 bottom_point = bottom_right[i]
                 for col_index in range(top_point[1], bottom_point[1] + 1):
                     cols.append(col_index)
-        elif selection_mode == wxGrid.wxGridSelectCells:
+        elif selection_mode == wxGrid.GridSelectCells:
             # this is the case where the selection_mode is cell, which also
             # allows complete columns or complete rows to be selected.
 
@@ -1673,17 +1673,9 @@ class _GridTableBase(GridTableBase):
         pos = self.model.get_column_count()
         return self.model.insert_columns(pos, num_cols)
 
-    def _GetAttr(self, row, col, kind):
+    def GetAttr(self, row, col, kind):
         """ Retrieve the cell attribute object for the specified cell. """
 
-        gr = self._grid._grid
-
-        dch, dcv = gr.GetDefaultCellAlignment()
-
-        #dco=gr.GetDefaultCellOverflow() 
-
-        #gr.GetDefaultEditor()
-        #gr.GetDefaultRenderer()        
         result = GridCellAttr()
         # we only handle cell requests, for other delegate to the supa
         if kind != GridCellAttr.Cell and kind != GridCellAttr.Any:
@@ -1704,15 +1696,11 @@ class _GridTableBase(GridTableBase):
                     self._editor_cache[(row, col)] = editor
                     editor._grid_info = (self._grid._grid, row, col)
 
-        if editor is not None:
+        if False:#editor is not None:
             # Note: We have to increment the reference to keep the
             #       underlying code from destroying our object.
             editor.IncRef()
             result.SetEditor(editor)
-        #else:
-        #    #dce.IncRef()
-        #    dce = wx.grid.GridCellTextEditor()
-        #    result.SetEditor(dce)
 
         # try to find a renderer for this cell
         renderer = None
@@ -1722,13 +1710,22 @@ class _GridTableBase(GridTableBase):
         if renderer is not None and renderer.renderer is not None:
             renderer.renderer.IncRef()
             result.SetRenderer(renderer.renderer)
-        #else:
-        #    #dcr.IncRef()
-        #    dcr = wx.grid.GridCellStringRenderer()
-        #    result.SetRenderer(dcr)
+
+        # look to see if this cell is editable
+        read_only = False
+        if row < rows and col < cols:
+            read_only = self.model.is_cell_read_only(row, col) or \
+                        self.model.is_row_read_only(row) or \
+                        self.model.is_column_read_only(col)
+
+        result.SetReadOnly(read_only)
+        if read_only :
+            read_only_color = self._grid.default_cell_read_only_color
+            if read_only_color is not None and read_only_color is not Undefined:
+                result.SetBackgroundColour(read_only_color)
 
         # check to see if colors or fonts are specified for this cell
-        bgcolor = self._grid.default_cell_bg_color  #None
+        bgcolor = None
         if row < rows and col < cols:
             bgcolor = self.model.get_cell_bg_color(row, col)
         else:
@@ -1736,19 +1733,15 @@ class _GridTableBase(GridTableBase):
 
         if bgcolor is not None:
             result.SetBackgroundColour(bgcolor)
-        #else:
-        #    dcbgc=gr.GetDefaultCellBackgroundColour() 
-        #    result.SetBackgroundColour(dcbgc)
-        text_color = self._grid.default_cell_text_color  #None
+
+        text_color = None
         if row < rows and col < cols:
             text_color = self.model.get_cell_text_color(row, col)
         else:
             text_color = self._grid.default_cell_text_color
         if text_color is not None:
             result.SetTextColour(text_color)
-        #else:
-        #    dctc=gr.GetDefaultCellTextColour()
-        #    result.SetTextColour(dctc)
+
         cell_font = None
         if row < rows and col < cols:
             cell_font = self.model.get_cell_font(row, col)
@@ -1756,9 +1749,6 @@ class _GridTableBase(GridTableBase):
             cell_font = self._grid.default_cell_font
         if cell_font is not None:
             result.SetFont(cell_font)
-        #else:
-        #    dcf=gr.GetDefaultCellFont()
-        #    result.SetFont(dcf)
 
         # check for alignment definition for this cell
         halignment = valignment = None
@@ -1781,22 +1771,9 @@ class _GridTableBase(GridTableBase):
                 v = wx.ALIGN_CENTRE
 
             result.SetAlignment(h, v)
-        else:
-            result.SetAlignment(dch, dcv)
-        # look to see if this cell is editable
-        read_only = False
-        if row < rows and col < cols:
-            read_only = self.model.is_cell_read_only(row, col) or \
-                        self.model.is_row_read_only(row) or \
-                        self.model.is_column_read_only(col)
-
-        result.SetReadOnly(read_only)
-        if read_only:
-            read_only_color = self._grid.default_cell_read_only_color
-            if read_only_color is not None and read_only_color is not Undefined:
-                result.SetBackgroundColour(read_only_color)
 
         return result
+
 
     ###########################################################################
     # private interface.

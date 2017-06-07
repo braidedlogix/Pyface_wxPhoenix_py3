@@ -38,7 +38,7 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
 
         value = self._get_value(grid, row, col)
 
-        if self.image_map.has_key(value):
+        if value in self.image_map:
             result = self.image_map[value]
         else:
             result = None
@@ -52,7 +52,7 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
 
         value = self._get_value(grid, row, col)
 
-        if self.text_map.has_key(value):
+        if value in self.text_map:
             result = self.text_map[value]
         else:
             result = None
