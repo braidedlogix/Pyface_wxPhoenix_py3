@@ -588,11 +588,11 @@ class Grid(Widget):
         # should we allow individual cells to be selected or only rows
         # or only columns
         if self.selection_mode == 'cell':
-            self._grid.SetSelectionMode(wxGrid.GridSelectCells)
+            self._grid.SetSelectionMode(wxGrid.SelectCells)
         elif self.selection_mode == 'rows':
-            self._grid.SetSelectionMode(wxGrid.GridSelectRows)
+            self._grid.SetSelectionMode(wxGrid.SelectRows)
         elif self.selection_mode == 'cols':
-            self._grid.SetSelectionMode(wxGrid.GridSelectColumns)
+            self._grid.SetSelectionMode(wxGrid.SelectColumns)
 
     def _on_column_label_height_changed(self):
         """ Handle a change to the column_label_height trait. """
