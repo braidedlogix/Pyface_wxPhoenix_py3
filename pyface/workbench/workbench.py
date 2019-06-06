@@ -1,7 +1,9 @@
 """ A workbench. """
 
 # Standard library imports.
-import _pickle as cPickle
+#import _pickle as cPickle
+import six
+from six.moves import cPickle
 import logging
 import os
 

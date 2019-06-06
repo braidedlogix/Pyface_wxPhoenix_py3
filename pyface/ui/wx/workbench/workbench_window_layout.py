@@ -17,7 +17,9 @@
 """
 
 # Standard library imports.
-import _pickle as cPickle  #cPickle
+#import _pickle as cPickle
+import six
+from six.moves import cPickle
 import logging
 
 # Major package imports.
